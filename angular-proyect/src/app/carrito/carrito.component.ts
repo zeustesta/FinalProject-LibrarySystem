@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent {
+  IDlibrosEnCarrito: number[]=[];
+  usuarioId: number;
+
 
 }
