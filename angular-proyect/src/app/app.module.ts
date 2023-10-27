@@ -9,6 +9,9 @@ import { CarritoComponent } from './Components/carrito/carrito.component';
 import { ListaLibrosComponent } from './Components/lista-libros/lista-libros.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { CarrouselComponent } from './Components/carrousel/carrousel.component';
+import { LoginComponent } from './Components/login/login.component';
+import { RegistroComponent } from './Components/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     CarritoComponent,
     ListaLibrosComponent,
     InicioComponent,
-    NavbarComponent
+    NavbarComponent,
+    CarrouselComponent,
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +32,6 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] //Aca carga la pagina
 })
 export class AppModule { }
