@@ -10,8 +10,11 @@ import { APIService } from '../../service/api.service';
 
 export class ListaLibrosComponent {
   listaLibros: Libro[] = [];
+  libroSeleccionado: Libro;
 
-  constructor(private apiService: APIService){};
+  constructor(private apiService: APIService){
+    this.libroSeleccionado=null;
+  };
 
   ngOnInit(): void {
     this.bajarLibros();
@@ -39,6 +42,8 @@ export class ListaLibrosComponent {
     console.log(aux);
     this.listaLibros.push(aux);
   }
+
+  
 
   generoRandom(){
     const generos = ['Horror', 'Fantasía', 'Ciencia Ficción', 'Drama', 'Suspenso', 'Aventura', 'Cristiano', 'Policial', 'Paranormal', 'Poesía'];
