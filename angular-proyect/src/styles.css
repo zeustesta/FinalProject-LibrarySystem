@@ -1,7 +1,0 @@
-html {
-  box-sizing: content-box;
-}
-
-*, *:after, *:before {
-  box-sizing: inherit;
-}

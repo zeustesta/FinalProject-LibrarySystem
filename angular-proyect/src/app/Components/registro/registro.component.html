@@ -1,0 +1,35 @@
+<body>
+  <div class="container">
+    <form action="#" [formGroup]="registerForm">
+      <h4>Registrarse</h4>
+      <div class="container">
+        <div class="form-group">
+  
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="Nombre" required>
+            <label for="name">Nombre</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="surname" placeholder="Apellido" required>
+            <label for="surname">Apellido</label>
+          </div>
+  
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" placeholder="Email" required>
+            <label for="email">Email</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" placeholder="Password" required>
+            <label for="password">Password</label>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary " type="submit">Registrarse</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>  
+</body>
