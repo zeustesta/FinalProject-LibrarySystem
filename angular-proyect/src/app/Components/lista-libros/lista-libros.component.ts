@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Libro } from 'src/app/interfaces/libro';
 import { APIService } from '../../service/api.service';
+import { CarritoService } from 'src/app/service/carrito.service';
+import { Usuario } from 'src/app/interfaces/usuario';
 
 @Component({
   selector: 'app-lista-libros',
@@ -10,14 +12,15 @@ import { APIService } from '../../service/api.service';
 
 export class ListaLibrosComponent {
   listaLibros: Libro[] = [];
-  libroSeleccionado: Libro;
 
-  constructor(private apiService: APIService){
-    this.libroSeleccionado=null;
-  };
+  constructor(private apiService: APIService){ }
 
   ngOnInit(): void {
     this.bajarLibros();
+  }
+
+  addToCart(libro:Libro){
+    
   }
 
   bajarLibros(){
@@ -43,10 +46,8 @@ export class ListaLibrosComponent {
     this.listaLibros.push(aux);
   }
 
-  
-
   generoRandom(){
-    const generos = ['Horror', 'Fantasía', 'Ciencia Ficción', 'Drama', 'Suspenso', 'Aventura', 'Cristiano', 'Policial', 'Paranormal', 'Poesía'];
-    return generos[Math.floor(Math.random() * (10 - 1 + 1))];
+    const generos = ['Horror', 'Fantasía', 'Ciencia Ficción', 'Drama', 'Suspenso', 'Aventura', 'Policial', 'Paranormal', 'Poesía'];
+    return generos[Math.floor(Math.random() * (9 - 1 + 1))];
   }
 }

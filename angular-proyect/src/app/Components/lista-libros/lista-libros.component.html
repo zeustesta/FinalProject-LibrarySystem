@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor="let libro of listaLibros">
     {{ libro.titulo }}, {{ libro.idLibro }}
-    <button (click)="agregarAlCarrito(libro)">Agregar al carrito</button>
+    <button (click)="addToCart(libro)">Agregar al carrito</button>
   </li>
 </ul>

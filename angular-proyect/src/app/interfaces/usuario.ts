@@ -5,5 +5,5 @@ export interface Usuario{
     apellido:string,
     email:string,
     password:string,
-    libro:Libro[];
+    carrito:Libro[];
 }

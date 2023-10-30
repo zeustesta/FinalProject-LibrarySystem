@@ -10,11 +10,11 @@ export class CarritoService {
 
   constructor() { }
 
-  agregarAlCarrito(usuario:Usuario,libro:Libro){
+  addToCarrito(usuario:Usuario,libro:Libro){
     usuario.carrito.push(libro);
   }
 
-  obtenerProductosEnCarrito(){
-    return this.carrito;
+  getCarrito(usuario:Usuario){
+    return usuario.carrito;
   }
 }
