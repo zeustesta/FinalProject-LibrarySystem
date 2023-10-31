@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Libro } from '../interfaces/plantillaLibro';
 
@@ -7,14 +7,16 @@ import { Libro } from '../interfaces/plantillaLibro';
   providedIn: 'root'
 })
 
-export class APIService {
+export class APIService implements OnInit {
   listaLibros: Libro[] = [];
   private urlApi = 'https://gutendex.com/books/?page=4';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.bajarLibros();
+   }
 
   ngOnInit(): void {
-    this.bajarLibros();
+    
   }
 
   public getData(): Observable<any> {
