@@ -42,4 +42,8 @@ export class UsuariosService {
 
     this.listaUsuarios.push(newUser);
   }
+
+  getUserList(){
+    return this.listaUsuarios;
+  }
 }
