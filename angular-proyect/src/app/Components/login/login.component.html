@@ -9,29 +9,26 @@
         <p class="login-box-msg">Complete los datos para iniciar sesión</p>
   
         <form action="/" [formGroup]="loginForm">
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Correo Electronico">
+          <div class="input-group ">
+            <input type="email" class="form-control" placeholder="Correo Electronico" formControlName="email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Contraseña">
+          <span *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Es necesario completar el email!</span>
+          <span *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">Utiliza un email válido!</span>
+          <div class="input-group mt-3">
+            <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
-            Es necesario completar la contrasenia!
-          </span>
-          <span *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched || 
-            loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
-            Utiliza entre 8 y 24 caracteres.
-          </span>
+          <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Es necesario completar la contrasenia!</span>
+          <span *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched || loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">Utiliza entre 8 y 24 caracteres.</span>
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">

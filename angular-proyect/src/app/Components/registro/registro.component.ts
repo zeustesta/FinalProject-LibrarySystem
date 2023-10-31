@@ -28,5 +28,6 @@ export class RegistroComponent {
     let password = this.registerForm.value.password;
 
     this.uService.agregarUsuario(name, surname, email, password);
+    this.router.navigate(['/login']);
   }
 }

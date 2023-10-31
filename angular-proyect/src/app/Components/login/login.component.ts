@@ -23,5 +23,6 @@ export class LoginComponent {
     let password = this.loginForm.value.password;
 
     this.us.iniciarSesion(email, password);
+    this.router.navigate(['/'])
   }
 }
