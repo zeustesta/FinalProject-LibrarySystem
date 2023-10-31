@@ -9,8 +9,10 @@ import { CarritoComponent } from './Components/carrito/carrito.component';
 import { ListaLibrosComponent } from './Components/lista-libros/lista-libros.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
-import { RegistroComponent } from './Components/registro/registro.component';
 import { ReactiveFormsModule } from '@angular/forms'
+import { CarrouselComponent } from './Components/carrousel/carrousel.component';
+import { LoginComponent } from './Components/login/login.component';
+import { RegistroComponent } from './Components/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms'
     ListaLibrosComponent,
     InicioComponent,
     NavbarComponent,
+    CarrouselComponent,
+    LoginComponent,
     RegistroComponent
   ],
   imports: [
@@ -30,6 +34,6 @@ import { ReactiveFormsModule } from '@angular/forms'
     ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] //Aca carga la pagina
 })
 export class AppModule { }

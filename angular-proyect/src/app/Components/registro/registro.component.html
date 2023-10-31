@@ -1,35 +1,76 @@
-<body>
-  <div class="container">
-    <form action="#" [formGroup]="registerForm">
-      <h4>Registrarse</h4>
-      <div class="container">
-        <div class="form-group">
-  
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" placeholder="Nombre" required>
-            <label for="name">Nombre</label>
-          </div>
-          
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="surname" placeholder="Apellido" required>
-            <label for="surname">Apellido</label>
-          </div>
-  
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="email" placeholder="Email" required>
-            <label for="email">Email</label>
-          </div>
-          
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="password" placeholder="Password" required>
-            <label for="password">Password</label>
-          </div>
-          
-          <div class="d-grid gap-2">
-            <button class="btn btn-primary " type="submit">Registrarse</button>
-          </div>
+<body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <a href="/" class="h1"><b>Library</b>System</a>
+        </div>
+        <div class="card-body">
+          <p class="login-box-msg">Registro de nuevo miembro</p>
+    
+          <form action="/" method="post" [formGroup]="registerForm">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Nombre">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Apellido">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" placeholder="Correo Electronico">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Contraseña">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Repita la Contraseña">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                  <label for="agreeTerms">
+                   Acepto los <a href="#">Terminos</a>
+                  </label>
+                </div>
+              </div>
+              <div class="col-10">
+                <button type="submit" class="btn btn-primary btn-block">Registrarme</button>
+              </div>
+            </div>
+          </form>  
+          <a href="/login" class="text-center">Ya estoy registrado!</a>
         </div>
       </div>
-    </form>
-  </div>  
-</body>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    </body>
