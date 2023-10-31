@@ -27,8 +27,12 @@ export class UsuariosService {
 
   listaUsuarios: Usuario[] = [this.user1, this.user2];
 
-
-  constructor() {  }
+  constructor() { 
+    const storedData = localStorage.getItem('usuariosData');
+    if (storedData) {
+      this.listaUsuarios = JSON.parse(storedData);
+    }
+  }
 
   agregarUsuario(nombre: string, apellido: string, email: string, password: string){
     let newUser: Usuario = {
@@ -41,25 +45,36 @@ export class UsuariosService {
     }
 
     this.listaUsuarios.push(newUser);
+
+    localStorage.setItem('usuariosData', JSON.stringify(this.listaUsuarios));
+    
+    console.log(this.listaUsuarios);
   }
 
   iniciarSesion(email: string, password: string){
-    let logueado = false;
+    const encontrado = this.listaUsuarios.find((u) => (u.email === email) && (u.password === password));
 
-    this.listaUsuarios.forEach(e => {
-      if(e.email = email){
-        if(e.password = password){
-          logueado = true;
-          alert('Logueado correctamente');
-        }
-      }
-    })
-    if(logueado == false){
-      alert('Email o contraseña incorrecta');
+    if(encontrado){
+      alert('Logueo Exitoso');
+    }else{
+      alert('Email o Password Incorrectos');
     }
+
+  //   this.listaUsuarios.forEach(e => {
+  //     if(e.email = email){
+  //       if(e.password = password){
+  //         logueado = true;
+  //         alert('Logueado correctamente');
+  //       }
+  //     }
+  //   })
+  //   if(logueado == false){
+  //     alert('Email o contraseña incorrecta');
+  //   }
   }
   
   getUserList(){
+    console.log(this.listaUsuarios)
     return this.listaUsuarios;
   }
 }
