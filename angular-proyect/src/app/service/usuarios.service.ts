@@ -58,4 +58,8 @@ export class UsuariosService {
       alert('Email o contraseña incorrecta');
     }
   }
+  
+  getUserList(){
+    return this.listaUsuarios;
+  }
 }

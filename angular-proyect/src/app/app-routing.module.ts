@@ -5,6 +5,7 @@ import { ListaLibrosComponent } from './Components/lista-libros/lista-libros.com
 import { CarritoComponent } from './Components/carrito/carrito.component';
 import { LoginComponent } from './Components/login/login.component';
 import { RegistroComponent } from './Components/registro/registro.component';
+import { UsuarioComponent } from './Components/usuario/usuario.component';
 
 const routes: Routes = [
   {path:'', component: InicioComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path:'carrito', component: CarritoComponent},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegistroComponent},
+  {path:'usuarios', component: UsuarioComponent},
   {path:'**', redirectTo: '', pathMatch: 'full'}
 ];
 
