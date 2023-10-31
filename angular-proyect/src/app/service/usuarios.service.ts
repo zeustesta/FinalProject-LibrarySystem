@@ -42,4 +42,20 @@ export class UsuariosService {
 
     this.listaUsuarios.push(newUser);
   }
+
+  iniciarSesion(email: string, password: string){
+    let logueado = false;
+
+    this.listaUsuarios.forEach(e => {
+      if(e.email = email){
+        if(e.password = password){
+          logueado = true;
+          alert('Logueado correctamente');
+        }
+      }
+    })
+    if(logueado == false){
+      alert('Email o contraseña incorrecta');
+    }
+  }
 }
