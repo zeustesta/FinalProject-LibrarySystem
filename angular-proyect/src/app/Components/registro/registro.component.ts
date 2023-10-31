@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Usuario } from 'src/app/interfaces/usuario';
+import { Usuario } from 'src/app/interfaces/plantillaUsuario';
+import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class RegistroComponent {
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder){
+  constructor(private formBuilder: FormBuilder, private uService: UsuariosService, private router: Router){
     this.registerForm = this.formBuilder.group({
       name:[''],
       surname:[''],
@@ -21,5 +22,12 @@ export class RegistroComponent {
     })
   }
 
-  
+  addToUsersList(){
+    let name = this.registerForm.value.name;
+    let surname = this.registerForm.value.surname;
+    let email = this.registerForm.value.email;
+    let password = this.registerForm.value.password;
+
+    this.uService.agregarUsuario(name, surname, email, password);
+  }
 }

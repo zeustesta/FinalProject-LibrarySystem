@@ -1,4 +1,4 @@
-import { Libro } from "./libro"
+import { Libro } from "./plantillaLibro"
 export interface Carrito{
     idCompra:number,
     fechaCompra: Date,

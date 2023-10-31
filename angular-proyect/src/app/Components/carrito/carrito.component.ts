@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Libro } from 'src/app/interfaces/libro';
+import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { Usuario } from 'src/app/interfaces/usuario';
+import { Usuario } from 'src/app/interfaces/plantillaUsuario';
 
 
 @Component({

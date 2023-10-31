@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Libro } from 'src/app/interfaces/libro';
+import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { CarritoService } from 'src/app/service/carrito.service';
-import { Usuario } from 'src/app/interfaces/usuario';
+import { Usuario } from 'src/app/interfaces/plantillaUsuario';
 
 @Component({
   selector: 'app-lista-libros',
