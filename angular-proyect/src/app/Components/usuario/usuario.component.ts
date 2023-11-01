@@ -9,7 +9,11 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent {
-  listaUsuarios: Usuario[] = this.usuarioService.getUserList();
+  listaUsuarios: Usuario[] = [];
+  usuarioActual: Usuario | null;
 
-  constructor(private usuarioService: UsuariosService){ }
+  constructor(private usuarioService: UsuariosService){
+    this.listaUsuarios = this.usuarioService.getUserList()
+    this.usuarioActual = this.usuarioService.obtenerUsuarioActual();
+  }
 }
