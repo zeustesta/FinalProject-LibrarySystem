@@ -10,8 +10,10 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 })
 export class UsuarioComponent {
   listaUsuarios: Usuario[] = [];
+  usuarioActual: Usuario | null;
 
   constructor(private usuarioService: UsuariosService){
     this.listaUsuarios = this.usuarioService.getUserList()
+    this.usuarioActual = this.usuarioService.obtenerUsuarioActual();
   }
 }

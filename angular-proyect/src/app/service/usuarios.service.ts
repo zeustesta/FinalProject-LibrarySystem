@@ -7,6 +7,9 @@ import { v4 as uuidv4 } from 'uuid'
 })
 
 export class UsuariosService {
+
+  usuarioActual: Usuario | null = null;
+
   user1 = {
     id: uuidv4(),
     nombre: 'Pepito',
@@ -32,6 +35,10 @@ export class UsuariosService {
     if (storedData) {
       this.listaUsuarios = JSON.parse(storedData);
     }
+    const storedUser= localStorage.getItem('usuarioActual');
+    if(storedUser){
+      this.usuarioActual = JSON.parse(storedUser);
+    }
   }
 
   agregarUsuario(nombre: string, apellido: string, email: string, password: string){
@@ -55,26 +62,32 @@ export class UsuariosService {
     const encontrado = this.listaUsuarios.find((u) => (u.email === email) && (u.password === password));
 
     if(encontrado){
+      this.establecerUsuarioActual(encontrado);
+      localStorage.setItem('usuarioActual',JSON.stringify(encontrado));
       alert('Logueo Exitoso');
     }else{
       alert('Email o Password Incorrectos');
     }
+  }
 
-  //   this.listaUsuarios.forEach(e => {
-  //     if(e.email = email){
-  //       if(e.password = password){
-  //         logueado = true;
-  //         alert('Logueado correctamente');
-  //       }
-  //     }
-  //   })
-  //   if(logueado == false){
-  //     alert('Email o contraseña incorrecta');
-  //   }
+  cerrarSesion() {
+    this.usuarioActual = null;
+    localStorage.removeItem('usuarioActual');
+    // Se puede agregar tambien que se remueve el usuarioActual cuando se cierra la ventana o un boton de cerrar sesion
+  }
+  
+
+  establecerUsuarioActual(usuario:Usuario){
+    this.usuarioActual= usuario;
+  }
+
+  obtenerUsuarioActual(): Usuario | null {
+    return this.usuarioActual;
   }
   
   getUserList(){
     console.log(this.listaUsuarios)
+    console.log(this.usuarioActual);
     return this.listaUsuarios;
   }
 }
