@@ -8,13 +8,29 @@ import { RegistroComponent } from './Components/registro/registro.component';
 import { UsuarioComponent } from './Components/usuario/usuario.component';
 
 const routes: Routes = [
-  {path:'', component: InicioComponent},
-  {path:'libros', component: ListaLibrosComponent},
-  {path:'carrito', component: CarritoComponent},
-  {path:'login', component: LoginComponent},
-  {path:'register', component: RegistroComponent},
-  {path:'usuarios', component: UsuarioComponent},
-  {path:'**', redirectTo: '', pathMatch: 'full'}
+  {
+    path:'', 
+    component: InicioComponent
+  },
+  {
+    path:'libros', 
+    component: ListaLibrosComponent},
+  {
+    path:'carrito', 
+    component: CarritoComponent},
+  {
+    path:'login', 
+    component: LoginComponent},
+  {
+    path:'register', 
+    component: RegistroComponent},
+  {
+    path:'usuarios', 
+    component: UsuarioComponent},
+  {
+    path:'**', 
+    redirectTo: '', 
+    pathMatch: 'full'}
 ];
 
 @NgModule({

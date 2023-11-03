@@ -1,7 +1,8 @@
 import { Component} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/interfaces/plantillaUsuario';
 
 @Component({
   selector: 'app-registro',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 
 export class RegistroComponent {
   registerForm: FormGroup;
+  emailEnUso: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private uService: UsuariosService, private router: Router){
     this.registerForm = this.formBuilder.group({
@@ -19,6 +21,8 @@ export class RegistroComponent {
       email:['', [Validators.email, Validators.min(5), Validators.required]],
       password:['', [Validators.required, Validators.minLength(8), Validators.maxLength(24)]]
     })
+
+    this.ObservarEmail();
   }
 
   addToUsersList(){
@@ -27,7 +31,27 @@ export class RegistroComponent {
     let email = this.registerForm.value.email;
     let password = this.registerForm.value.password;
 
-    this.uService.agregarUsuario(name, surname, email, password);
-    this.router.navigate(['/login']);
+    if(this.validarEmail(email)){
+      this.uService.agregarUsuario(name, surname, email, password);
+      this.router.navigate(['/login']);
+    }
+  }
+
+  validarEmail(nuevoEmail: string): boolean{
+    for(const usuario of this.uService.listaUsuarios){
+      if(usuario.email.toLowerCase() === nuevoEmail.toLowerCase()){
+        return false; //El correo ya se encuentra en uso
+      }
+    }
+    return true; //El correo es unico
+  }
+
+  ObservarEmail() {
+    const emailControl = this.registerForm.get('email');
+    if (emailControl) { 
+      emailControl.valueChanges.subscribe((nuevoEmail) => {
+        this.emailEnUso = !this.validarEmail(nuevoEmail);
+      });
+    }
   }
 }

@@ -1,7 +1,8 @@
 <ul>
     <li *ngFor="let usuario of listaUsuarios">
-      {{ usuario.nombre }}, {{ usuario.apellido }},
-      {{ usuario.email }}
+      Nombre: {{ usuario.nombre }}, {{ usuario.apellido }},
+      Email: {{ usuario.email }}, 
+      Carrito: {{usuario.carrito}}
       <button>Opciones</button>
     </li>
   </ul>

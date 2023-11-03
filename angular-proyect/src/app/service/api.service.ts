@@ -46,7 +46,6 @@ export class APIService implements OnInit {
       precio: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
       portada: portada
     }
-    console.log(aux);
     this.listaLibros.push(aux);
   }
 

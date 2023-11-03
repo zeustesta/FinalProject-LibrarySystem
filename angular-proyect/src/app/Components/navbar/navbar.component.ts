@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  constructor(){
 
+  }
+
+  cerrarSesion(){
+    localStorage.removeItem('usuarioActual');
+    console.log("Sesion cerrada");
+  }
 }

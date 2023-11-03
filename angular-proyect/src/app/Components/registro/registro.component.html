@@ -40,6 +40,9 @@
           <span *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">
             Utilice un correo valido!
           </span>
+          <span *ngIf="emailEnUso">
+            El email está en uso!
+          </span>
 
           <div class="input-group mt-3">
             <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
@@ -50,7 +53,7 @@
             </div>
           </div>
           <span *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
-            Es necesario completar la contrasenia!
+            Es necesario completar la contraseña!
           </span>
           <span *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched || 
             registerForm.get('password')?.hasError('maxlength') && registerForm.get('password')?.touched">
@@ -67,7 +70,7 @@
               </div>
             </div>
             <div class="col-12">
-              <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary btn-block"
+              <button type="submit" [disabled]="registerForm.invalid || emailEnUso" class="btn btn-primary btn-block"
                 (click)="addToUsersList()">Registrarme</button>
             </div>
           </div>
