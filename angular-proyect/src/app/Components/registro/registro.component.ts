@@ -1,8 +1,7 @@
-import { Component} from '@angular/core';
-import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/interfaces/plantillaUsuario';
 
 @Component({
   selector: 'app-registro',

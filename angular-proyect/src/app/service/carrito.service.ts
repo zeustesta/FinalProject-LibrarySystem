@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Libro } from '../interfaces/plantillaLibro';
-import { Usuario } from '../interfaces/plantillaUsuario';
-import { Carrito } from '../interfaces/plantillaCarrito';
+import { UsuariosService } from './usuarios.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
 
-  constructor() { }
+  constructor(private uService: UsuariosService) {
 
-  addToCarrito(usuario: Usuario, libro: Libro){
-    usuario.carrito.push(libro);
   }
 
-  getCarrito(usuario:Usuario){
-    return usuario.carrito;
+  agregarAlCarrito(libro: Libro){
+    const usuario = this.uService.obtenerUsuarioActual() 
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      this.uService.listaUsuarios[indexUsuarioActual].carrito.push(libro);
+      this.uService.actualizarLocalStorage();
+    }
   }
 }

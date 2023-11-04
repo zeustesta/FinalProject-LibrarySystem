@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UsuariosService } from 'src/app/service/usuarios.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,12 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(){
+  constructor(private uService: UsuariosService){
 
   }
 
-  cerrarSesion(){
-    localStorage.removeItem('usuarioActual');
-    console.log("Sesion cerrada");
+  logOut(){
+    this.uService.cerrarSesion();
   }
 }

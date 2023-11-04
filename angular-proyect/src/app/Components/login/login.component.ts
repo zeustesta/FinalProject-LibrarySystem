@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router} from '@angular/router';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 
 @Component({
@@ -11,18 +11,26 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private us: UsuariosService, private router: Router){
+  constructor(private fb: FormBuilder, private uService: UsuariosService, private router: Router){
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.minLength(5), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
     })
+    console.log(this.uService.usuarioActual);
   }
 
   signIn(){
     let email = this.loginForm.value.email;
     let password = this.loginForm.value.password;
 
-    this.us.iniciarSesion(email, password);
-    this.router.navigate(['/'])
+    const usuarioExiste = this.uService.buscarUsuario(email, password);
+  
+    if (usuarioExiste) {
+      this.uService.establecerUsuarioActual(usuarioExiste);
+      alert('Inicio de sesión exitoso');
+      this.router.navigate(['/inicio']);
+    } else {
+      alert('Email o contraseña incorrectos');
+    }
   }
 }
