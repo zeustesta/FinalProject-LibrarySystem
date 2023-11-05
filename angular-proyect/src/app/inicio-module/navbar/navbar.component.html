@@ -20,19 +20,19 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" [routerLink]="['carrito']">Carrito</a>
+        <a class="nav-link"[routerLink]="['/inicio/carrito']">Carrito</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" [routerLink]="['libros']">Libros</a>
+        <a class="nav-link"  [routerLink]="['/inicio/libros']">Libros</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" [routerLink]="['usuarios']">Usuarios</a>
+        <a class="nav-link"  [routerLink]="['/inicio/usuarios']">Usuarios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Favoritos</a>
+        <a class="nav-link" [routerLink]="['/inicio']">Favoritos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['login']">Ingresar</a>
+        <a class="nav-link" [routerLink]="['/inicio/login']">Ingresar</a>
       </li>
       <li class="nav-item">
         <button class="btn btn-secondary" (click)="logOut()">Logout</button>

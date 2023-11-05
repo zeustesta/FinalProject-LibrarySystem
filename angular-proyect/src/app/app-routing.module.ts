@@ -1,40 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InicioComponent } from './Components/inicio/inicio.component';
-import { CarritoComponent } from './Components/carrito/carrito.component';
-import { RegistroComponent } from './Components/registro/registro.component';
-import { LoginComponent } from './Components/login/login.component';
-import { UsuarioComponent } from './Components/usuario/usuario.component';
-import { ListaLibrosComponent } from './Components/lista-libros/lista-libros.component';
+// import { InicioComponent } from './inicio-module/inicio/inicio.component';
+// import { CarritoComponent } from './inicio-module/carrito/carrito.component';
+// import { RegistroComponent } from './inicio-module/registro/registro.component';
+// import { LoginComponent } from './inicio-module/login/login.component';
+// import { UsuarioComponent } from './inicio-module/usuario/usuario.component';
+// import { ListaLibrosComponent } from './inicio-module/lista-libros/lista-libros.component';
 
 const routes: Routes = [
   {
-    path:'', 
-    component: InicioComponent,
-  },
-  {
-    path: 'carrito',
-    component: CarritoComponent
-  },
-  {
-    path: 'register',
-    component: RegistroComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'usuarios',
-    component: UsuarioComponent
-  },
-  {
-    path: 'libros',
-    component: ListaLibrosComponent
+    path:'inicio', 
+    loadChildren: () =>
+      import('./inicio-module/inicio.module').then((m) => m.InicioModuleModule)
   },
   {
     path:'**', 
-    redirectTo: '', 
+    redirectTo: 'inicio', 
     pathMatch: 'full'}
 ];
 

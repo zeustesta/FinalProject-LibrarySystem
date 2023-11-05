@@ -1,0 +1,50 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
+import { ListaLibrosComponent } from './lista-libros/lista-libros.component';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { CarritoComponent } from './carrito/carrito.component';
+import { InicioComponent } from './inicio/inicio.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    children: [
+      {
+        path: 'inicio',
+        component: InicioComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'register',
+        component: RegistroComponent
+      },
+      {
+        path: 'libros',
+        component: ListaLibrosComponent
+      },
+      {
+        path: 'usuarios',
+        component: UsuarioComponent
+      },
+      {
+        path: 'carrito',
+        component: CarritoComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'inicio' 
+      }
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class InicioModuleRoutingModule { }
