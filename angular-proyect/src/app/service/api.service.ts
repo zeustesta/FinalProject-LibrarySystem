@@ -53,4 +53,14 @@ export class APIService implements OnInit {
     const generos = ['Horror', 'Fantasía', 'Ciencia Ficción', 'Drama', 'Suspenso', 'Aventura', 'Policial', 'Paranormal', 'Poesía'];
     return generos[Math.floor(Math.random() * (9 - 1 + 1))];
   }
+
+  buscarPorId(idBuscado: number){
+    const encontrado = this.listaLibros.find((l) => l.idLibro === idBuscado);
+
+    if(encontrado){
+      return encontrado;
+    }else{
+      return null;
+    }
+  }
 }

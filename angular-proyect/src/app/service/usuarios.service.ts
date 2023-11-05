@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
 import { v4 as uuidv4 } from 'uuid';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,8 @@ export class UsuariosService {
   listaUsuarios: Usuario[] = [this.user1, this.user2];
   usuarioActual: Usuario | null = null;
 
-  constructor() { 
-    const storedData = localStorage.getItem('usuariosData');
-    if (storedData) {
-      this.listaUsuarios = JSON.parse(storedData);
-    }
+  constructor(private storage: StorageService) { 
+    this.listaUsuarios = storage.getItem('usuariosData');
   }
 
   agregarUsuario(nombre: string, apellido: string, email: string, password: string){
@@ -46,8 +44,7 @@ export class UsuariosService {
     }
 
     this.listaUsuarios.push(newUser);
-
-    localStorage.setItem('usuariosData', JSON.stringify(this.listaUsuarios));
+    this.storage.setItem('usuariosData', this.listaUsuarios);
   }
 
   buscarUsuario(email: string, password: string){
@@ -58,16 +55,17 @@ export class UsuariosService {
 
   cerrarSesion(){
     this.usuarioActual = null;
-    localStorage.removeItem('usuarioActual');
+    this.storage.removeItem('usuarioActual');
   }
   
-  establecerUsuarioActual(usuario:Usuario){
+  establecerUsuarioActual(usuario: Usuario){
     this.usuarioActual = usuario;
-    localStorage.setItem('usuarioActual', JSON.stringify(usuario));
+    this.storage.setItem('usuarioActual', usuario);
   }
 
   obtenerUsuarioActual(): Usuario | null {
-    const usuarioAlmacenado = localStorage.getItem('usuarioActual');
+    const usuarioAlmacenado = this.storage.getItem('usuarioActual');
+
     if (usuarioAlmacenado) {
       return JSON.parse(usuarioAlmacenado);
     }else{
@@ -79,7 +77,7 @@ export class UsuariosService {
     return this.listaUsuarios;
   }
 
-  actualizarLocalStorage(){
-    localStorage.setItem('usuariosData', JSON.stringify(this.listaUsuarios));
+  actualizarUsuarios(){
+    this.storage.setItem('usuariosData', this.listaUsuarios);
   }
 }

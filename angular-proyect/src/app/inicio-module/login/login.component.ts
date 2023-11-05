@@ -28,7 +28,7 @@ export class LoginComponent {
     if (usuarioExiste) {
       this.uService.establecerUsuarioActual(usuarioExiste);
       alert('Inicio de sesión exitoso');
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/inicio/inicio']);
     } else {
       alert('Email o contraseña incorrectos');
     }

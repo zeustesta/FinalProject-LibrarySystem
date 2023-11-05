@@ -3,6 +3,6 @@ export interface Venta{
     idCompra: String,
     idUsuario: String,
     fechaCompra: Date,
-    libros: Libro[],
+    idsLibros: Number[],
     total: Number
 }
