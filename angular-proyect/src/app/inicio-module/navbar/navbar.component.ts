@@ -11,6 +11,22 @@ export class NavbarComponent {
 
   }
 
+  isAdmin(){
+    if(this.uService.obtenerUsuarioActual()?.email == 'admin@gmail.com'){
+      return true; //Es admin
+    }else{
+      return false; //Es usuario
+    }
+  }
+
+  isLoggedIn(){
+    if(this.uService.obtenerUsuarioActual() != null){
+      return true; //Esta logueado
+    }else{
+      return false; //No esta logueado
+    }
+  }
+
   logOut(){
     this.uService.cerrarSesion();
   }

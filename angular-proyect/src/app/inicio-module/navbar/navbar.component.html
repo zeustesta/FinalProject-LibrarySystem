@@ -20,21 +20,24 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link"[routerLink]="['/inicio/carrito']">Carrito</a>
+        <a class="nav-link" [routerLink]="['/inicio/carrito']">Carrito</a>
       </li>
       <li class="nav-item">
         <a class="nav-link"  [routerLink]="['/inicio/libros']">Libros</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link"  [routerLink]="['/inicio/ventas']">Ventas</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
         <a class="nav-link"  [routerLink]="['/inicio/usuarios']">Usuarios</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/inicio']">Favoritos</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!isLoggedIn()">
         <a class="nav-link" [routerLink]="['/inicio/login']">Ingresar</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isLoggedIn()">
         <button class="btn btn-secondary" (click)="logOut()">Logout</button>
       </li>
     </ul>

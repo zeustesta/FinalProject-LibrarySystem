@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { UsuarioComponent } from './usuario/usuario.component';
-// import { CarrouselComponent } from './carrousel/carrousel.component';
+import { VentasComponent } from './ventas/ventas.component';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { UsuarioComponent } from './usuario/usuario.component';
     RegistroComponent,
     CarritoComponent,
     UsuarioComponent,
-    // CarrouselComponent
+    VentasComponent
   ],
   imports: [
     CommonModule,

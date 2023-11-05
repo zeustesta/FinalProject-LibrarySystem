@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class UsuariosService {
     nombre: 'admin',
     apellido: 'admin',
     email: 'admin@gmail.com',
-    password: '12345678',
+    password: 'admin',
     carrito: []
   }
 
