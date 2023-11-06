@@ -1,0 +1,5 @@
+<h2>Libros del género {{ generoSeleccionado }}</h2>
+<div *ngFor="let libro of librosFiltrados">
+  {{ libro.titulo }}, {{ libro.idLibro }}
+</div>
+

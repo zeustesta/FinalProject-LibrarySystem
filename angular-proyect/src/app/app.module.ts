@@ -7,12 +7,15 @@ import { InicioComponent } from './inicio-module/inicio/inicio.component';
 import { NavbarComponent } from './inicio-module/navbar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms'
 import { CarrouselComponent } from './inicio-module/carrousel/carrousel.component';
+import { FiltroComponent } from './inicio-module/filtro/filtro.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     InicioComponent,
     NavbarComponent,
     CarrouselComponent,
+    FiltroComponent
   ],
   imports: [
     BrowserModule,
