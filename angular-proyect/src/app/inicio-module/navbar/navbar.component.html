@@ -32,13 +32,13 @@
         <a class="nav-link"  [routerLink]="['/inicio/usuarios']">Usuarios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/inicio']">Favoritos</a>
+        <a class="nav-link" [routerLink]="['/inicio/inicio']">Favoritos</a>
       </li>
       <li class="nav-item" *ngIf="!isLoggedIn()">
         <a class="nav-link" [routerLink]="['/inicio/login']">Ingresar</a>
       </li>
       <li class="nav-item" *ngIf="isLoggedIn()">
-        <button class="btn btn-secondary" (click)="logOut()">Logout</button>
+        <button class="btn btn-secondary" [routerLink]="['/inicio/inicio']" (click)="logOut()">Logout</button>
       </li>
     </ul>
   </div>

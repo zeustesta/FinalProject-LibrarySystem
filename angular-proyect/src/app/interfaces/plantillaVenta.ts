@@ -1,6 +1,6 @@
 import { Libro } from "./plantillaLibro"
 export interface Venta{
-    idCompra: String,
+    idVenta: String,
     idUsuario: String,
     fechaCompra: Date,
     idsLibros: Number[],

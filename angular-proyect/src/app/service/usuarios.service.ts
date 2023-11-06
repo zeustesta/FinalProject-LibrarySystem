@@ -30,7 +30,11 @@ export class UsuariosService {
   usuarioActual: Usuario | null = null;
 
   constructor(private storage: StorageService) { 
-    this.listaUsuarios = storage.getItem('usuariosData');
+    if(this.storage.getItem('usuariosData') == null){
+      this.storage.setItem('usuariosData', this.listaUsuarios);
+    }else{
+      this.listaUsuarios = this.storage.getItem('usuariosData');
+    }
   }
 
   agregarUsuario(nombre: string, apellido: string, email: string, password: string){
@@ -44,7 +48,7 @@ export class UsuariosService {
     }
 
     this.listaUsuarios.push(newUser);
-    this.storage.setItem('usuariosData', this.listaUsuarios);
+    this.storage.updateItem('usuariosData', this.listaUsuarios);
   }
 
   buscarUsuario(email: string, password: string){
@@ -67,7 +71,7 @@ export class UsuariosService {
     const usuarioAlmacenado = this.storage.getItem('usuarioActual');
 
     if (usuarioAlmacenado) {
-      return JSON.parse(usuarioAlmacenado);
+      return usuarioAlmacenado;
     }else{
       return null;
     }

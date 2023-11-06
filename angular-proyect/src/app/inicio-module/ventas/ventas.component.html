@@ -1,1 +1,9 @@
-<h1>Ventas</h1>
+<ul>
+  <li *ngFor="let venta of listaVentas">
+    Id Venta: {{ venta.idVenta }}
+    <br>
+    Id Usuario: {{ venta.idUsuario }}
+    <br>
+    Libros: {{ venta.idsLibros }}
+  </li>
+</ul>
