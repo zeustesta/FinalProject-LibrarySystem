@@ -22,5 +22,6 @@ export class ListaLibrosComponent implements OnInit {
 
   addToCart(libro:Libro){
     (this.uService.obtenerUsuarioActual() == null) ? alert("Debe estar logueado!") : this.cService.agregarAlCarrito(libro);
+    alert('Libro añadido al carrito!');
   }
 }
