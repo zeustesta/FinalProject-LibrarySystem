@@ -4,6 +4,8 @@ import { UsuariosService } from './usuarios.service';
 import { v4 as uuidv4 } from 'uuid';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
+import { EstadoVenta } from '../utils/enum';
+import { ɵɵtsModuleIndicatorApiExtractorWorkaround } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,6 @@ export class VentasService {
 
   constructor(private uService: UsuariosService, private aService: APIService, private storage: StorageService) {
     if(storage.getItem('ventasData') == null){
-      this.agregarVenta(this.uService.listaUsuarios[1].id, [105, 132, 145], new Date());
       storage.setItem('ventasData', this.listaVentas);
     }else{
       this.listaVentas = storage.getItem('ventasData');
@@ -26,7 +27,22 @@ export class VentasService {
       idUsuario: idUsuario,
       fechaCompra: fecha,
       idsLibros: idsLibros,
-      total: this.calcularTotal(idsLibros)
+      total: this.calcularTotal(idsLibros),
+      estado: EstadoVenta.PENDIENTE
+    }
+
+    this.listaVentas.push(newVenta);
+    this.storage.updateItem('ventasData', this.listaVentas);
+  }
+
+  agregarVentaManual(fecha: Date, total: number){
+    const newVenta = {
+      idVenta: uuidv4(),
+      idUsuario: 'Fisico',
+      fechaCompra: fecha,
+      idsLibros: [],
+      total: total,
+      estado: EstadoVenta.CONFIRMADA
     }
 
     this.listaVentas.push(newVenta);
@@ -47,4 +63,21 @@ export class VentasService {
   getVentas(){
     return this.listaVentas;
   }
+
+  confirmarCompra(idVenta: string){
+    const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
+
+    if(indexVenta != null){
+      this.listaVentas[indexVenta].estado = EstadoVenta.CONFIRMADA
+    }
+  }
+
+  rechazarCompra(idVenta: string){
+    const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
+
+    if(indexVenta != null){
+      this.listaVentas[indexVenta].estado = EstadoVenta.RECHAZADA
+    }
+  }
+  
 }
