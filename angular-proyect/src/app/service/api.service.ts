@@ -31,6 +31,7 @@ export class APIService implements OnInit {
     this.getData().subscribe(data => {
       const results = data.results;
       for(let i = 0; i < results.length; i++){
+        console.log(results[i].authors.name);
         this.cargarLibro(results[i].id, results[i].title, results[i].authors.name, results[i].formats["image/jpeg"]);
       }
     })

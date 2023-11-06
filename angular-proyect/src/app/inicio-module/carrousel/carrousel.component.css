@@ -3,4 +3,16 @@
     /*align-items: center;*/
     justify-content: center;
     padding: 70px;
+    border: 2px solid #D4E6F1 ;
+    border-radius: 20px;
+    margin: 5px;
+    background-color: #EAF2F8 ;
 }
+
+.h2{
+    text-align: center;
+    margin-top: 10px;
+    
+}
+
+

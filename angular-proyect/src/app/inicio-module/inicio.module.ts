@@ -8,6 +8,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { VentasComponent } from './ventas/ventas.component';
     RegistroComponent,
     CarritoComponent,
     UsuarioComponent,
-    VentasComponent
+    VentasComponent,
+    LibroDetalleComponent
   ],
   imports: [
     CommonModule,
