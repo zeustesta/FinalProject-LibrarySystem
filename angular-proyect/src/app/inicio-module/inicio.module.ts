@@ -17,7 +17,7 @@ import { VentasComponent } from './ventas/ventas.component';
     RegistroComponent,
     CarritoComponent,
     UsuarioComponent,
-    VentasComponent
+    VentasComponent,
   ],
   imports: [
     CommonModule,

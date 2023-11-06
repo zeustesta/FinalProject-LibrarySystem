@@ -7,6 +7,7 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { FiltroComponent } from './filtro/filtro.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'ventas',
         component: VentasComponent
+      },
+      {
+        path: 'filtro',
+        component: FiltroComponent
       },
       {
         path: '**',
