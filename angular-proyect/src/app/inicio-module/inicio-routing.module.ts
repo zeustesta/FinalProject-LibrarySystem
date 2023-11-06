@@ -42,7 +42,7 @@ const routes: Routes = [
         component: VentasComponent
       },
       {
-        path: 'filtro',
+        path: 'filtro/:genero',
         component: FiltroComponent
       },
       {
