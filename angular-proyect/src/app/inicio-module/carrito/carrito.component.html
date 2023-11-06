@@ -1,1 +1,8 @@
-
+<ul>
+  <li *ngFor="let libro of carritoActual">
+    Titulo: {{ libro.titulo }} <br>
+    Id Libro: {{ libro.idLibro }} <br>
+    Precio: {{ libro.precio }}
+  </li>
+</ul>
+<button class="btn btn-secondary" (click)="comprarCarrito()">Encargar</button>

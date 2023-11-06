@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Venta } from '../interfaces/plantillaVenta';
 import { UsuariosService } from './usuarios.service';
 import { v4 as uuidv4 } from 'uuid';
-import { Libro } from '../interfaces/plantillaLibro';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
 
@@ -10,18 +9,15 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class VentasService {
-  venta1 = {
-    idVenta: uuidv4(),
-    idUsuario: this.uService.listaUsuarios[1].id,
-    fechaCompra: new Date(),
-    idsLibros: [145, 132, 105],
-    total: this.calcularTotal([145, 132, 105])
-  };
-
-  listaVentas: Venta[] = [this.venta1];
+  listaVentas: Venta[] = [];
 
   constructor(private uService: UsuariosService, private aService: APIService, private storage: StorageService) {
-    
+    if(storage.getItem('ventasData') == null){
+      this.agregarVenta(this.uService.listaUsuarios[1].id, [105, 132, 145], new Date());
+      storage.setItem('ventasData', this.listaVentas);
+    }else{
+      this.listaVentas = storage.getItem('ventasData');
+    }
   }
   
   agregarVenta(idUsuario: string, idsLibros: number[], fecha: Date){
@@ -40,9 +36,9 @@ export class VentasService {
   calcularTotal(arrayIds: number[]): number{
     let total: number = 0;
     for(let idLibro of arrayIds){
-      let libro: Libro | null = this.aService.buscarPorId(idLibro);
-      if(libro != null){
-        total = total + libro.precio;
+      let aux = this.aService.retornarPrecio(idLibro);
+      if(aux != null){
+        total = total + aux;
       }
     }
     return total;

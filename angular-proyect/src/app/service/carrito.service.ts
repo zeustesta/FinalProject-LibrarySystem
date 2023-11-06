@@ -31,4 +31,13 @@ export class CarritoService {
       return null;
     }
   }
+
+  limpiarCarrito(){
+    const usuario = this.uService.obtenerUsuarioActual();
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      this.uService.listaUsuarios[indexUsuarioActual].carrito = [];
+    }
+    this.uService.actualizarUsuarios();
+  }
 }

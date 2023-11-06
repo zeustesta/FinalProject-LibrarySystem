@@ -16,7 +16,6 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.minLength(5), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
     })
-    console.log(this.uService.usuarioActual);
   }
 
   signIn(){
