@@ -24,7 +24,7 @@ export class VentasService {
     
   }
   
-  agregarVenta(idUsuario: String, idsLibros: number[], fecha: Date){
+  agregarVenta(idUsuario: string, idsLibros: number[], fecha: Date){
     const newVenta = {
       idVenta: uuidv4(),
       idUsuario: idUsuario,

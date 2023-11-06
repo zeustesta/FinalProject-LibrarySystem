@@ -1,8 +1,8 @@
 import { Libro } from "./plantillaLibro"
 export interface Venta{
-    idVenta: String,
-    idUsuario: String,
+    idVenta: string,
+    idUsuario: string,
     fechaCompra: Date,
-    idsLibros: Number[],
-    total: Number
+    idsLibros: number[],
+    total: number
 }
