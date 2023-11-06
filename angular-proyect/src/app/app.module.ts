@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { CarrouselComponent } from './Components/carrousel/carrousel.component';
 import { LoginComponent } from './Components/login/login.component';
 import { RegistroComponent } from './Components/registro/registro.component';
+import { LibroDetalleComponent } from './Components/libro-detalle/libro-detalle.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { RegistroComponent } from './Components/registro/registro.component';
     NavbarComponent,
     CarrouselComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    LibroDetalleComponent
   ],
   imports: [
     BrowserModule,

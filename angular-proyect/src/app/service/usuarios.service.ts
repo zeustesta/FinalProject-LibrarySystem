@@ -28,7 +28,34 @@ export class UsuariosService {
     carrito: [] 
   }
 
-  listaUsuarios: Usuario[] = [this.user1, this.user2];
+  user3 = {
+    id: uuidv4(),
+    nombre: 'Diego',
+    apellido: 'Contreras',
+    email: 'diego@gmail.com',
+    password: '123',
+    carrito: [] 
+  }
+
+  user4 = {
+    id: uuidv4(),
+    nombre: 'Zeus',
+    apellido: 'Testa',
+    email: 'zeus@gmail.com',
+    password: '123',
+    carrito: [] 
+  }
+
+  user5 = {
+    id: uuidv4(),
+    nombre: 'Lucas',
+    apellido: 'Mena',
+    email: 'lucas@gmail.com',
+    password: '123',
+    carrito: [] 
+  }
+
+  listaUsuarios: Usuario[] = [this.user1, this.user2, this.user3, this.user4, this.user5];
 
   constructor() { 
     const storedData = localStorage.getItem('usuariosData');

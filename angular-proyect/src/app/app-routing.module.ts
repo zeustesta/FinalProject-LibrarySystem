@@ -6,6 +6,7 @@ import { CarritoComponent } from './Components/carrito/carrito.component';
 import { LoginComponent } from './Components/login/login.component';
 import { RegistroComponent } from './Components/registro/registro.component';
 import { UsuarioComponent } from './Components/usuario/usuario.component';
+import { LibroDetalleComponent } from './Components/libro-detalle/libro-detalle.component';
 
 const routes: Routes = [
   {path:'', component: InicioComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'register', component: RegistroComponent},
   {path:'usuarios', component: UsuarioComponent},
+  {path:'libro_detalle/:id_libro', component: LibroDetalleComponent},
   {path:'**', redirectTo: '', pathMatch: 'full'}
 ];
 
