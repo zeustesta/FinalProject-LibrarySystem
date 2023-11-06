@@ -21,8 +21,8 @@ export class UsuariosService {
     id: uuidv4(),
     nombre: 'usuario',
     apellido: 'usuario',
-    email: 'usuario@hotmail.com',
-    password: '12345678',
+    email: 'usuario@gmail.com',
+    password: 'usuario',
     carrito: [] 
   }
 

@@ -2,26 +2,23 @@ import { Injectable } from '@angular/core';
 import { Venta } from '../interfaces/plantillaVenta';
 import { UsuariosService } from './usuarios.service';
 import { v4 as uuidv4 } from 'uuid';
-import { Libro } from '../interfaces/plantillaLibro';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
+import { EstadoVenta } from '../utils/enum';
+import { ɵɵtsModuleIndicatorApiExtractorWorkaround } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VentasService {
-  venta1 = {
-    idVenta: uuidv4(),
-    idUsuario: this.uService.listaUsuarios[1].id,
-    fechaCompra: new Date(),
-    idsLibros: [145, 132, 105],
-    total: this.calcularTotal([145, 132, 105])
-  };
-
-  listaVentas: Venta[] = [this.venta1];
+  listaVentas: Venta[] = [];
 
   constructor(private uService: UsuariosService, private aService: APIService, private storage: StorageService) {
-    
+    if(storage.getItem('ventasData') == null){
+      storage.setItem('ventasData', this.listaVentas);
+    }else{
+      this.listaVentas = storage.getItem('ventasData');
+    }
   }
   
   agregarVenta(idUsuario: string, idsLibros: number[], fecha: Date){
@@ -30,7 +27,22 @@ export class VentasService {
       idUsuario: idUsuario,
       fechaCompra: fecha,
       idsLibros: idsLibros,
-      total: this.calcularTotal(idsLibros)
+      total: this.calcularTotal(idsLibros),
+      estado: EstadoVenta.PENDIENTE
+    }
+
+    this.listaVentas.push(newVenta);
+    this.storage.updateItem('ventasData', this.listaVentas);
+  }
+
+  agregarVentaManual(fecha: Date, total: number){
+    const newVenta = {
+      idVenta: uuidv4(),
+      idUsuario: 'Fisico',
+      fechaCompra: fecha,
+      idsLibros: [],
+      total: total,
+      estado: EstadoVenta.CONFIRMADA
     }
 
     this.listaVentas.push(newVenta);
@@ -40,9 +52,9 @@ export class VentasService {
   calcularTotal(arrayIds: number[]): number{
     let total: number = 0;
     for(let idLibro of arrayIds){
-      let libro: Libro | null = this.aService.buscarPorId(idLibro);
-      if(libro != null){
-        total = total + libro.precio;
+      let aux = this.aService.retornarPrecio(idLibro);
+      if(aux != null){
+        total = total + aux;
       }
     }
     return total;
@@ -51,4 +63,21 @@ export class VentasService {
   getVentas(){
     return this.listaVentas;
   }
+
+  confirmarCompra(idVenta: string){
+    const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
+
+    if(indexVenta != null){
+      this.listaVentas[indexVenta].estado = EstadoVenta.CONFIRMADA
+    }
+  }
+
+  rechazarCompra(idVenta: string){
+    const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
+
+    if(indexVenta != null){
+      this.listaVentas[indexVenta].estado = EstadoVenta.RECHAZADA
+    }
+  }
+  
 }

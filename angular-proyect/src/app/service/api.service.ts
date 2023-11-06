@@ -31,12 +31,13 @@ export class APIService implements OnInit {
     this.getData().subscribe(data => {
       const results = data.results;
       for(let i = 0; i < results.length; i++){
-        this.cargarLibro(results[i].id, results[i].title, results[i].authors, results[i].formats["image/jpeg"]);
+        console.log(results[i].authors.name);
+        this.cargarLibro(results[i].id, results[i].title, results[i].authors.name, results[i].formats["image/jpeg"]);
       }
     })
   }
 
-  cargarLibro(idLibro: number, titulo: string, autor: string[], portada: string){
+  cargarLibro(idLibro: number, titulo: string, autor: string, portada: string){
     const aux: Libro = {
       idLibro: idLibro,
       titulo: titulo,
@@ -66,6 +67,16 @@ export class APIService implements OnInit {
       return encontrado;
     }else{
       return null;
+    }
+  }
+
+  retornarPrecio(idLibro: number){
+    const libro = this.buscarPorId(idLibro);
+
+    if(libro){
+      return libro.precio;
+    }else{
+      return 0;
     }
   }
 }

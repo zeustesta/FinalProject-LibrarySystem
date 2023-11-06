@@ -8,6 +8,7 @@ import { CarritoComponent } from './carrito/carrito.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { FiltroComponent } from './filtro/filtro.component';
+import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,9 @@ const routes: Routes = [
       {
         path: 'filtro/:genero',
         component: FiltroComponent
+      },{
+        path:'libro_detalle/:id_libro', 
+        component: LibroDetalleComponent
       },
       {
         path: '**',

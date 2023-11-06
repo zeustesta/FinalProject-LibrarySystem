@@ -1,6 +1,18 @@
-<ul>
-  <li *ngFor="let libro of listaLibros">
-    {{ libro.titulo }}, {{ libro.idLibro }}
-    <button (click)="addToCart(libro)">Agregar al carrito</button>
-  </li>
-</ul>
+ARREGLAR CARD, QUE IMAGEN Y H2 ENVIEN A CARD DETAIL Y AGREGAR BARRA DE FILTRADO LATERAL O ARRIBA 
+
+<div class="div">
+  <div class="cards">
+    <div *ngFor="let libro of listaLibros" class="card">
+      <img class="img" src='{{libro.portada}}' alt="imagen">
+      <h5 class="h5">{{libro.titulo}}</h5>
+      <!--FALTA MUESTRA DE AUTOR-->
+      <div class="genero">
+        <p class="text">${{libro.precio}}</p>
+      </div>
+      <br>
+      <div class="">
+        <button class="btn btn-primary" (click)="addToCart(libro)">Agregar al Carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
