@@ -46,7 +46,7 @@ const routes: Routes = [
         path: 'filtro/:genero',
         component: FiltroComponent
       },{
-        path:'libro_detalle/:id_libro', 
+        path:'libro_detalle/:idLibro', 
         component: LibroDetalleComponent
       },
       {
