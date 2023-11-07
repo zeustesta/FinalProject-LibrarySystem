@@ -54,6 +54,11 @@ export class APIService implements OnInit {
     return generos[Math.floor(Math.random() * (9 - 1 + 1))];
   }
 
+  filtrarLibrosPorGenero(genero: string) {
+    return this.listaLibros.filter(libro => libro.genero === genero);
+  }
+  
+
   buscarPorId(idBuscado: number){
     const encontrado = this.listaLibros.find((l) => l.idLibro === idBuscado);
 
@@ -74,3 +79,4 @@ export class APIService implements OnInit {
     }
   }
 }
+
