@@ -15,7 +15,7 @@ import { FiltroComponent } from './inicio-module/filtro/filtro.component';
     InicioComponent,
     NavbarComponent,
     CarrouselComponent,
-    FiltroComponent
+    FiltroComponent,
   ],
   imports: [
     BrowserModule,

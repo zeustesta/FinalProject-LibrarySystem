@@ -9,6 +9,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { FiltroComponent } from './filtro/filtro.component';
 import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
+import { FavoritosComponent } from './favoritos/favoritos.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'ventas',
         component: VentasComponent
+      },
+      {
+        path: 'favoritos',
+        component: FavoritosComponent
       },
       {
         path: 'filtro/:genero',
