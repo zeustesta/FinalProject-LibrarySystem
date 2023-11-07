@@ -27,6 +27,6 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   verInformacionDetallada(id: number){
-    this.router.navigate(['inicio/libro_detalle', id]);
+    this.router.navigate([`/inicio/libro_detalle/${id}`]);
   }
 }

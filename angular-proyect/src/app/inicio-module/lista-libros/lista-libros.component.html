@@ -4,7 +4,7 @@ ARREGLAR CARD, QUE IMAGEN Y H2 ENVIEN A CARD DETAIL Y AGREGAR BARRA DE FILTRADO 
   <div class="cards">
     <div *ngFor="let libro of listaLibros" class="card">
       <img class="img" src='{{libro.portada}}' alt="imagen">
-      <h5 class="h5" (click)="verInformacionDetallada(libro.idLibro)">{{libro.titulo}}</h5>
+      <h5 class="h5" type="button" (click)="verInformacionDetallada(libro.idLibro)">{{libro.titulo}}</h5>
       <!--FALTA MUESTRA DE AUTOR-->
       <div class="genero">
         <p class="text">${{libro.precio}}</p>
