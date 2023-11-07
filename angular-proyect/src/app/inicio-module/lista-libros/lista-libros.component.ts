@@ -22,8 +22,12 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   addToCart(libro:Libro){
-    (this.uService.obtenerUsuarioActual() == null) ? alert("Debe estar logueado!") : this.cService.agregarAlCarrito(libro);
-    alert('Libro añadido al carrito!');
+    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
+      this.cService.agregarAlCarrito(libro);
+      alert('Libro añadido al carrito!');
+    }else{
+      alert('Debe estar logueado');
+    }
   }
 
   verInformacionDetallada(id: number){
