@@ -14,7 +14,8 @@ export class UsuariosService {
     apellido: 'admin',
     email: 'admin@gmail.com',
     password: 'admin',
-    carrito: []
+    carrito: [],
+    favoritos: new Map<string, number[]>()
   }
 
   user2 = {
@@ -23,7 +24,8 @@ export class UsuariosService {
     apellido: 'usuario',
     email: 'usuario@gmail.com',
     password: 'usuario',
-    carrito: [] 
+    carrito: [],
+    favoritos: new Map<string, number[]>()
   }
 
   listaUsuarios: Usuario[] = [this.user1, this.user2];
@@ -37,32 +39,33 @@ export class UsuariosService {
     }
   }
 
-  agregarUsuario(nombre: string, apellido: string, email: string, password: string){
+  agregarUsuario(nombre: string, apellido: string, email: string, password: string): void{
     let newUser: Usuario = {
       id: uuidv4(),
       nombre: nombre,
       apellido: apellido,
       email: email,
       password: password,
-      carrito: []
+      carrito: [],
+      favoritos: new Map<string, number[]>()
     }
 
     this.listaUsuarios.push(newUser);
     this.storage.updateItem('usuariosData', this.listaUsuarios);
   }
 
-  buscarUsuario(email: string, password: string){
+  buscarUsuario(email: string, password: string): Usuario | undefined{
     const encontrado = this.listaUsuarios.find((u) => (u.email === email) && (u.password === password));
 
     return encontrado;
   }
 
-  cerrarSesion(){
+  cerrarSesion(): void{
     this.usuarioActual = null;
     this.storage.removeItem('usuarioActual');
   }
   
-  establecerUsuarioActual(usuario: Usuario){
+  establecerUsuarioActual(usuario: Usuario): void{
     this.usuarioActual = usuario;
     this.storage.setItem('usuarioActual', usuario);
   }
@@ -76,12 +79,21 @@ export class UsuariosService {
       return null;
     }
   }
+
+  obtenerIndex(idUsuario: string): number | null{
+    const indexUsuario = this.listaUsuarios.findIndex((u) => u.id = idUsuario);
+    if(indexUsuario !== -1){
+      return indexUsuario;
+    }else{
+      return null;
+    }
+  }
   
-  getUserList(){
+  getUserList(): Usuario[]{
     return this.listaUsuarios;
   }
 
-  actualizarUsuarios(){
+  actualizarUsuarios(): void{
     this.storage.setItem('usuariosData', this.listaUsuarios);
   }
 }

@@ -6,4 +6,5 @@ export interface Usuario{
     email: string,
     password: string,
     carrito: Libro[];
-}
+    favoritos: Map<string, number[]>
+}   
