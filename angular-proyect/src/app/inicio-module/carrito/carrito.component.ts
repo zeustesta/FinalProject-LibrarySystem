@@ -3,8 +3,9 @@ import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
 import { Usuario } from 'src/app/interfaces/plantillaUsuario';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-import { CarritoService } from 'src/app/service/carrito.service';
+import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { VentasService } from 'src/app/service/ventas.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,22 +17,26 @@ export class CarritoComponent {
   carritoActual: Libro[] | null;
   usuarioActual: Usuario | null;
 
-  constructor(private aService: APIService, private cService: CarritoService, private vService: VentasService, private uService: UsuariosService){
+  constructor(private cService: CartFavsService, private vService: VentasService, private uService: UsuariosService, private router: Router){
     this.carritoActual = this.cService.getCarritoActual();
     this.usuarioActual = this.uService.obtenerUsuarioActual();
   }
 
   comprarCarrito(){
-    let idUsuarioActual;
-    let arrayIds = new Array;
     if(this.usuarioActual != null && this.carritoActual != null){
+      let idUsuarioActual;
+      let arrayIds = new Array;
       for(let i = 0; i < this.carritoActual.length; i++){
         arrayIds.push(this.carritoActual[i].idLibro);
       }
       idUsuarioActual = this.usuarioActual.id;
       this.vService.agregarVenta(idUsuarioActual, arrayIds, new Date());
+      this.carritoActual = [];
+      this.cService.limpiarCarrito();
+      alert('Carrito encargado exitosamente');
+      this.router.navigate([`/inicio/inicio`]);
+    }else{
+      alert('Debe estar logueado!');
     }
-    this.carritoActual = [];
-    this.cService.limpiarCarrito();
   }
 }

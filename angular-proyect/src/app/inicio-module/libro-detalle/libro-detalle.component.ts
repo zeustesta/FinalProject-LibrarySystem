@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from '../../interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
-import { CarritoService } from 'src/app/service/carrito.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-import { FavoritosService } from 'src/app/service/favoritos.service';
+import { CartFavsService } from 'src/app/service/cart-favs.service';
+import { TmplAstIdleDeferredTrigger } from '@angular/compiler';
 
 @Component({
   selector: 'app-libro-detalle',
@@ -14,17 +14,8 @@ import { FavoritosService } from 'src/app/service/favoritos.service';
 
 export class LibroDetalleComponent implements OnInit {
   libro: Libro | null = null;
-  idActual: string | undefined;
-  ingresarLista = false;
-  nombreLista = '';
 
-  constructor(private route: ActivatedRoute, 
-    private apiService: APIService, 
-    private cService: CarritoService, 
-    private uService: UsuariosService,
-    private fService: FavoritosService) {
-      this.idActual = this.uService.obtenerUsuarioActual()?.id;
-    }
+  constructor(private route: ActivatedRoute, private apiService: APIService, private uService: UsuariosService, private cfService: CartFavsService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) =>{
@@ -35,39 +26,21 @@ export class LibroDetalleComponent implements OnInit {
     });
   }
 
-  addToCart(libro: Libro | null){
+  addToCart(libro: Libro){
     if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
-      this.cService.agregarAlCarrito(libro);
+      this.cfService.agregarAlCarrito(libro);
       alert('Libro añadido al carrito!');
     }else{
       alert('Debe estar logueado');
     }
   }
 
-  addToFavs(libro: Libro | null){
-    // if(this.idActual !== undefined && libro !== null){
-    //   const key = prompt('A que lista desea agregar el libro?');
-    //   this.fService.agregarALista(libro.idLibro, this.idActual, String(key));
-    //   alert('Libro añadido al carrito!');
-    // }else{
-    //   alert('Debe estar logueado');
-    // }
-    this.ingresarLista = true;
-
-    if(this.idActual !== undefined && libro !== null){
-      // let key = prompt('A que lista desea agregar el libro?');
-      let response = this.fService.agregarALista(libro.idLibro, this.idActual, this.nombreLista);
-      
-      if(response === 1){
-        alert('Agregado correctamente!');
-      }else if(response === -1){
-        alert('La lista no existe!');
-      }
-      this.nombreLista = '';
+  addToFavs(libro: Libro){
+    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
+      this.cfService.agregarToFavs(libro.idLibro);
+      alert('Libro agregado a favoritos');
     }else{
       alert('Debe estar logueado');
     }
-
-    this.ingresarLista = false;
   }
 }

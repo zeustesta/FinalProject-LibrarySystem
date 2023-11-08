@@ -1,4 +1,5 @@
 import { Libro } from "./plantillaLibro";
+
 export interface Usuario{
     id: string,
     nombre: string,
@@ -6,5 +7,5 @@ export interface Usuario{
     email: string,
     password: string,
     carrito: Libro[];
-    favoritos: Map<string, number[]>
+    favoritos: number[]
 }   

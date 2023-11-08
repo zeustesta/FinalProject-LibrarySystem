@@ -15,7 +15,7 @@ export class UsuariosService {
     email: 'admin@gmail.com',
     password: 'admin',
     carrito: [],
-    favoritos: new Map<string, number[]>()
+    favoritos: []
   }
 
   user2 = {
@@ -25,7 +25,7 @@ export class UsuariosService {
     email: 'usuario@gmail.com',
     password: 'usuario',
     carrito: [],
-    favoritos: new Map<string, number[]>()
+    favoritos: []
   }
 
   listaUsuarios: Usuario[] = [this.user1, this.user2];
@@ -47,7 +47,7 @@ export class UsuariosService {
       email: email,
       password: password,
       carrito: [],
-      favoritos: new Map<string, number[]>()
+      favoritos: []
     }
 
     this.listaUsuarios.push(newUser);

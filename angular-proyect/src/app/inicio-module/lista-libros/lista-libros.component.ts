@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
-import { CarritoService } from 'src/app/service/carrito.service';
+import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class ListaLibrosComponent implements OnInit {
   listaLibros: Libro[] = [];
 
-  constructor(private apiService: APIService, private uService: UsuariosService, private cService: CarritoService, private router: Router){
+  constructor(private apiService: APIService, private uService: UsuariosService, private cService: CartFavsService, private router: Router){
   }
 
   ngOnInit(): void {

@@ -1,8 +1,3 @@
-<form *ngIf="(ingresarLista)" (ngSubmit)="addToFavs(libro)">
-  <input type="text" [(ngModel)]="nombreLista" name="nombreLista" placeholder="Nombre de la lista">
-  <button type="submit">Agregar a la lista</button>
-</form>
-
 <body class="hold-transition sidebar-mini">
     <div class="">  
       <div class="">
@@ -58,14 +53,14 @@
                   <div class="mt-4">
                     <div class="btn btn-primary btn-lg btn-flat">
                       <i class="fas fa-cart-plus fa-lg mr-2"></i>
-                      <button class="btn btn-primary" type="submit" (click)="addToCart(libro)">
+                      <button class="btn btn-primary" type="submit" (click)="addToCart(libro!)">
                         AGREGAR AL CARRITO
                       </button>
                     </div>
     
                     <div class="ml-2 btn btn-secondary btn-lg btn-flat">
                       <i class="fas fa-heart fa-lg mr-2"></i>
-                      <button class="btn btn-secondary" type="submit" (click)="addToFavs(libro)">
+                      <button class="btn btn-secondary" type="submit" (click)="addToFavs(libro!)">
                         AGREGAR A FAVORITOS
                       </button>
                     </div>
