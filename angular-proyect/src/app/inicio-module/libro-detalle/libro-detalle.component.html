@@ -1,3 +1,8 @@
+<form *ngIf="(ingresarLista)" (ngSubmit)="addToFavs(libro)">
+  <input type="text" [(ngModel)]="nombreLista" name="nombreLista" placeholder="Nombre de la lista">
+  <button type="submit">Agregar a la lista</button>
+</form>
+
 <body class="hold-transition sidebar-mini">
     <div class="">  
       <div class="">
@@ -28,10 +33,11 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-6">
-                  <h2 class="my-3"></h2>
-                  <h3 class="my-3"></h3>
-                  <h5 class="my-3"></h5>
-                  <h6 class="my-3"></h6>
+                  <h2 class="my-3">Autor: {{ libro?.autor }}</h2>
+                  <h3 class="my-3">Genero: {{ libro?.genero }} </h3>
+                  <h5 class="my-3">Stock: {{ libro?.stock }} </h5>
+                  <h6 class="my-3">Id: {{ libro?.idLibro }} </h6>
+                  <hr>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum corporis nulla error asperiores vel. 
                     Qui quis odit natus, aspernatur obcaecati, nesciunt delectus odio quaerat quidem molestias labore quod, reprehenderit amet!
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, qui accusantium sit voluptatibus a nam asperiores enim, animi 

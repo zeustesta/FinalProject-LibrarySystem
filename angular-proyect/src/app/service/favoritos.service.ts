@@ -23,17 +23,25 @@ export class FavoritosService {
     }
   }
 
-  agregarALista(idLibro: number, idUsuario: string, key: string): boolean{
+  agregarALista(idLibro: number, idUsuario: string, key: string){
     let usuario = this.uService.obtenerUsuarioActual();
-
+    console.log('Usuario en agregarALista: ' + usuario);
+    
     if (usuario) {
       let indexUsuarioActual = this.uService.obtenerIndex(usuario.id);
-      this.uService.listaUsuarios[indexUsuarioActual].favoritos.get(key)?.push(idLibro);
-      this.uService.actualizarUsuarios();
-      return true;
-    }else{
-      return false;
+      console.log('IdActual en agregarALista: ' + usuario.id);
+      console.log('IndexUsuarioActual en agregarALista: ' + indexUsuarioActual);
+      if(this.existeLista(key, usuario.id)){
+        console.log('key: ' +key);
+        console.log('Existe: ' + this.existeLista(key, usuario.id));
+        this.uService.listaUsuarios[indexUsuarioActual].favoritos.get(key)?.push(idLibro);
+        this.uService.actualizarUsuarios();
+        return 1; //Agregado correctamente
+      }else{
+        return -1; //No existe la lista
+      }
     }
+    return 0; //No logueado
   }
 
   borrarLista(listaBorrar: string, idUsuario: string): boolean{
@@ -54,7 +62,7 @@ export class FavoritosService {
     let indexUsuarioActual = this.uService.obtenerIndex(idUsuario);
 
     if(indexUsuarioActual !== null){
-      if(this.uService.listaUsuarios[indexUsuarioActual].favoritos.has(nombreLista) === true){
+      if(this.uService.listaUsuarios[indexUsuarioActual].favoritos.has(nombreLista)){
         return true; //Existe la lista
       }
     }

@@ -10,6 +10,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
   imports: [
     CommonModule,
     InicioModuleRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class InicioModuleModule { }

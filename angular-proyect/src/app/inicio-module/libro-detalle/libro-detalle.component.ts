@@ -5,8 +5,6 @@ import { APIService } from '../../service/api.service';
 import { CarritoService } from 'src/app/service/carrito.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { FavoritosService } from 'src/app/service/favoritos.service';
-import { stringify } from 'uuid';
-
 
 @Component({
   selector: 'app-libro-detalle',
@@ -17,6 +15,8 @@ import { stringify } from 'uuid';
 export class LibroDetalleComponent implements OnInit {
   libro: Libro | null = null;
   idActual: string | undefined;
+  ingresarLista = false;
+  nombreLista = '';
 
   constructor(private route: ActivatedRoute, 
     private apiService: APIService, 
@@ -45,12 +45,29 @@ export class LibroDetalleComponent implements OnInit {
   }
 
   addToFavs(libro: Libro | null){
+    // if(this.idActual !== undefined && libro !== null){
+    //   const key = prompt('A que lista desea agregar el libro?');
+    //   this.fService.agregarALista(libro.idLibro, this.idActual, String(key));
+    //   alert('Libro añadido al carrito!');
+    // }else{
+    //   alert('Debe estar logueado');
+    // }
+    this.ingresarLista = true;
+
     if(this.idActual !== undefined && libro !== null){
-      const key = prompt('A que lista desea agregar el libro?');
-      this.fService.agregarALista(libro.idLibro, this.idActual, String(key));
-      alert('Libro añadido al carrito!');
+      // let key = prompt('A que lista desea agregar el libro?');
+      let response = this.fService.agregarALista(libro.idLibro, this.idActual, this.nombreLista);
+      
+      if(response === 1){
+        alert('Agregado correctamente!');
+      }else if(response === -1){
+        alert('La lista no existe!');
+      }
+      this.nombreLista = '';
     }else{
       alert('Debe estar logueado');
     }
+
+    this.ingresarLista = false;
   }
 }
