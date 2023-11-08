@@ -80,12 +80,12 @@ export class UsuariosService {
     }
   }
 
-  obtenerIndex(idUsuario: string): number | null{
+  obtenerIndex(idUsuario: string): number{
     const indexUsuario = this.listaUsuarios.findIndex((u) => u.id = idUsuario);
     if(indexUsuario !== -1){
       return indexUsuario;
     }else{
-      return null;
+      return -1;
     }
   }
   

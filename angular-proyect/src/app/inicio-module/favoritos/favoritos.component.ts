@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UrlSegment } from '@angular/router';
+import { FavoritosService } from 'src/app/service/favoritos.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 
 @Component({
@@ -9,49 +10,19 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 })
 export class FavoritosComponent {
   favoritosUsuario = new Map();
+  keyArray: string[] = []; 
+  idActual; 
 
-  constructor(private uService: UsuariosService){
-    const idActual = this.uService.obtenerUsuarioActual()?.id;
-    if(idActual){
-      const indexUsuarioActual = this.uService.obtenerIndex(idActual);
-      if(indexUsuarioActual)
+  constructor(private uService: UsuariosService, private fService: FavoritosService){
+    this.idActual = this.uService.obtenerUsuarioActual()?.id;
+    if(this.idActual){
+      const indexUsuarioActual = this.uService.obtenerIndex(this.idActual);
+      if(indexUsuarioActual){
         this.favoritosUsuario = this.uService.listaUsuarios[indexUsuarioActual].favoritos;
-    }
-  }
-
-  crearLista(listaAgregar: string, idUsuario: string): boolean{
-    const indexUsuarioActual = this.uService.obtenerIndex(idUsuario);
-
-    if((indexUsuarioActual !== null) && (!this.existeLista(listaAgregar, idUsuario))){
-      this.uService.listaUsuarios[indexUsuarioActual].favoritos.set(listaAgregar, []);
-      this.uService.actualizarUsuarios();
-      return true; //Lista agregada
-    }else{
-      return false; //No existe el usuario o la lista ya esta agregada
-    }
-  }
-
-  existeLista(nombreLista: string, idUsuario: string): boolean{
-    const indexUsuarioActual = this.uService.obtenerIndex(idUsuario);
-
-    if(indexUsuarioActual !== null){
-      if(this.uService.listaUsuarios[indexUsuarioActual].favoritos.has(nombreLista) === true){
-        return true; //Existe la lista
+        this.keyArray = Array.from(this.favoritosUsuario.keys());
       }
     }
-    return false; //No existe la lista
   }
 
-  borrarLista(listaBorrar: string, idUsuario: string): boolean{
-    const indexUsuarioActual = this.uService.obtenerIndex(idUsuario);
-
-    if((indexUsuarioActual !== null) && (this.existeLista(listaBorrar, idUsuario))){
-      this.uService.listaUsuarios[indexUsuarioActual].favoritos.delete(listaBorrar);
-      this.uService.actualizarUsuarios();
-      return true; //Lista borrada
-    }else{
-      return false; //No existe el usuario o la lista no esta agregada
-    }
-  }
-
+  
 }

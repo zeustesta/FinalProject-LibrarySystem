@@ -51,14 +51,17 @@
     
                   <div class="mt-4">
                     <div class="btn btn-primary btn-lg btn-flat">
+                      <i class="fas fa-cart-plus fa-lg mr-2"></i>
                       <button class="btn btn-primary" type="submit" (click)="addToCart(libro)">
                         AGREGAR AL CARRITO
                       </button>
                     </div>
     
-                    <div class="btn btn-default btn-lg btn-flat">
+                    <div class="ml-2 btn btn-secondary btn-lg btn-flat">
                       <i class="fas fa-heart fa-lg mr-2"></i>
-                      AGREGAR A FAVORITOS
+                      <button class="btn btn-secondary" type="submit" (click)="addToFavs(libro)">
+                        AGREGAR A FAVORITOS
+                      </button>
                     </div>
                   </div>
     
