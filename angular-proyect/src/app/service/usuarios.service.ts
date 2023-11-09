@@ -96,4 +96,20 @@ export class UsuariosService {
   actualizarUsuarios(): void{
     this.storage.setItem('usuariosData', this.listaUsuarios);
   }
+
+  esAdmin(){
+    if(this.usuarioActual?.email === 'admin@gmail.com'){
+      return true; //Es admin
+    }else{
+      return false; //Es usuario
+    }
+  }
+
+  estaLogueado(){
+    if(this.usuarioActual !== null){
+      return true; //Esta logueado
+    }else{
+      return false; //No esta logueado
+    }
+  }
 }

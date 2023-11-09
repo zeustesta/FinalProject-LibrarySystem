@@ -7,62 +7,65 @@ import { Libro } from '../interfaces/plantillaLibro';
   providedIn: 'root'
 })
 export class CartFavsService {
-  usuarioActual: Usuario | null = null;
-  indexActual: number | null = null;
-
-  constructor(private uService: UsuariosService) {
-    if(this.uService.obtenerUsuarioActual() && this.uService.obtenerIndex(this.usuarioActual!.id)){
-      this.usuarioActual = this.uService.obtenerUsuarioActual();
-      this.indexActual = this.uService.obtenerIndex(this.usuarioActual!.id);  
-    }
-  }
+  constructor(private uService: UsuariosService) {}
 
   agregarAlCarrito(libro: Libro){
-    if (this.usuarioActual && this.indexActual) {
-      this.uService.listaUsuarios[this.indexActual].carrito.push(libro);
+    const usuario = this.uService.obtenerUsuarioActual();
+
+    if (usuario) {
+      let indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      this.uService.listaUsuarios[indexUsuarioActual].carrito.push(libro);
       this.uService.actualizarUsuarios();
     }
   }
 
   getCarritoActual(){
-    if (this.usuarioActual && this.indexActual) {
-      return this.uService.listaUsuarios[this.indexActual].carrito;
+    const usuario = this.uService.obtenerUsuarioActual();
+
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      return this.uService.listaUsuarios[indexUsuarioActual].carrito;
     }else{
       return null;
     }
   }
 
   limpiarCarrito(){
-    if (this.usuarioActual && this.indexActual) {
-      this.uService.listaUsuarios[this.indexActual].carrito = [];
+    const usuario = this.uService.obtenerUsuarioActual();
+
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      this.uService.listaUsuarios[indexUsuarioActual].carrito = [];
       this.uService.actualizarUsuarios();
     }
   }
 
   agregarToFavs(idLibro: number){
-    if (this.usuarioActual && this.indexActual) {
-      this.uService.listaUsuarios[this.indexActual].favoritos = [];
-      this.uService.actualizarUsuarios();
-    }
-  }
+    const usuario = this.uService.obtenerUsuarioActual();
 
-  eliminarDeFavs(idLibro: number){
-    if(this.usuarioActual && this.indexActual){
-      this.uService.listaUsuarios[this.indexActual].favoritos.splice(this.indexActual, 1);
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      this.uService.listaUsuarios[indexUsuarioActual].favoritos.push(idLibro);
       this.uService.actualizarUsuarios();
     }
   }
 
   limpiarFavs(){
-    if(this.usuarioActual && this.indexActual){
-      this.uService.listaUsuarios[this.indexActual].favoritos = [];
+    const usuario = this.uService.obtenerUsuarioActual();
+
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      this.uService.listaUsuarios[indexUsuarioActual].favoritos = [];
       this.uService.actualizarUsuarios();
     }
   }
 
   getFavsActual(){
-    if(this.usuarioActual && this.indexActual){
-      return this.uService.listaUsuarios[this.indexActual].favoritos;
+    const usuario = this.uService.obtenerUsuarioActual();
+
+    if (usuario) {
+      const indexUsuarioActual = this.uService.listaUsuarios.findIndex((u) => u.id == usuario.id);
+      return this.uService.listaUsuarios[indexUsuarioActual].favoritos;
     }else{
       return null;
     }

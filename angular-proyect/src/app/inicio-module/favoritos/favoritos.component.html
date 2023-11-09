@@ -1,14 +1,20 @@
-<div class="accordion" id="accordionExample">
+<!-- <div class="accordion" >
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-        Nombre Lista
+        Favoritos
       </button>
     </h2>
-    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+    <div class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" *ngFor="let libFav of arrayTitulosFavs">
       <div class="accordion-body">
-        <strong>Nombre Libro</strong>
+        <strong>{{ libFav }}</strong>
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<ul>
+  <li *ngFor="let titulo of arrayTitulosFavs">
+    {{ titulo }}
+  </li>
+</ul>
