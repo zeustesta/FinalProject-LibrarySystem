@@ -1,20 +1,47 @@
-<!-- <div class="accordion" >
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-        Favoritos
-      </button>
-    </h2>
-    <div class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" *ngFor="let libFav of arrayTitulosFavs">
-      <div class="accordion-body">
-        <strong>{{ libFav }}</strong>
-      </div>
+<body class="hold-transition sidebar-mini">
+  <div>    
+    <div>
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Lista de Favoritos</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Elimine o Agregue al carrito a sus libros favoritos</h3>
+                </div>
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th class="th">Título</th>
+                      <th class="th">Eliminar</th>
+                      <th class="th">Añadir al Carrito</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let titulo of arrayTitulosFavs">
+                      <td class="td">{{titulo}}</td>
+                      <td class="td"><i class="fa-solid fa-trash" style="color: #e00606;"></i></td>
+                      <td class="td"><i class="fa-solid fa-cart-shopping"></i></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-</div> -->
-
-<ul>
-  <li *ngFor="let titulo of arrayTitulosFavs">
-    {{ titulo }}
-  </li>
-</ul>
+  </div>   
+</body>

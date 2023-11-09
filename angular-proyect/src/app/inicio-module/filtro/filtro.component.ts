@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
+import { CartFavsService } from 'src/app/service/cart-favs.service';
+import { UsuariosService } from 'src/app/service/usuarios.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +19,10 @@ export class FiltroComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private libroService: APIService
+    private libroService: APIService,
+    private uService: UsuariosService, 
+    private cService: CartFavsService, 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,5 +34,18 @@ export class FiltroComponent implements OnInit {
       alert("No hay libros de ese genero");
      }
     });
+  }
+
+  addToCart(libro:Libro){
+    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
+      this.cService.agregarAlCarrito(libro);
+      alert('Libro añadido al carrito!');
+    }else{
+      alert('Debe estar logueado');
+    }
+  }
+
+  verInformacionDetallada(id: number){
+    this.router.navigate([`/inicio/libro_detalle/${id}`]);
   }
 }
