@@ -17,8 +17,8 @@ export class CarritoComponent {
   carritoActual: Libro[] | null;
   usuarioActual: Usuario | null;
 
-  constructor(private cService: CartFavsService, private vService: VentasService, private uService: UsuariosService, private router: Router){
-    this.carritoActual = this.cService.getCarritoActual();
+  constructor(private cfService: CartFavsService, private vService: VentasService, private uService: UsuariosService, private router: Router){
+    this.carritoActual = this.cfService.getCarritoActual();
     this.usuarioActual = this.uService.obtenerUsuarioActual();
   }
 
@@ -32,11 +32,18 @@ export class CarritoComponent {
       idUsuarioActual = this.usuarioActual.id;
       this.vService.agregarVenta(idUsuarioActual, arrayIds, new Date());
       this.carritoActual = [];
-      this.cService.limpiarCarrito();
+      this.cfService.limpiarCarrito();
       alert('Carrito encargado exitosamente');
       this.router.navigate([`/inicio/inicio`]);
     }else{
       alert('Debe estar logueado!');
+    }
+  }
+
+  eliminarDeCarrito(idLibro: number){
+    if(idLibro && this.usuarioActual){
+      this.cfService.eliminarDeCarrito(idLibro);
+      alert('Libro eliminado de carrito');
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
 import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
@@ -22,6 +23,7 @@ export class FavoritosComponent {
   }
 
   generarArregloTitulos(){
+    console.log(this.cfService.getFavsActual())
     let arrayIds = this.cfService.getFavsActual();
     let arrayTitulos: string[] | null = new Array;
 
@@ -34,5 +36,24 @@ export class FavoritosComponent {
       }
     }
     return arrayTitulos;
+  }
+
+  eliminarDeFavs(titulo: string){
+    let libro = this.aService.listaLibros.find((l) => l.titulo === titulo);
+
+    if(libro){
+      this.cfService.eliminarDeFavs(libro.idLibro);
+      this.arrayTitulosFavs = this.generarArregloTitulos();
+      alert('Libro eliminado de favoritos');
+    }
+  }
+
+  agregarACarrito(titulo: string){
+    let libro = this.aService.listaLibros.find((l) => l.titulo === titulo);
+
+    if(libro){
+      this.cfService.agregarAlCarrito(libro);
+      alert('Libro agregado al carrito');
+    }
   }
 }

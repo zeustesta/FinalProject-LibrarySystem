@@ -28,8 +28,12 @@ export class LibroDetalleComponent implements OnInit {
 
   addToCart(libro: Libro){
     if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
-      this.cfService.agregarAlCarrito(libro);
-      alert('Libro añadido al carrito!');
+      if(libro.stock > 0){
+        this.cfService.agregarAlCarrito(libro);
+        alert('Libro añadido al carrito');
+      }else{
+        alert('Ya no quedan libros disponibles')
+      }
     }else{
       alert('Debe estar logueado');
     }

@@ -48,7 +48,7 @@
                       <td class="td">{{ libro.autor }}</td>
                       <td class="td">{{ libro.genero }}</td>
                       <td class="td">${{ libro.precio }}</td>
-                      <td class="td"><i class="fa-solid fa-trash" style="color: #e00606;"></i></td>
+                      <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeCarrito(libro.idLibro)" style="color: #e00606;"></i></td>
                     </tr>
                     </tbody>
                   </table>
