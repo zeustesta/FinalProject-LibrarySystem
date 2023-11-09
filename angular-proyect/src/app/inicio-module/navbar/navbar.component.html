@@ -19,26 +19,26 @@
           <a class="dropdown-item" [routerLink]="['/inicio/filtro','Poesía']" href="#">Poesía</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/inicio/carrito']">Carrito</a>
+      <li class="nav-item mt-2">
+        <i type="button" class="fa-solid fa-cart-shopping" [routerLink]="['/inicio/carrito']"></i>
       </li>
-      <li class="nav-item">
-        <a class="nav-link"  [routerLink]="['/inicio/libros']">Libros</a>
+      <li class="nav-item mt-2 ml-2">
+        <i type="button" class="fa-solid fa-book" [routerLink]="['/inicio/libros']"></i>
       </li>
-      <li class="nav-item" *ngIf="isAdmin()">
-        <a class="nav-link"  [routerLink]="['/inicio/ventas']">Ventas</a>
+      <li class="nav-item mt-2 ml-2" *ngIf="isAdmin()">
+        <i type="button" class="fa-solid fa-clipboard-check" [routerLink]="['/inicio/ventas']"></i>
       </li>
-      <li class="nav-item" *ngIf="isAdmin()">
-        <a class="nav-link"  [routerLink]="['/inicio/usuarios']">Usuarios</a>
+      <li class="nav-item mt-2 ml-2" *ngIf="isAdmin()">
+        <i type="button" class="fa-solid fa-users" [routerLink]="['/inicio/usuarios']"></i>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/inicio/favoritos']">Favoritos</a>
+      <li class="nav-item mt-2 ml-2">
+        <i type="button" class="fa-solid fa-heart" [routerLink]="['/inicio/favoritos']"></i>
       </li>
-      <li class="nav-item" *ngIf="!isLoggedIn()">
-        <a class="nav-link" [routerLink]="['/inicio/login']">Ingresar</a>
+      <li class="nav-item mt-2 ml-2" *ngIf="!isLoggedIn()">
+        <i type="button" class="fa-solid fa-user" [routerLink]="['/inicio/login']"></i>
       </li>
-      <li class="nav-item" *ngIf="isLoggedIn()">
-        <button class="btn btn-secondary" [routerLink]="['/inicio/inicio']" (click)="logOut()">Logout</button>
+      <li class="nav-item mt-2 ml-2" *ngIf="isLoggedIn()">
+        <i type="button" class="fa-solid fa-right-from-bracket" [routerLink]="['/inicio/inicio']" (click)="logOut()"></i>
       </li>
     </ul>
   </div>
