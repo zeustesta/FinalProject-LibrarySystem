@@ -1,5 +1,3 @@
-<!-- VER SI LE VAMOS A DAR FUNCIONABILIDAD A LOS BOTONES DE EDITAR Y ELIMINAR PARA VER SI LOS DEJAMOS O LOS SACAMOS -->
-
 <body class="hold-transition sidebar-mini">
   <div>    
     <div>
@@ -25,20 +23,18 @@
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
                     <tr>
+                      <th class="th">ID</th>
                       <th class="th">Nombre</th>
                       <th class="th">Apellido</th>
                       <th class="th">Correo Electronico</th>
-                      <th class="th">Modificar</th>
-                      <th class="th">Eliminar</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let usuario of listaUsuarios">
+                      <td class="td">{{usuario.id}}</td>
                       <td class="td">{{usuario.nombre}}</td>
                       <td class="td">{{usuario.apellido}}</td>
                       <td class="td">{{usuario.email}}</td>
-                      <td class="td"><i class="fa-solid fa-pencil" style="color: #efe70b;"></i></td>
-                      <td class="td"><i class="fa-solid fa-trash" style="color: #e00606;"></i></td>
                     </tr>
                     </tbody>
                   </table>
