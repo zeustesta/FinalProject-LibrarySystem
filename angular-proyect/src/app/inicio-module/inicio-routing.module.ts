@@ -28,6 +28,10 @@ const routes: Routes = [
         component: RegistroComponent
       },
       {
+        path: 'libros/:titulo',
+        component: ListaLibrosComponent
+      },
+      {
         path: 'libros',
         component: ListaLibrosComponent
       },
