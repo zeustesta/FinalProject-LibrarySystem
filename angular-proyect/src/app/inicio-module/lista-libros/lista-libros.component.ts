@@ -3,7 +3,7 @@ import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-libros',
@@ -14,11 +14,28 @@ import { Router } from '@angular/router';
 export class ListaLibrosComponent implements OnInit {
   listaLibros: Libro[] = [];
 
-  constructor(private apiService: APIService, private uService: UsuariosService, private cService: CartFavsService, private router: Router){
+  constructor(private apiService: APIService, private uService: UsuariosService, private cService: CartFavsService, private router: Router,private aRouter: ActivatedRoute){
   }
+/*
+  this.aRouter.paramMap.subscribe((params) => {
+    const heroeParam = params.get('heroe');
+    if (heroeParam === null) {
+      this.getHeroesDefault();
+    } else {
+      this.getHeroesParam(heroeParam);
+    }
+  });*/
 
   ngOnInit(): void {
-    this.listaLibros = this.apiService.retornarLibros();
+    this.aRouter.paramMap.subscribe((params) => {
+      const titulo = params.get('titulo');
+      if(titulo === null){
+        this.listaLibros= this.apiService.retornarLibros();
+      } else{
+        const auxListaLibros= this.apiService.retornarLibros();
+        this.listaLibros = auxListaLibros.filter(libro => libro.titulo.toLowerCase().includes(titulo.toLowerCase()));
+      }
+    })
   }
 
   addToCart(libro:Libro){
