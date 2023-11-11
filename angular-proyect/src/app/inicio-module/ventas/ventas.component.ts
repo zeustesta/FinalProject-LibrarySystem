@@ -16,7 +16,7 @@ export class VentasComponent {
     this.listaVentas = this.vService.getVentas();
     this.ventaForm = this.fb.group({
       fecha: ['', Validators.required],
-      total: [0, Validators.min(0.01), Validators.required]
+      total: [0, [Validators.min(0), Validators.required]]
     })
   }
 

@@ -4,7 +4,6 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router: Router = inject(Router);
   const usuarioActual = localStorage.getItem('usuarioActual');
-  console.log(usuarioActual);
 
   if (usuarioActual == undefined) {
     alert('Debe iniciar sesión primero!');
