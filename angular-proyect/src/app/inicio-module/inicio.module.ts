@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 
 
+
 @NgModule({
   declarations: [
     ListaLibrosComponent,
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     UsuarioComponent,
     VentasComponent,
     LibroDetalleComponent,
-    FavoritosComponent
+    FavoritosComponent,
+
   ],
   imports: [
     CommonModule,

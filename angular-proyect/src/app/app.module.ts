@@ -8,6 +8,8 @@ import { NavbarComponent } from './inicio-module/navbar/navbar.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { CarrouselComponent } from './inicio-module/carrousel/carrousel.component';
 import { FiltroComponent } from './inicio-module/filtro/filtro.component';
+import { ReseniasComponent } from './inicio-module/resenias/resenias.component';
+import { FooterComponent } from './inicio-module/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { FiltroComponent } from './inicio-module/filtro/filtro.component';
     NavbarComponent,
     CarrouselComponent,
     FiltroComponent,
+    ReseniasComponent, 
+    FooterComponent
   ],
   imports: [
     BrowserModule,
