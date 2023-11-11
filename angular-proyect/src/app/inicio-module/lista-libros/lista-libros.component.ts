@@ -16,15 +16,6 @@ export class ListaLibrosComponent implements OnInit {
 
   constructor(private apiService: APIService, private uService: UsuariosService, private cService: CartFavsService, private router: Router,private aRouter: ActivatedRoute){
   }
-/*
-  this.aRouter.paramMap.subscribe((params) => {
-    const heroeParam = params.get('heroe');
-    if (heroeParam === null) {
-      this.getHeroesDefault();
-    } else {
-      this.getHeroesParam(heroeParam);
-    }
-  });*/
 
   ngOnInit(): void {
     this.aRouter.paramMap.subscribe((params) => {
