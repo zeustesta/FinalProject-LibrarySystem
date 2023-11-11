@@ -23,7 +23,6 @@ export class FavoritosComponent {
   }
 
   generarArregloTitulos(){
-    console.log(this.cfService.getFavsActual())
     let arrayIds = this.cfService.getFavsActual();
     let arrayTitulos: string[] | null = new Array;
 

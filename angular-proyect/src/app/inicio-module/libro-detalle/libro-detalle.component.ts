@@ -35,7 +35,7 @@ export class LibroDetalleComponent implements OnInit {
         alert('Ya no quedan libros disponibles')
       }
     }else{
-      alert('Debe estar logueado');
+      alert('Debe iniciar sesión primero!');
     }
   }
 
@@ -44,7 +44,7 @@ export class LibroDetalleComponent implements OnInit {
       this.cfService.agregarToFavs(libro.idLibro);
       alert('Libro agregado a favoritos');
     }else{
-      alert('Debe estar logueado');
+      alert('Debe iniciar sesión primero!');
     }
   }
 }

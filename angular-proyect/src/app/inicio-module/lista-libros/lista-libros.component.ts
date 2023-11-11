@@ -34,7 +34,7 @@ export class ListaLibrosComponent implements OnInit {
       this.cService.agregarAlCarrito(libro);
       alert('Libro añadido al carrito!');
     }else{
-      alert('Debe estar logueado');
+      alert('Debe iniciar sesión primero!');
     }
   }
 

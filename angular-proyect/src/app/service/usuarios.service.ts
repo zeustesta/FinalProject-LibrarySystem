@@ -15,7 +15,8 @@ export class UsuariosService {
     email: 'admin@gmail.com',
     password: 'admin',
     carrito: [],
-    favoritos: []
+    favoritos: [],
+    rol: 'admin'
   }
 
   user2 = {
@@ -25,7 +26,8 @@ export class UsuariosService {
     email: 'usuario@gmail.com',
     password: 'usuario',
     carrito: [],
-    favoritos: []
+    favoritos: [],
+    rol: 'usuario'
   }
 
   listaUsuarios: Usuario[] = [this.user1, this.user2];
@@ -47,8 +49,9 @@ export class UsuariosService {
       email: email,
       password: password,
       carrito: [],
-      favoritos: []
-    }
+      favoritos: [],
+      rol: 'usuario'
+    };
 
     this.listaUsuarios.push(newUser);
     this.storage.updateItem('usuariosData', this.listaUsuarios);
@@ -98,7 +101,7 @@ export class UsuariosService {
   }
 
   esAdmin(){
-    if(this.usuarioActual?.email === 'admin@gmail.com'){
+    if(this.usuarioActual?.rol === 'admin'){
       return true; //Es admin
     }else{
       return false; //Es usuario

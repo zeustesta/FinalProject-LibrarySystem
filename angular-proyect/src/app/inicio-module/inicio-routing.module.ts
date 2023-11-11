@@ -10,7 +10,8 @@ import { VentasComponent } from './ventas/ventas.component';
 import { FiltroComponent } from './filtro/filtro.component';
 import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
-import { authGuard } from '../utils/auth.guard';
+import { usersGuard } from '../utils/auth.guard';
+import { adminGuard } from '../utils/admin-guard.guard';
 
 const routes: Routes = [
   {
@@ -39,22 +40,22 @@ const routes: Routes = [
       {
         path: 'usuarios',
         component: UsuarioComponent,
-        canActivate: [authGuard]
+        canActivate: [adminGuard]
       },
       {
         path: 'carrito',
         component: CarritoComponent,
-        canActivate: [authGuard]
+        canActivate: [usersGuard],
       },
       {
         path: 'ventas',
         component: VentasComponent,
-        canActivate: [authGuard]
+        canActivate: [adminGuard],
       },
       {
         path: 'favoritos',
         component: FavoritosComponent,
-        canActivate: [authGuard]
+        canActivate: [usersGuard],
       },
       {
         path: 'filtro/:genero',

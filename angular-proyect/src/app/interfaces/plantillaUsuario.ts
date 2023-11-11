@@ -6,6 +6,7 @@ export interface Usuario{
     apellido: string,
     email: string,
     password: string,
-    carrito: Libro[];
-    favoritos: number[]
+    carrito: Libro[],
+    favoritos: number[],
+    rol: string,
 }   
