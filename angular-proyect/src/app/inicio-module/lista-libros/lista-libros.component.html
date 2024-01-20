@@ -1,4 +1,5 @@
 <div class="div">
+
   <div class="cards">
     <div *ngFor="let libro of listaLibros" class="card">
       <img class="img" src='{{libro.portada}}' alt="imagen">
@@ -13,4 +14,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="listaLibros.length === 0" class="mensaje-vacio">
+  <p>No hay libros disponibles.</p>
 </div>

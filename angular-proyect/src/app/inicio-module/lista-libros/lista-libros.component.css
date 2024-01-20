@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.mensaje-vacio {
+  text-align: center;
+  padding: 350px;
+}
+
 .cards {
   display: flex;
   flex-direction: row;
