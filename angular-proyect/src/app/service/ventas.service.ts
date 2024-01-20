@@ -35,20 +35,6 @@ export class VentasService {
     this.storage.updateItem('ventasData', this.listaVentas);
   }
 
-  agregarVentaManual(fecha: Date, total: number){
-    const newVenta = {
-      idVenta: uuidv4(),
-      idUsuario: 'Fisico',
-      fechaCompra: fecha,
-      idsLibros: [],
-      total: total,
-      estado: EstadoVenta.CONFIRMADA
-    }
-
-    this.listaVentas.push(newVenta);
-    this.storage.updateItem('ventasData', this.listaVentas);
-  }
-
   calcularTotal(arrayIds: number[]): number{
     let total: number = 0;
     for(let idLibro of arrayIds){
@@ -79,5 +65,4 @@ export class VentasService {
       this.listaVentas[indexVenta].estado = EstadoVenta.RECHAZADA
     }
   }
-  
 }

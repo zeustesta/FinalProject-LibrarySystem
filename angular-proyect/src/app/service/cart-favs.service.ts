@@ -18,6 +18,7 @@ export class CartFavsService {
       this.uService.listaUsuarios[indexUsuarioActual].carrito.push(libro);
       let indexLibro = this.apiService.listaLibros.findIndex((L) => L.idLibro === libro.idLibro);
       this.apiService.listaLibros[indexLibro].stock = this.apiService.listaLibros[indexLibro].stock - 1;
+      this.apiService.listaLibros[indexLibro].cantVenta = this.apiService.listaLibros[indexLibro].cantVenta + 1;
       this.uService.actualizarUsuarios();
     }
   }

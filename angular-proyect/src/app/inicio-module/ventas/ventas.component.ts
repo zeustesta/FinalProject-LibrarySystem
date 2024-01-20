@@ -28,18 +28,6 @@ export class VentasComponent {
     this.vService.rechazarCompra(idVenta);
   }
 
-  agregarVenta(){
-    let fecha = this.ventaForm.value.fecha;
-    let total = parseInt(this.ventaForm.value.total);
-
-    const partes = fecha.split('-');
-    const anio = +partes[0];
-    const mes = +partes[1] - 1; // Restamos 1 porque los meses en JavaScript son 0-11
-    const dia = +partes[2];
-    
-    this.vService.agregarVentaManual(new Date(anio, mes, dia), total);
-  }
-
   yaConfirmada(idVenta: string){
     const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
 
