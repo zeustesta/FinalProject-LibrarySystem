@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
 import { EstadoVenta } from '../utils/enum';
-import { ɵɵtsModuleIndicatorApiExtractorWorkaround } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
