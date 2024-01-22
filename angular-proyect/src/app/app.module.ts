@@ -11,6 +11,7 @@ import { FiltroComponent } from './inicio-module/filtro/filtro.component';
 import { FooterComponent } from './inicio-module/footer/footer.component';
 import { SpinnerComponent } from './inicio-module/spinner/spinner.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { SpinnerComponent } from './inicio-module/spinner/spinner.component';
     FiltroComponent,
     FooterComponent,
     SpinnerComponent
+    
   ],
   imports: [
     BrowserModule,
