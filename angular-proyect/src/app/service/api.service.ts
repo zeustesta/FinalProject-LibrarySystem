@@ -61,7 +61,6 @@ export class APIService implements OnInit {
     return this.listaLibros.filter(libro => libro.genero === genero);
   }
   
-
   buscarPorId(idBuscado: number){
     const encontrado = this.listaLibros.find((l) => l.idLibro === idBuscado);
 
