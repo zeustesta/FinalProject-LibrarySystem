@@ -11,6 +11,7 @@ import { VentasComponent } from './ventas/ventas.component';
 import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { FormsModule } from '@angular/forms';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     VentasComponent,
     LibroDetalleComponent,
     FavoritosComponent,
+    SpinnerComponent,
 
   ],
   imports: [

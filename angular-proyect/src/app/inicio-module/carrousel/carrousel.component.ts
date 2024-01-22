@@ -9,6 +9,7 @@ import { APIService } from '../../service/api.service';
   styleUrls: ['./carrousel.component.css'],
 })
 export class CarrouselComponent implements OnInit{
+  loading: boolean = false;
   listaLibros: Libro[] = [];
   index= 0;
 
@@ -21,6 +22,7 @@ export class CarrouselComponent implements OnInit{
   }
 
   getLibros(){
+    this.loading= true;
     this.apiService.getData().subscribe((data) => {
         let results = data.results;
         let listaAux: Libro []=[];
@@ -31,6 +33,7 @@ export class CarrouselComponent implements OnInit{
         }
         this.listaLibros= this.apiService.getTop5(listaAux);
         console.log(this.listaLibros);
+        this.loading= false;
       })
     }
   }

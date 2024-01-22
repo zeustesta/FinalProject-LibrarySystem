@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { CarrouselComponent } from './inicio-module/carrousel/carrousel.component';
 import { FiltroComponent } from './inicio-module/filtro/filtro.component';
 import { FooterComponent } from './inicio-module/footer/footer.component';
+import { SpinnerComponent } from './inicio-module/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FooterComponent } from './inicio-module/footer/footer.component';
     NavbarComponent,
     CarrouselComponent,
     FiltroComponent,
-    FooterComponent
+    FooterComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
