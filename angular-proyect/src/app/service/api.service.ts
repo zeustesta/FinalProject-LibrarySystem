@@ -38,7 +38,7 @@ export class APIService implements OnInit {
     })
   }
 
-  cargarLibro(idLibro: number, titulo: string, autor: string, portada: string){
+  cargarLibro(idLibro: number, titulo: string, autor: string, portada: string, listaLibrosAux?:Libro[]){
     const aux: Libro = {
       idLibro: idLibro,
       titulo: titulo,
@@ -49,7 +49,12 @@ export class APIService implements OnInit {
       precio: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
       portada: portada
     }
-    this.listaLibros.push(aux);
+    if(listaLibrosAux){
+      listaLibrosAux.push(aux);
+    } else{
+      this.listaLibros.push(aux);
+    }
+    
   }
 
   generoRandom(){

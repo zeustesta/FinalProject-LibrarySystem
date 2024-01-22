@@ -26,6 +26,7 @@ export class ListaLibrosComponent implements OnInit {
         const auxListaLibros= this.apiService.retornarLibros();
         this.listaLibros = auxListaLibros.filter(libro => libro.titulo.toLowerCase().includes(titulo.toLowerCase()));
       }
+      console.log(this.listaLibros);
     })
   }
 
