@@ -1,9 +1,9 @@
 import express, { Application, Request, Response } from 'express';
-import routesLibros from '../routes/libros';
-import db from '../db/connection';
-import { Venta, LibrosVendidos } from './Ventas';
-import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from './Clientes';
-import libroModel from './Libros';
+import routesLibros from '../routes/LibrosRoutes';
+import db from '../db/Connection';
+import { Venta, LibrosVendidos } from './VentasModel';
+import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from './ClientesModel';
+import libroModel from './LibrosModel';
 
 class Server {
   private app: Application;

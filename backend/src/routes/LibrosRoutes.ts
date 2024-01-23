@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getLibros, getLibro, deleteLibro, postLibro, updateLibro } from "../controllers/libros";
+import { getLibros, getLibro, deleteLibro, postLibro, updateLibro } from "../controllers/LibrosController";
 
 const router = Router();
 

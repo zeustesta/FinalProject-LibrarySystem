@@ -8,7 +8,7 @@ const connection_1 = __importDefault(require("../db/connection"));
 const Libro = connection_1.default.define('Libro', {
     idLibro: {
         type: sequelize_1.DataTypes.UUID,
-        defaultValue: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
         primaryKey: true
     },
     titulo: {
@@ -28,7 +28,7 @@ const Libro = connection_1.default.define('Libro', {
         allowNull: false
     },
     precio: {
-        type: sequelize_1.DataTypes.DECIMAL(6, 2),
+        type: sequelize_1.DataTypes.DECIMAL(8, 2),
         allowNull: false
     },
     portada: {
@@ -38,10 +38,18 @@ const Libro = connection_1.default.define('Libro', {
     cantVentas: {
         type: sequelize_1.DataTypes.INTEGER,
         defaultValue: 0
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+        allowNull: false
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+        allowNull: false
     }
 }, {
-    tableName: 'LIBROS',
-    createdAt: false,
-    updatedAt: false
+    tableName: 'LIBROS'
 });
 exports.default = Libro;

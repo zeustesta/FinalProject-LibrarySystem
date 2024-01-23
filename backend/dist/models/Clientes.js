@@ -35,25 +35,36 @@ exports.Cliente = connection_1.default.define('Cliente', {
         allowNull: false,
     }
 }, {
-    tableName: 'CLIENTES'
+    tableName: 'CLIENTES',
+    createdAt: false,
+    updatedAt: false
 });
 exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
     libroId: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     }
+}, {
+    createdAt: false,
+    updatedAt: false
 });
 exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
     libroId: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     }
+}, {
+    createdAt: false,
+    updatedAt: false
 });
 exports.ClienteCompras = connection_1.default.define('ClienteCompras', {
     libroId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false
     }
+}, {
+    createdAt: false,
+    updatedAt: false
 });
 exports.Cliente.belongsToMany(Libros_1.default, { through: exports.ClienteCarrito, as: 'Carrito' });
 exports.Cliente.belongsToMany(Libros_1.default, { through: exports.ClienteFavoritos, as: 'Favoritos' });

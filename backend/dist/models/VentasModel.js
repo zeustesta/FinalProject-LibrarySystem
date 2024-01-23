@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibrosVendidos = exports.Venta = void 0;
 const sequelize_1 = require("sequelize");
-const connection_1 = __importDefault(require("../db/connection"));
+const Connection_1 = __importDefault(require("../db/Connection"));
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
 var EstadoVenta;
 (function (EstadoVenta) {
@@ -13,10 +13,10 @@ var EstadoVenta;
     EstadoVenta["CONFIRMADA"] = "Confirmada";
     EstadoVenta["RECHAZADA"] = "Rechazada";
 })(EstadoVenta || (EstadoVenta = {}));
-exports.Venta = connection_1.default.define('Venta', {
+exports.Venta = Connection_1.default.define('Venta', {
     idVenta: {
         type: sequelize_1.DataTypes.UUID,
-        defaultValue: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
         primaryKey: true
     },
     idUsuario: {
@@ -35,19 +35,34 @@ exports.Venta = connection_1.default.define('Venta', {
         type: sequelize_1.DataTypes.ENUM(...Object.values(EstadoVenta)),
         allowNull: false,
         defaultValue: EstadoVenta.PENDIENTE
-    }
-}, {
-    tableName: 'VENTAS',
-    createdAt: false,
-    updatedAt: false
-});
-exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
-    idLibro: {
-        type: sequelize_1.DataTypes.UUID,
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+        allowNull: false
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
         allowNull: false
     }
 }, {
-    createdAt: false,
-    updatedAt: false
+    tableName: 'VENTAS',
+});
+exports.LibrosVendidos = Connection_1.default.define('LibrosVendidos', {
+    idLibro: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+        allowNull: false
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+        allowNull: false
+    }
 });
 exports.Venta.belongsToMany(LibrosModel_1.default, { through: exports.LibrosVendidos, as: 'IdsVendidos' });

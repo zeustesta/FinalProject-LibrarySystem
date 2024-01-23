@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
-import db from "../db/connection";
-import Libro from "./Libros";
+import db from "../db/Connection";
+import Libro from "./LibrosModel";
 
 export const Cliente = db.define('Cliente', {
   idCliente: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   }, 
   nombre: {
@@ -28,15 +28,35 @@ export const Cliente = db.define('Cliente', {
   rol: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
+    allowNull: false
   }
 }, 
 {
-  tableName: 'CLIENTES'
+  tableName: 'CLIENTES',
 });
 
 export const ClienteFavoritos = db.define('ClienteFavoritos', {
   libroId: {
     type: DataTypes.STRING,
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
     allowNull: false
   }
 });
@@ -45,12 +65,32 @@ export const ClienteCarrito = db.define('ClienteCarrito', {
   libroId: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
+    allowNull: false
   }
 });
 
 export const ClienteCompras = db.define('ClienteCompras', {
   libroId: {
     type: DataTypes.UUID,
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
     allowNull: false
   }
 });

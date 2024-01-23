@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
-import db from "../db/connection"
+import db from '../db/connection'; 
 
 const Libro = db.define('Libro', {
   idLibro: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
   titulo: {
@@ -24,7 +24,7 @@ const Libro = db.define('Libro', {
     allowNull: false
   },
   precio: {
-    type: DataTypes.DECIMAL(6, 2),
+    type: DataTypes.DECIMAL(8, 2),
     allowNull: false
   },
   portada: {
@@ -34,10 +34,20 @@ const Libro = db.define('Libro', {
   cantVentas: {
     type: DataTypes.INTEGER,
     defaultValue: 0
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
+    allowNull: false
   }
-}, 
+},
 {
-  tableName: 'LIBROS'
+  tableName: 'LIBROS';
 });
 
 export default Libro;

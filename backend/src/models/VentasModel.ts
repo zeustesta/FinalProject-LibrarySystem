@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import db from  "../db/connection";
-import Libro from "./Libros";
+import db from  "../db/Connection";
+import Libro from "./LibrosModel";
 
 enum EstadoVenta{
   PENDIENTE = 'Pendiente',
@@ -11,7 +11,7 @@ enum EstadoVenta{
 export const Venta = db.define('Venta', {
   idVenta: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
   idUsuario: {
@@ -30,15 +30,35 @@ export const Venta = db.define('Venta', {
     type: DataTypes.ENUM(...Object.values(EstadoVenta)),
     allowNull: false,
     defaultValue: EstadoVenta.PENDIENTE
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
+    allowNull: false
   }
 }, 
 {
-  tableName: 'VENTAS'
+  tableName: 'VENTAS',
 });
 
 export const LibrosVendidos = db.define('LibrosVendidos', {
   idLibro: {
     type: DataTypes.UUID,
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW, 
     allowNull: false
   }
 });
