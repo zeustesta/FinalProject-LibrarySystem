@@ -1,6 +1,9 @@
 import express, { Application, Request, Response } from 'express';
 import routesLibros from '../routes/libros';
 import db from '../db/connection';
+import { Venta, LibrosVendidos } from './Ventas';
+import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from './Clientes';
+import libroModel from './Libros';
 
 class Server {
   private app: Application;
@@ -17,7 +20,7 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log(`Aplicacion corriendo en el puerto: ${this.port}`);
+      console.log(`Aplicacion corriendo en: http://localhost:${this.port}`);
     })
   }
 
@@ -36,11 +39,19 @@ class Server {
 
   async dbConnect() {
     try {
-      await db.authenticate()
+      await db.authenticate();
       console.log('Base de datos conectada');
+      await libroModel.sync();
+      await Cliente.sync();
+      await ClienteCarrito.sync();
+      await ClienteCompras.sync();
+      await ClienteFavoritos.sync();
+      await Venta.sync();
+      await LibrosVendidos.sync();
+      console.log('Modelos sincronizados correctamente');
     } catch(error) {
       console.log(error);
-      console.log('Error al conectar a la base de datos');
+      console.log('Error al conectar a la base de datos o sincronizar los modelos');
     }
     
   }
