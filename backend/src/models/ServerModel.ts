@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import routesLibros from '../routes/LibrosRoutes';
 import db from '../db/Connection';
+import cors from 'cors';
 import { Venta, LibrosVendidos } from './VentasModel';
 import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from './ClientesModel';
 import libroModel from './LibrosModel';
@@ -34,7 +35,8 @@ class Server {
   }
 
   middlewares() {
-    this.app.use(express.json())
+    this.app.use(express.json());
+    this.app.use(cors());
   }
 
   async dbConnect() {

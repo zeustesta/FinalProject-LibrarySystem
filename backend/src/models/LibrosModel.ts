@@ -47,7 +47,7 @@ const Libro = db.define('Libro', {
   }
 },
 {
-  tableName: 'LIBROS';
+  tableName: 'LIBROS',
 });
 
 export default Libro;

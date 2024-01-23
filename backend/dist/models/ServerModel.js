@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const LibrosRoutes_1 = __importDefault(require("../routes/LibrosRoutes"));
 const Connection_1 = __importDefault(require("../db/Connection"));
+const cors_1 = __importDefault(require("cors"));
 const VentasModel_1 = require("./VentasModel");
 const ClientesModel_1 = require("./ClientesModel");
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
@@ -42,6 +43,7 @@ class Server {
     }
     middlewares() {
         this.app.use(express_1.default.json());
+        this.app.use((0, cors_1.default)());
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {

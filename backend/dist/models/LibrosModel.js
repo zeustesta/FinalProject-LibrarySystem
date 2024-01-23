@@ -50,6 +50,6 @@ const Libro = connection_1.default.define('Libro', {
         allowNull: false
     }
 }, {
-    tableName: 'LIBROS'
+    tableName: 'LIBROS',
 });
 exports.default = Libro;

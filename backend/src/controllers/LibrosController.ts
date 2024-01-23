@@ -3,7 +3,6 @@ import Libro from "../models/LibrosModel";
 
 export const getLibros = async (req: Request, res: Response) => {
   const listaLibros = await Libro.findAll();
-
   res.json(listaLibros);
 } 
 
@@ -48,8 +47,6 @@ export const postLibro = async (req: Request, res: Response) => {
     console.log(error);
     console.log('No se ha podido agregar el libro');
   }
-  
-  
 } 
 
 export const updateLibro = async (req: Request, res: Response) => {
