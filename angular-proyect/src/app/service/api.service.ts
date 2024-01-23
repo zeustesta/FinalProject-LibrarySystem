@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, pipe, switchMap } from 'rxjs';
 import { Libro } from '../interfaces/plantillaLibro';
 
 @Injectable({
@@ -13,11 +13,10 @@ export class APIService implements OnInit {
 
   constructor(private http: HttpClient) {
     this.bajarLibros();
-    
    }
 
   ngOnInit(): void {
-    
+
   }
 
   public getData(): Observable<any> {
@@ -39,17 +38,23 @@ export class APIService implements OnInit {
     })
   }
 
-  cargarLibro(idLibro: number, titulo: string, autor: string, portada: string){
+  cargarLibro(idLibro: number, titulo: string, autor: string, portada: string, listaLibrosAux?:Libro[]){
     const aux: Libro = {
       idLibro: idLibro,
       titulo: titulo,
       genero: this.generoRandom(),
       autor: autor,
       stock: Math.floor(Math.random() * (15 - 3 + 1)) + 3,
+      cantVenta: 0,
       precio: Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000,
       portada: portada
     }
-    this.listaLibros.push(aux);
+    if(listaLibrosAux){
+      listaLibrosAux.push(aux);
+    } else{
+      this.listaLibros.push(aux);
+    }
+    
   }
 
   generoRandom(){
@@ -79,6 +84,14 @@ export class APIService implements OnInit {
     }else{
       return 0;
     }
+  }
+
+  getTop5(listaTop:Libro[]){
+        const ventasOrdenadas = listaTop.sort((a,b) => b.cantVenta - a.cantVenta);
+        console.log(ventasOrdenadas);
+        const top5Ventas = ventasOrdenadas.slice(0,5);
+        
+        return top5Ventas;
   }
 }
 

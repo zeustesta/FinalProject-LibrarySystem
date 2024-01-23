@@ -4,6 +4,7 @@ export interface Libro{
   genero: string,
   autor: string,
   stock: number,
+  cantVenta: number,
   precio: number,
   portada: string
 }
