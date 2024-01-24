@@ -25,7 +25,6 @@ export class ListaLibrosComponent implements OnInit {
   getListaLibros() {
     this.apiService.getLibros().subscribe((data: Libro[]) => {
       this.listaLibros = data;
-      console.log(data);
     })
   }
 

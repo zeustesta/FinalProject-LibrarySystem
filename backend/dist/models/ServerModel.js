@@ -14,15 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const LibrosRoutes_1 = __importDefault(require("../routes/LibrosRoutes"));
-const Connection_1 = __importDefault(require("../db/Connection"));
+const ClientesRoutes_1 = __importDefault(require("../routes/ClientesRoutes"));
+const VentasRoutes_1 = __importDefault(require("../routes/VentasRoutes"));
+const connection_1 = __importDefault(require("../db/connection"));
 const cors_1 = __importDefault(require("cors"));
 const VentasModel_1 = require("./VentasModel");
 const ClientesModel_1 = require("./ClientesModel");
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
+const config_1 = require("../config");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || '3001';
+        this.port = config_1.PORT || '3001';
         this.listen();
         this.middlewares();
         this.routes();
@@ -40,6 +43,8 @@ class Server {
             });
         });
         this.app.use('/api/libros', LibrosRoutes_1.default);
+        this.app.use('/api/clientes', ClientesRoutes_1.default);
+        this.app.use('/api/ventas', VentasRoutes_1.default);
     }
     middlewares() {
         this.app.use(express_1.default.json());
@@ -48,7 +53,7 @@ class Server {
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield Connection_1.default.authenticate();
+                yield connection_1.default.authenticate();
                 console.log('Base de datos conectada');
                 yield LibrosModel_1.default.sync();
                 yield ClientesModel_1.Cliente.sync();

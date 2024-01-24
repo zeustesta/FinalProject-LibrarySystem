@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Libro } from '../interfaces/plantillaLibro';
 import { environment } from 'src/enviroments/environment.prod';
 
@@ -15,23 +16,25 @@ export class APIService {
 
   constructor(private http: HttpClient) {
     this.appUrl = environment.apiUrl;
-    this.apiUrl = 'api/libros/';
+    this.apiUrl = '/api/libros';
   }
 
   getLibros(): Observable<Libro[]> {
-    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}`);
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getLibros`);
   }
 
   getLibro(idLibro: string): Observable<Libro> {
-    return this.http.get<Libro>(`${this.appUrl}${this.apiUrl}${idLibro}`)
+    return this.http.get<Libro>(`${this.appUrl}${this.apiUrl}/getLibro/${idLibro}`)
   }
 
   updateLibro(idLibro: string, libro: Libro): Observable<void> {
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}${idLibro}`, libro);
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateLibro/${idLibro}`, libro);
   }
 
-  filtrarLibrosPorGenero(genero: string) {
-    return this.listaLibros.filter(libro => libro.genero === genero);
+  filtrarLibrosPorGenero(generoDeseado: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getLibros`).pipe(
+      map((libros: Libro[]) => libros.filter(libro => libro.genero === generoDeseado))
+    );
   }
 
   retornarPrecio(idLibro: string) {

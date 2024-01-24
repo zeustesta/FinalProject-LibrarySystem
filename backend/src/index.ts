@@ -1,12 +1,9 @@
 import Server from "./models/ServerModel";
-import dotenv from 'dotenv';
 import { seedDatabase } from "./seeds/seed";
+import { seedClients } from "./seeds/seedClientes";
 
-dotenv.config();
-const server = new Server();
+const server = new Server()
 
 // seedDatabase(); //USADO PARA BAJAR LA INFO A LA BASE DE DATOS
-
-
-
-
+// seedClients(); //USADO PARA CREAR ADMIN Y USUARIO
+ 

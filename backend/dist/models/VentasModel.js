@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibrosVendidos = exports.Venta = void 0;
 const sequelize_1 = require("sequelize");
-const Connection_1 = __importDefault(require("../db/Connection"));
+const connection_1 = __importDefault(require("../db/connection"));
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
 var EstadoVenta;
 (function (EstadoVenta) {
@@ -13,7 +13,7 @@ var EstadoVenta;
     EstadoVenta["CONFIRMADA"] = "Confirmada";
     EstadoVenta["RECHAZADA"] = "Rechazada";
 })(EstadoVenta || (EstadoVenta = {}));
-exports.Venta = Connection_1.default.define('Venta', {
+exports.Venta = connection_1.default.define('Venta', {
     idVenta: {
         type: sequelize_1.DataTypes.UUID,
         defaultValue: sequelize_1.DataTypes.UUIDV4,
@@ -49,7 +49,7 @@ exports.Venta = Connection_1.default.define('Venta', {
 }, {
     tableName: 'VENTAS',
 });
-exports.LibrosVendidos = Connection_1.default.define('LibrosVendidos', {
+exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
     idLibro: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false

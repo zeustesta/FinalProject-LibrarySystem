@@ -3,10 +3,10 @@ import { getLibros, getLibro, deleteLibro, postLibro, updateLibro } from "../con
 
 const router = Router();
 
-router.get('/', getLibros);
-router.get('/:id', getLibro);
-router.delete('/:id', deleteLibro);
-router.post('/', postLibro);
-router.put('/:id', updateLibro)
+router.get('/getLibros', getLibros);
+router.get('/getLibro/:id', getLibro);
+router.delete('/deleteLibro/:id', deleteLibro);
+router.post('/postLibro', postLibro);
+router.put('/updateLibro/:id', updateLibro);
 
 export default router;

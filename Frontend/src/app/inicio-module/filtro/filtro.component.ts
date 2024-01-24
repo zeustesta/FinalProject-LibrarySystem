@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./filtro.component.css']
 })
 
-export class FiltroComponent implements OnInit {
+export class FiltroComponent{
   generoSeleccionado: string | undefined;
   librosFiltrados: Libro[] = [];
 
@@ -23,16 +23,18 @@ export class FiltroComponent implements OnInit {
     private uService: UsuariosService, 
     private cService: CartFavsService, 
     private router: Router
-  ) {}
+  ) { this.filtrarLibros(); }
 
-  ngOnInit(): void {
+  filtrarLibros() {
     this.route.paramMap.subscribe((params) =>{
-     const generoParam = params.get('genero');
-     if(generoParam !== null){
-      this.librosFiltrados= this.libroService.filtrarLibrosPorGenero(generoParam);
-     } else{
-      alert("No hay libros de ese genero");
-     }
+      const generoParam = params.get('genero');
+      if (generoParam) {
+       this.libroService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
+         this.librosFiltrados = data;
+       })
+      } else {
+       alert("No hay libros de ese genero");
+      }
     });
   }
 

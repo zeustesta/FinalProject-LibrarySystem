@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClienteCompras = exports.ClienteCarrito = exports.ClienteFavoritos = exports.Cliente = void 0;
 const sequelize_1 = require("sequelize");
-const Connection_1 = __importDefault(require("../db/Connection"));
+const connection_1 = __importDefault(require("../db/connection"));
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
-exports.Cliente = Connection_1.default.define('Cliente', {
+exports.Cliente = connection_1.default.define('Cliente', {
     idCliente: {
         type: sequelize_1.DataTypes.UUID,
         defaultValue: sequelize_1.DataTypes.UUIDV4,
@@ -47,7 +47,7 @@ exports.Cliente = Connection_1.default.define('Cliente', {
 }, {
     tableName: 'CLIENTES',
 });
-exports.ClienteFavoritos = Connection_1.default.define('ClienteFavoritos', {
+exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
     libroId: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
@@ -63,7 +63,7 @@ exports.ClienteFavoritos = Connection_1.default.define('ClienteFavoritos', {
         allowNull: false
     }
 });
-exports.ClienteCarrito = Connection_1.default.define('ClienteCarrito', {
+exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
     libroId: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
@@ -79,7 +79,7 @@ exports.ClienteCarrito = Connection_1.default.define('ClienteCarrito', {
         allowNull: false
     }
 });
-exports.ClienteCompras = Connection_1.default.define('ClienteCompras', {
+exports.ClienteCompras = connection_1.default.define('ClienteCompras', {
     libroId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false

@@ -1,10 +1,13 @@
 import express, { Application, Request, Response } from 'express';
 import routesLibros from '../routes/LibrosRoutes';
-import db from '../db/Connection';
+import routesClientes from '../routes/ClientesRoutes';
+import routesVentas from '../routes/VentasRoutes';
+import db from '../db/connection';
 import cors from 'cors';
 import { Venta, LibrosVendidos } from './VentasModel';
 import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from './ClientesModel';
 import libroModel from './LibrosModel';
+import { PORT } from '../config';
 
 class Server {
   private app: Application;
@@ -12,7 +15,7 @@ class Server {
 
   constructor() {
     this.app = express();
-    this.port = process.env.PORT || '3001';
+    this.port = PORT || '3001';
     this.listen();
     this.middlewares();
     this.routes();
@@ -31,7 +34,9 @@ class Server {
         msg: 'API Working'
       });
     })
-    this.app.use('/api/libros', routesLibros)
+    this.app.use('/api/libros', routesLibros);
+    this.app.use('/api/clientes', routesClientes);
+    this.app.use('/api/ventas', routesVentas);
   }
 
   middlewares() {
@@ -47,7 +52,7 @@ class Server {
       await Cliente.sync();
       await ClienteCarrito.sync();
       await ClienteCompras.sync();
-      await ClienteFavoritos.sync();
+      await ClienteFavoritos.sync()
       await Venta.sync();
       await LibrosVendidos.sync();
       console.log('Modelos sincronizados correctamente');
@@ -55,7 +60,6 @@ class Server {
       console.log(error);
       console.log('Error al conectar a la base de datos o sincronizar los modelos');
     }
-    
   }
 }
 

@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
-import db from  "../db/Connection";
+import db from  "../db/connection";
 import Libro from "./LibrosModel";
 
 enum EstadoVenta{
   PENDIENTE = 'Pendiente',
-  CONFIRMADA = 'Confirmada',
+  CONFIRMADA = 'Confirmada', 
   RECHAZADA = 'Rechazada'
 }
 

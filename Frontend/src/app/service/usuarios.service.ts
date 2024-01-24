@@ -2,43 +2,32 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
 import { v4 as uuidv4 } from 'uuid';
 import { StorageService } from './storage.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/enviroments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UsuariosService {
-  user1 = {
-    id: uuidv4(),
-    nombre: 'admin',
-    apellido: 'admin',
-    email: 'admin@gmail.com',
-    password: 'admin',
-    carrito: [],
-    favoritos: [],
-    rol: 'admin'
-  }
-
-  user2 = {
-    id: uuidv4(),
-    nombre: 'usuario',
-    apellido: 'usuario',
-    email: 'usuario@gmail.com',
-    password: 'usuario',
-    carrito: [],
-    favoritos: [],
-    rol: 'usuario'
-  }
-
-  listaUsuarios: Usuario[] = [this.user1, this.user2];
+  private appUrl: string; 
+  private apiUrl: string;
+  listaUsuarios: Usuario[] = [];
   usuarioActual: Usuario | null = null;
 
-  constructor(private storage: StorageService) { 
+  constructor(private storage: StorageService, private http: HttpClient) { 
+    this.appUrl = environment.apiUrl;
+    this.apiUrl = '/api/clientes';
     if(this.storage.getItem('usuariosData') == null){
       this.storage.setItem('usuariosData', this.listaUsuarios);
     }else{
       this.listaUsuarios = this.storage.getItem('usuariosData');
     }
+  }
+
+  getClientes(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.appUrl}${this.apiUrl}/getClientes`);
   }
 
   agregarUsuario(nombre: string, apellido: string, email: string, password: string): void{
