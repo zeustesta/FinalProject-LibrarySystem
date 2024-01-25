@@ -48,15 +48,24 @@ exports.Cliente = connection_1.default.define('Cliente', {
     tableName: 'CLIENTES',
 });
 exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
-    // idCliente: {
-    //   type: DataTypes.UUID,
-    //   defaultValue: DataTypes.UUIDV4,
-    //   primaryKey: true
-    // }, 
-    // idLibros: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // },
+    idCliente: {
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
+        primaryKey: true,
+        references: {
+            model: exports.Cliente,
+            key: 'idCliente',
+        }
+    },
+    idLibros: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+            model: LibrosModel_1.default,
+            key: 'idLibro',
+        }
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
@@ -67,17 +76,28 @@ exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
         defaultValue: sequelize_1.DataTypes.NOW,
         allowNull: false
     }
+}, {
+    tableName: 'FAVORITOSPORCLIENTE'
 });
 exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
-    // idCliente: {
-    //   type: DataTypes.UUID,
-    //   defaultValue: DataTypes.UUIDV4,
-    //   primaryKey: true
-    // }, 
-    // idLibro: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // },
+    idCliente: {
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
+        primaryKey: true,
+        references: {
+            model: exports.Cliente,
+            key: 'idCliente',
+        },
+    },
+    idLibro: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+            model: LibrosModel_1.default,
+            key: 'idLibro',
+        },
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
@@ -88,17 +108,28 @@ exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
         defaultValue: sequelize_1.DataTypes.NOW,
         allowNull: false
     }
+}, {
+    tableName: 'CARRITOPORCLIENTE'
 });
 exports.ClienteCompras = connection_1.default.define('ClienteCompras', {
-    // idCliente: {
-    //   type: DataTypes.UUID,
-    //   defaultValue: DataTypes.UUIDV4,
-    //   primaryKey: true
-    // }, 
-    // idLibro: {
-    //   type: DataTypes.UUID,
-    //   allowNull: false
-    // },
+    idCliente: {
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
+        primaryKey: true,
+        references: {
+            model: exports.Cliente,
+            key: 'idCliente',
+        }
+    },
+    idLibro: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+            model: exports.Cliente,
+            key: 'idCliente',
+        }
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
@@ -109,7 +140,12 @@ exports.ClienteCompras = connection_1.default.define('ClienteCompras', {
         defaultValue: sequelize_1.DataTypes.NOW,
         allowNull: false
     }
+}, {
+    tableName: 'COMPRASPORCLIENTE'
 });
-exports.Cliente.belongsToMany(LibrosModel_1.default, { through: exports.ClienteCarrito, as: 'Carrito' });
-exports.Cliente.belongsToMany(LibrosModel_1.default, { through: exports.ClienteFavoritos, as: 'Favoritos' });
-exports.Cliente.belongsToMany(LibrosModel_1.default, { through: exports.ClienteCompras, as: 'Compras' });
+exports.ClienteFavoritos.belongsTo(exports.Cliente, { foreignKey: 'idCliente', as: 'ClienteFavoritos' });
+exports.ClienteFavoritos.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosFavoritos' });
+exports.ClienteCarrito.belongsTo(exports.Cliente, { foreignKey: 'idCliente', as: 'ClienteCarrito' });
+exports.ClienteCarrito.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosCarrito' });
+exports.ClienteCompras.belongsTo(exports.Cliente, { foreignKey: 'idCliente', as: 'ClienteCompras' });
+exports.ClienteCompras.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosCompras' });

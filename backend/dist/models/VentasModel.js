@@ -24,8 +24,8 @@ exports.Venta = connection_1.default.define('Venta', {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         references: {
-            model: ClientesModel_1.Cliente, // La tabla a la que hace referencia
-            key: 'idCliente', // El campo en la tabla a la que hace referencia
+            model: ClientesModel_1.Cliente,
+            key: 'idCliente'
         },
     },
     fechaCompra: {
@@ -55,14 +55,24 @@ exports.Venta = connection_1.default.define('Venta', {
     tableName: 'VENTAS',
 });
 exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
-    // idVenta: {
-    //   type: DataTypes.UUID,
-    //   allowNull: false
-    // },
-    // idLibro: {
-    //   type: DataTypes.UUID,
-    //   allowNull: false
-    // },
+    idVenta: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+            model: exports.Venta,
+            key: 'idVenta',
+        }
+    },
+    idLibro: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+            model: LibrosModel_1.default,
+            key: 'idLibro',
+        }
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
@@ -73,5 +83,9 @@ exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
         defaultValue: sequelize_1.DataTypes.NOW,
         allowNull: false
     }
+}, {
+    tableName: 'LIBROSPORVENTA'
 });
-exports.Venta.belongsToMany(LibrosModel_1.default, { through: exports.LibrosVendidos, as: 'IdsVendidos' });
+exports.Venta.belongsTo(ClientesModel_1.Cliente, { foreignKey: 'idCliente', as: 'ClienteVenta' });
+exports.LibrosVendidos.belongsTo(exports.Venta, { foreignKey: 'idVenta', as: 'Venta' });
+exports.LibrosVendidos.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosVenta' });

@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateVenta = exports.postLibroPorVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
+exports.updateVenta = exports.deleteLibroDeCarrito = exports.postLibroToCarrito = exports.deleteLibroDeFavoritos = exports.postLibroToFavoritos = exports.postLibroPorVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
 const VentasModel_1 = require("../models/VentasModel");
+const ClientesModel_1 = require("../models/ClientesModel");
 const getVentas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listaVentas = yield VentasModel_1.Venta.findAll();
     res.json(listaVentas);
@@ -73,6 +74,66 @@ const postLibroPorVenta = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.postLibroPorVenta = postLibroPorVenta;
+const postLibroToFavoritos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    try {
+        yield VentasModel_1.LibrosVendidos.create(body);
+        res.json({
+            msg: 'Libro vendido agregado con exito'
+        });
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido agregar el libro vendidos');
+    }
+});
+exports.postLibroToFavoritos = postLibroToFavoritos;
+const deleteLibroDeFavoritos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const venta = yield VentasModel_1.Venta.findByPk(id);
+    if (!venta) {
+        res.status(404).json({
+            msg: `No existe una venta con id: ${id}`
+        });
+    }
+    else {
+        yield venta.destroy();
+        res.json({
+            msg: 'Venta eliminada con exito'
+        });
+    }
+});
+exports.deleteLibroDeFavoritos = deleteLibroDeFavoritos;
+const postLibroToCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    try {
+        yield ClientesModel_1.ClienteCarrito.create(body);
+        res.json({
+            msg: 'Libro vendido agregado con exito'
+        });
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido agregar el libro vendidos');
+    }
+});
+exports.postLibroToCarrito = postLibroToCarrito;
+const deleteLibroDeCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const libroCarrito = yield ClientesModel_1.ClienteCarrito.findByPk(id);
+    if (!libroCarrito) {
+        res.status(404).json({
+            msg: `No existe un libro en carrito con id: ${id}`
+        });
+    }
+    else {
+        yield libroCarrito.destroy();
+        res.json({
+            msg: 'Libro en carrito eliminado con exito'
+        });
+    }
+});
+exports.deleteLibroDeCarrito = deleteLibroDeCarrito;
 const updateVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { id } = req.params;

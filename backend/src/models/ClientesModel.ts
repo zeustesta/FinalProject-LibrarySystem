@@ -45,15 +45,24 @@ export const Cliente = db.define('Cliente', {
 });
 
 export const ClienteFavoritos = db.define('ClienteFavoritos', {
-  // idCliente: {
-  //   type: DataTypes.UUID,
-  //   defaultValue: DataTypes.UUIDV4,
-  //   primaryKey: true
-  // }, 
-  // idLibros: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false
-  // },
+  idCliente: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    references: {
+      model: Cliente,
+      key: 'idCliente',
+    }
+  }, 
+  idLibros: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: Libro,
+      key: 'idLibro',
+    }
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
@@ -64,18 +73,30 @@ export const ClienteFavoritos = db.define('ClienteFavoritos', {
     defaultValue: DataTypes.NOW, 
     allowNull: false
   }
+}, 
+{
+  tableName: 'FAVORITOSPORCLIENTE'
 });
 
 export const ClienteCarrito = db.define('ClienteCarrito', {
-  // idCliente: {
-  //   type: DataTypes.UUID,
-  //   defaultValue: DataTypes.UUIDV4,
-  //   primaryKey: true
-  // }, 
-  // idLibro: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false
-  // },
+  idCliente: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    references: {
+      model: Cliente,
+      key: 'idCliente',
+    },
+  }, 
+  idLibro: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: Libro,
+      key: 'idLibro',
+    },
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
@@ -86,18 +107,30 @@ export const ClienteCarrito = db.define('ClienteCarrito', {
     defaultValue: DataTypes.NOW, 
     allowNull: false
   }
+}, 
+{
+  tableName: 'CARRITOPORCLIENTE'
 });
 
 export const ClienteCompras = db.define('ClienteCompras', {
-  // idCliente: {
-  //   type: DataTypes.UUID,
-  //   defaultValue: DataTypes.UUIDV4,
-  //   primaryKey: true
-  // }, 
-  // idLibro: {
-  //   type: DataTypes.UUID,
-  //   allowNull: false
-  // },
+  idCliente: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    references: {
+      model: Cliente,
+      key: 'idCliente',
+    }
+  }, 
+  idLibro: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: Cliente,
+      key: 'idCliente',
+    }
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
@@ -108,8 +141,16 @@ export const ClienteCompras = db.define('ClienteCompras', {
     defaultValue: DataTypes.NOW, 
     allowNull: false
   }
+},
+{
+  tableName: 'COMPRASPORCLIENTE'
 });
 
-Cliente.belongsToMany(Libro, { through: ClienteCarrito, as: 'Carrito' });
-Cliente.belongsToMany(Libro, { through: ClienteFavoritos, as: 'Favoritos' });
-Cliente.belongsToMany(Libro, { through: ClienteCompras, as: 'Compras' });
+ClienteFavoritos.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteFavoritos' });
+ClienteFavoritos.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosFavoritos' });
+
+ClienteCarrito.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteCarrito' });
+ClienteCarrito.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosCarrito' });
+
+ClienteCompras.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteCompras' });
+ClienteCompras.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosCompras' });

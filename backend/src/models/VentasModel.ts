@@ -19,8 +19,8 @@ export const Venta = db.define('Venta', {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: Cliente, // La tabla a la que hace referencia
-      key: 'idCliente', // El campo en la tabla a la que hace referencia
+      model: Cliente,
+      key: 'idCliente'
     },
   },
   fechaCompra: {
@@ -52,14 +52,24 @@ export const Venta = db.define('Venta', {
 });
 
 export const LibrosVendidos = db.define('LibrosVendidos', {
-  // idVenta: {
-  //   type: DataTypes.UUID,
-  //   allowNull: false
-  // },
-  // idLibro: {
-  //   type: DataTypes.UUID,
-  //   allowNull: false
-  // },
+  idVenta: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: Venta,
+      key: 'idVenta',
+    }
+  },
+  idLibro: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: Libro,
+      key: 'idLibro',
+    }
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
@@ -70,7 +80,12 @@ export const LibrosVendidos = db.define('LibrosVendidos', {
     defaultValue: DataTypes.NOW, 
     allowNull: false
   }
+},
+{
+  tableName: 'LIBROSPORVENTA'
 });
 
-Venta.belongsToMany(Libro, { through: LibrosVendidos, as: 'IdsVendidos' });
+Venta.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteVenta' });
 
+LibrosVendidos.belongsTo(Venta, { foreignKey: 'idVenta', as: 'Venta' });
+LibrosVendidos.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosVenta' });
