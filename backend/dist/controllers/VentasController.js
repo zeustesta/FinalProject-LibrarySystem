@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
+exports.updateVenta = exports.postLibroPorVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
 const VentasModel_1 = require("../models/VentasModel");
 const getVentas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listaVentas = yield VentasModel_1.Venta.findAll();
@@ -59,6 +59,20 @@ const postVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.postVenta = postVenta;
+const postLibroPorVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    try {
+        yield VentasModel_1.LibrosVendidos.create(body);
+        res.json({
+            msg: 'Libro vendido agregado con exito'
+        });
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido agregar el libro vendidos');
+    }
+});
+exports.postLibroPorVenta = postLibroPorVenta;
 const updateVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { id } = req.params;

@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from  "../db/connection";
 import Libro from "./LibrosModel";
+import { Cliente } from "./ClientesModel";
 
 enum EstadoVenta{
   PENDIENTE = 'Pendiente',
@@ -14,9 +15,13 @@ export const Venta = db.define('Venta', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  idUsuario: {
+  idCliente: {
     type: DataTypes.UUID,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: Cliente, // La tabla a la que hace referencia
+      key: 'idCliente', // El campo en la tabla a la que hace referencia
+    },
   },
   fechaCompra: {
     type: DataTypes.DATE,
@@ -47,10 +52,14 @@ export const Venta = db.define('Venta', {
 });
 
 export const LibrosVendidos = db.define('LibrosVendidos', {
-  idLibro: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
+  // idVenta: {
+  //   type: DataTypes.UUID,
+  //   allowNull: false
+  // },
+  // idLibro: {
+  //   type: DataTypes.UUID,
+  //   allowNull: false
+  // },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Venta } from "../models/VentasModel";
+import { Venta, LibrosVendidos } from "../models/VentasModel";
 
 export const getVentas = async (req: Request, res: Response) => {
   const listaVentas = await Venta.findAll();
@@ -46,6 +46,20 @@ export const postVenta = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     console.log('No se ha podido agregar la venta');
+  }
+} 
+
+export const postLibroPorVenta = async (req: Request, res: Response) => {
+  const { body } = req;
+
+  try {
+    await LibrosVendidos.create(body);
+    res.json({
+      msg: 'Libro vendido agregado con exito'
+    });
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido agregar el libro vendidos');
   }
 } 
 

@@ -7,5 +7,6 @@ router.get('/getVentas', VentasController_1.getVentas);
 router.get('/getVenta/:id', VentasController_1.getVenta);
 router.delete('/deleteVenta/:id', VentasController_1.deleteVenta);
 router.post('/postVenta', VentasController_1.postVenta);
+router.post('/postLibroVendido', VentasController_1.postLibroPorVenta);
 router.put('/updateVenta/:id', VentasController_1.updateVenta);
 exports.default = router;

@@ -48,10 +48,15 @@ exports.Cliente = connection_1.default.define('Cliente', {
     tableName: 'CLIENTES',
 });
 exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
-    libroId: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
+    // idCliente: {
+    //   type: DataTypes.UUID,
+    //   defaultValue: DataTypes.UUIDV4,
+    //   primaryKey: true
+    // }, 
+    // idLibros: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
@@ -64,10 +69,15 @@ exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
     }
 });
 exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
-    libroId: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
+    // idCliente: {
+    //   type: DataTypes.UUID,
+    //   defaultValue: DataTypes.UUIDV4,
+    //   primaryKey: true
+    // }, 
+    // idLibro: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
@@ -80,10 +90,15 @@ exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
     }
 });
 exports.ClienteCompras = connection_1.default.define('ClienteCompras', {
-    libroId: {
-        type: sequelize_1.DataTypes.UUID,
-        allowNull: false
-    },
+    // idCliente: {
+    //   type: DataTypes.UUID,
+    //   defaultValue: DataTypes.UUIDV4,
+    //   primaryKey: true
+    // }, 
+    // idLibro: {
+    //   type: DataTypes.UUID,
+    //   allowNull: false
+    // },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,

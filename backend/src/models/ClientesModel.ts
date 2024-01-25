@@ -45,10 +45,15 @@ export const Cliente = db.define('Cliente', {
 });
 
 export const ClienteFavoritos = db.define('ClienteFavoritos', {
-  libroId: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+  // idCliente: {
+  //   type: DataTypes.UUID,
+  //   defaultValue: DataTypes.UUIDV4,
+  //   primaryKey: true
+  // }, 
+  // idLibros: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false
+  // },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
@@ -62,10 +67,15 @@ export const ClienteFavoritos = db.define('ClienteFavoritos', {
 });
 
 export const ClienteCarrito = db.define('ClienteCarrito', {
-  libroId: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+  // idCliente: {
+  //   type: DataTypes.UUID,
+  //   defaultValue: DataTypes.UUIDV4,
+  //   primaryKey: true
+  // }, 
+  // idLibro: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false
+  // },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
@@ -79,10 +89,15 @@ export const ClienteCarrito = db.define('ClienteCarrito', {
 });
 
 export const ClienteCompras = db.define('ClienteCompras', {
-  libroId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
+  // idCliente: {
+  //   type: DataTypes.UUID,
+  //   defaultValue: DataTypes.UUIDV4,
+  //   primaryKey: true
+  // }, 
+  // idLibro: {
+  //   type: DataTypes.UUID,
+  //   allowNull: false
+  // },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

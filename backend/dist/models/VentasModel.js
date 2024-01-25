@@ -7,6 +7,7 @@ exports.LibrosVendidos = exports.Venta = void 0;
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
+const ClientesModel_1 = require("./ClientesModel");
 var EstadoVenta;
 (function (EstadoVenta) {
     EstadoVenta["PENDIENTE"] = "Pendiente";
@@ -19,9 +20,13 @@ exports.Venta = connection_1.default.define('Venta', {
         defaultValue: sequelize_1.DataTypes.UUIDV4,
         primaryKey: true
     },
-    idUsuario: {
+    idCliente: {
         type: sequelize_1.DataTypes.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: ClientesModel_1.Cliente, // La tabla a la que hace referencia
+            key: 'idCliente', // El campo en la tabla a la que hace referencia
+        },
     },
     fechaCompra: {
         type: sequelize_1.DataTypes.DATE,
@@ -50,10 +55,14 @@ exports.Venta = connection_1.default.define('Venta', {
     tableName: 'VENTAS',
 });
 exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
-    idLibro: {
-        type: sequelize_1.DataTypes.UUID,
-        allowNull: false
-    },
+    // idVenta: {
+    //   type: DataTypes.UUID,
+    //   allowNull: false
+    // },
+    // idLibro: {
+    //   type: DataTypes.UUID,
+    //   allowNull: false
+    // },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         defaultValue: sequelize_1.DataTypes.NOW,
