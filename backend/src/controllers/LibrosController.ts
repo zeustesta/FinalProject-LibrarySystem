@@ -7,25 +7,25 @@ export const getLibros = async (req: Request, res: Response) => {
 } 
 
 export const getLibro = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const libro = await Libro.findByPk(id);
+  const { idLibro } = req.params;
+  const libro = await Libro.findByPk(idLibro);
 
   if (libro) {
     res.json(libro);
   } else {
     res.status(404).json({
-      msg: `No existe un libro con id: ${id}`
+      msg: `No existe un libro con id: ${idLibro}`
     });
   }
 } 
 
 export const deleteLibro = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const libro = await Libro.findByPk(id);
+  const { idLibro } = req.params;
+  const libro = await Libro.findByPk(idLibro);
 
   if (!libro) {
     res.status(404).json({
-      msg: `No existe un libro con id: ${id}`
+      msg: `No existe un libro con id: ${idLibro}`
     });
   } else {
     await libro.destroy();
@@ -51,14 +51,14 @@ export const postLibro = async (req: Request, res: Response) => {
 
 export const updateLibro = async (req: Request, res: Response) => {
   const { body } = req;
-  const { id } = req.params;
+  const { idLibro } = req.params;
 
   try {
-    const libro = await Libro.findByPk(id);
+    const libro = await Libro.findByPk(idLibro);
   
     if (!libro) {
       res.status(404).json({
-        msg: `No existe un libro con id: ${id}`
+        msg: `No existe un libro con id: ${idLibro}`
       });
     } else {
       await libro.update(body);

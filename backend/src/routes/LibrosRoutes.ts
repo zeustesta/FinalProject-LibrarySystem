@@ -4,9 +4,9 @@ import { getLibros, getLibro, deleteLibro, postLibro, updateLibro } from "../con
 const router = Router();
 
 router.get('/getLibros', getLibros);
-router.get('/getLibro/:id', getLibro);
-router.delete('/deleteLibro/:id', deleteLibro);
+router.get('/getLibro/:idLibro', getLibro);
+router.delete('/deleteLibro/:idLibro', deleteLibro);
 router.post('/postLibro', postLibro);
-router.put('/updateLibro/:id', updateLibro);
+router.put('/updateLibro/:idLibro', updateLibro);
 
 export default router;

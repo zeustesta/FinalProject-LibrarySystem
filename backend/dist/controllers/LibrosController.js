@@ -20,24 +20,24 @@ const getLibros = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getLibros = getLibros;
 const getLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const libro = yield LibrosModel_1.default.findByPk(id);
+    const { idLibro } = req.params;
+    const libro = yield LibrosModel_1.default.findByPk(idLibro);
     if (libro) {
         res.json(libro);
     }
     else {
         res.status(404).json({
-            msg: `No existe un libro con id: ${id}`
+            msg: `No existe un libro con id: ${idLibro}`
         });
     }
 });
 exports.getLibro = getLibro;
 const deleteLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const libro = yield LibrosModel_1.default.findByPk(id);
+    const { idLibro } = req.params;
+    const libro = yield LibrosModel_1.default.findByPk(idLibro);
     if (!libro) {
         res.status(404).json({
-            msg: `No existe un libro con id: ${id}`
+            msg: `No existe un libro con id: ${idLibro}`
         });
     }
     else {
@@ -64,12 +64,12 @@ const postLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.postLibro = postLibro;
 const updateLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
-    const { id } = req.params;
+    const { idLibro } = req.params;
     try {
-        const libro = yield LibrosModel_1.default.findByPk(id);
+        const libro = yield LibrosModel_1.default.findByPk(idLibro);
         if (!libro) {
             res.status(404).json({
-                msg: `No existe un libro con id: ${id}`
+                msg: `No existe un libro con id: ${idLibro}`
             });
         }
         else {
