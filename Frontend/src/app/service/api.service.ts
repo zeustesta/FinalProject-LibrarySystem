@@ -44,7 +44,7 @@ export class APIService {
   }
 
   getTop5(listaTop:Libro[]) {
-    const ventasOrdenadas = listaTop.sort((a,b) => b.cantVenta - a.cantVenta);
+    const ventasOrdenadas = listaTop.sort((a,b) => b.cantVentas - a.cantVentas);
     console.log(ventasOrdenadas);
     const top5Ventas = ventasOrdenadas.slice(0,5);
     

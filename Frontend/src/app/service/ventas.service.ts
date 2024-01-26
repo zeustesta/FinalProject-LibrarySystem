@@ -5,33 +5,45 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
 import { EstadoVenta } from '../utils/enum';
+import { Observable, Observer } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/enviroments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VentasService {
-  listaVentas: Venta[] = [];
+  private appUrl: string; 
+  private apiUrl: string;
 
-  constructor(private uService: UsuariosService, private aService: APIService, private storage: StorageService) {
-    if(storage.getItem('ventasData') == null){
-      storage.setItem('ventasData', this.listaVentas);
-    }else{
-      this.listaVentas = storage.getItem('ventasData');
-    }
+  constructor(private uService: UsuariosService, private aService: APIService, private storage: StorageService, private http: HttpClient) {
+    this.appUrl = environment.apiUrl;
+    this.apiUrl = '/api/ventas';
   }
-  
-  agregarVenta(idUsuario: string, idsLibros: string[], fecha: Date){
-    const newVenta = {
-      idVenta: uuidv4(),
-      idUsuario: idUsuario,
-      fechaCompra: fecha,
-      idsLibros: idsLibros,
-      total: this.calcularTotal(idsLibros),
-      estado: EstadoVenta.PENDIENTE
-    }
 
-    this.listaVentas.push(newVenta);
-    this.storage.updateItem('ventasData', this.listaVentas);
+  getVentas(): Observable<Venta[]> {
+    return this.http.get<Venta[]>(`${this.appUrl}${this.apiUrl}/getVentas`)
+  }
+
+  getVenta(idVenta: string): Observable<Venta> {
+    return this.http.get<Venta>(`${this.appUrl}${this.apiUrl}/getVenta/${idVenta}`);
+  }
+
+  deleteVenta(idVenta: string): Observable<string> {
+    return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteVenta/${idVenta}`);
+  }
+
+  postVenta(newVenta: Venta): Observable<string> {
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postVenta`, newVenta);
+  }
+
+  updateVenta(idVenta: string, estado: EstadoVenta): Observable<string> {
+    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateVenta/${idVenta}`, estado);
+  }
+
+  postLibroVendido(idVenta: string, idLibro: string): Observable<string> {
+    const libroVendido = { idVenta: idVenta, idLibro: idLibro };
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroVendido`, libroVendido);
   }
 
   calcularTotal(arrayIds: string[]) {
@@ -43,25 +55,5 @@ export class VentasService {
       }
     }
     return total;
-  }
-
-  getVentas(){
-    return this.listaVentas;
-  }
-
-  confirmarCompra(idVenta: string){
-    const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
-
-    if(indexVenta != null){
-      this.listaVentas[indexVenta].estado = EstadoVenta.CONFIRMADA
-    }
-  }
-
-  rechazarCompra(idVenta: string){
-    const indexVenta = this.listaVentas.findIndex((v) => v.idVenta === idVenta);
-
-    if(indexVenta != null){
-      this.listaVentas[indexVenta].estado = EstadoVenta.RECHAZADA
-    }
   }
 }

@@ -3,8 +3,8 @@ export interface Libro {
   titulo: string,
   genero: string,
   autor: string,
-  stock: number,
-  cantVenta: number,
+  stock: number,  
   precio: number,
-  portada: string
+  portada: string,
+  cantVentas: number
 }

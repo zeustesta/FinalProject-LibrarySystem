@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
-import { v4 as uuidv4 } from 'uuid';
 import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/enviroments/environment.prod';
+import { Libro } from '../interfaces/plantillaLibro';
 
 @Injectable({
   providedIn: 'root'
@@ -13,87 +13,97 @@ import { environment } from 'src/enviroments/environment.prod';
 export class UsuariosService {
   private appUrl: string; 
   private apiUrl: string;
-  listaUsuarios: Usuario[] = [];
-  usuarioActual: Usuario | null = null;
+  usuarioActual: string | null;
 
   constructor(private storage: StorageService, private http: HttpClient) { 
     this.appUrl = environment.apiUrl;
     this.apiUrl = '/api/clientes';
-    if(this.storage.getItem('usuariosData') == null){
-      this.storage.setItem('usuariosData', this.listaUsuarios);
-    }else{
-      this.listaUsuarios = this.storage.getItem('usuariosData');
-    }
+    this.usuarioActual = null;
   }
+
+  //METODOS PARA CLIENTE
 
   getClientes(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.appUrl}${this.apiUrl}/getClientes`);
   }
 
-  agregarUsuario(nombre: string, apellido: string, email: string, password: string): void{
-    let newUser: Usuario = {
-      id: uuidv4(),
-      nombre: nombre,
-      apellido: apellido,
-      email: email,
-      password: password,
-      carrito: [],
-      favoritos: [],
-      rol: 'usuario'
-    };
-
-    this.listaUsuarios.push(newUser);
-    this.storage.updateItem('usuariosData', this.listaUsuarios);
+  getCliente(idCliente: string): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.appUrl}${this.apiUrl}/getCliente/${idCliente}`);
   }
 
-  buscarUsuario(email: string, password: string): Usuario | undefined{
-    const encontrado = this.listaUsuarios.find((u) => (u.email === email) && (u.password === password));
+  postCliente(newClient: Usuario): Observable<string> {
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postCliente`, newClient);
+  }
 
-    return encontrado;
+  updateCliente(idCliente: string, update: Usuario): Observable<string> {
+    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateCliente/${idCliente}`, update);
+  }
+
+  deleteCliente(idCliente: string): Observable<string> { 
+    return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCliente/${idCliente}`);
+  }
+
+  //METODOS PARA FAVS DEL CLIENTE
+
+  getFavs(idCliente: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getFavs/${idCliente}`);
+  }
+
+  postFav(idCliente: string, idLibro: string): Observable<string> {
+    const body = { idCliente, idLibro };
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnFavs`, body);
+  }
+
+  deleteFav(idCliente: string, idLibro: string): Observable<string> {
+    return this.http.delete<string>(`this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
+  }
+
+  //METODOS PARA CART DEL CLIENTE
+
+  getCart(idCliente: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getCart/${idCliente}`);
+  }
+
+  postCart(idCliente: string, idLibro: string): Observable<string> {
+    const body = { idCliente, idLibro };
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
+  }
+
+  deleteCart(idCliente: string, idLibro: string): Observable<string> {
+    return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroCart/${idCliente}/${idLibro}`);
+  }
+
+  //METODO PARA EL HISTORIAL DEL CLIENTE
+
+  getHistorial(idCliente: string): Observable<any> {
+    return this.http.get<any>(`${this.appUrl}${this.apiUrl}/getHistorial/${idCliente}`)
+  }
+
+  //METODOS PARA USUARIO ACTUAL
+
+  establecerUsuarioActual(usuario: string): void{
+    this.usuarioActual = usuario;
+    this.storage.setItem('usuarioActual', usuario);
   }
 
   cerrarSesion(): void{
     this.usuarioActual = null;
     this.storage.removeItem('usuarioActual');
   }
-  
-  establecerUsuarioActual(usuario: Usuario): void{
-    this.usuarioActual = usuario;
-    this.storage.setItem('usuarioActual', usuario);
-  }
 
   obtenerUsuarioActual(): Usuario | null {
-    const usuarioAlmacenado = this.storage.getItem('usuarioActual');
-
-    if (usuarioAlmacenado) {
-      return usuarioAlmacenado;
-    }else{
-      return null;
-    }
-  }
-
-  obtenerIndex(idUsuario: string): number{
-    const indexUsuario = this.listaUsuarios.findIndex((u) => u.id = idUsuario);
-    if(indexUsuario !== -1){
-      return indexUsuario;
-    }else{
-      return -1;
-    }
-  }
-  
-  getUserList(): Usuario[]{
-    return this.listaUsuarios;
-  }
-
-  actualizarUsuarios(): void{
-    this.storage.setItem('usuariosData', this.listaUsuarios);
+    return this.storage.getItem('usuarioActual');
   }
 
   esAdmin(){
-    if(this.usuarioActual?.rol === 'admin'){
-      return true; //Es admin
-    }else{
-      return false; //Es usuario
+    if(this.estaLogueado()){
+      this.getCliente(this.usuarioActual!).subscribe((userData) => {
+        if (userData.rol === 'admin') {
+          return true; //es admin
+        } else {
+          return false; //no es admin
+        }
+      })
     }
   }
 

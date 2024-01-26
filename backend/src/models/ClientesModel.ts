@@ -112,45 +112,8 @@ export const ClienteCarrito = db.define('ClienteCarrito', {
   tableName: 'CARRITOPORCLIENTE'
 });
 
-export const ClienteCompras = db.define('ClienteCompras', {
-  idCliente: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-    references: {
-      model: Cliente,
-      key: 'idCliente',
-    }
-  }, 
-  idLibro: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    primaryKey: true,
-    references: {
-      model: Cliente,
-      key: 'idCliente',
-    }
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-    allowNull: false
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW, 
-    allowNull: false
-  }
-},
-{
-  tableName: 'COMPRASPORCLIENTE'
-});
-
 ClienteFavoritos.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteFavoritos' });
 ClienteFavoritos.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosFavoritos' });
 
 ClienteCarrito.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteCarrito' });
 ClienteCarrito.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosCarrito' });
-
-ClienteCompras.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteCompras' });
-ClienteCompras.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosCompras' });

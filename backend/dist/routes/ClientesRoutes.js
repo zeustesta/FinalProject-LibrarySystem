@@ -10,10 +10,13 @@ router.post('/postCliente', ClientesController_1.postCliente);
 router.put('/updateCliente/:idCliente', ClientesController_1.updateCliente);
 router.delete('/deleteCliente/:idCliente', ClientesController_1.deleteCliente);
 //ROUTES PARA FAVORITOS
-router.get('/getFavoritos/:idCliente', ClientesController_1.getFavoritos);
-router.delete('/deleteLibroFavoritos/:idCliente/:idLibro', ClientesController_1.deleteLibroFavoritos);
+router.get('/getFavs/:idCliente', ClientesController_1.getFavoritos);
+router.delete('/deleteLibroFavs/:idCliente/:idLibro', ClientesController_1.deleteLibroFavoritos);
+router.post('/postLibroEnFavs', ClientesController_1.postLibroEnFavoritos);
 //ROUTES PARA CARRITO
-router.get('/getCarrito/:idCliente', ClientesController_1.getCarrito);
-router.delete('/deleteLibroCarrito/:idCliente/:idLibro', ClientesController_1.deleteLibroCarrito);
-//ROUTES PARA COMPRAS
+router.get('/getCart/:idCliente', ClientesController_1.getCarrito);
+router.delete('/deleteLibroCart/:idCliente/:idLibro', ClientesController_1.deleteLibroCarrito);
+router.post('/postLibroEnCart', ClientesController_1.postLibroEnCarrito);
+//GET HISTORIAL CLIENTE
+router.get('/getHistorial/:idCliente', ClientesController_1.getHistorialComprasCliente);
 exports.default = router;

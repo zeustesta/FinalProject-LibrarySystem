@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClienteCompras = exports.ClienteCarrito = exports.ClienteFavoritos = exports.Cliente = void 0;
+exports.ClienteCarrito = exports.ClienteFavoritos = exports.Cliente = void 0;
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
@@ -111,41 +111,7 @@ exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
 }, {
     tableName: 'CARRITOPORCLIENTE'
 });
-exports.ClienteCompras = connection_1.default.define('ClienteCompras', {
-    idCliente: {
-        type: sequelize_1.DataTypes.UUID,
-        defaultValue: sequelize_1.DataTypes.UUIDV4,
-        primaryKey: true,
-        references: {
-            model: exports.Cliente,
-            key: 'idCliente',
-        }
-    },
-    idLibro: {
-        type: sequelize_1.DataTypes.UUID,
-        allowNull: false,
-        primaryKey: true,
-        references: {
-            model: exports.Cliente,
-            key: 'idCliente',
-        }
-    },
-    createdAt: {
-        type: sequelize_1.DataTypes.DATE,
-        defaultValue: sequelize_1.DataTypes.NOW,
-        allowNull: false
-    },
-    updatedAt: {
-        type: sequelize_1.DataTypes.DATE,
-        defaultValue: sequelize_1.DataTypes.NOW,
-        allowNull: false
-    }
-}, {
-    tableName: 'COMPRASPORCLIENTE'
-});
 exports.ClienteFavoritos.belongsTo(exports.Cliente, { foreignKey: 'idCliente', as: 'ClienteFavoritos' });
 exports.ClienteFavoritos.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosFavoritos' });
 exports.ClienteCarrito.belongsTo(exports.Cliente, { foreignKey: 'idCliente', as: 'ClienteCarrito' });
 exports.ClienteCarrito.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosCarrito' });
-exports.ClienteCompras.belongsTo(exports.Cliente, { foreignKey: 'idCliente', as: 'ClienteCompras' });
-exports.ClienteCompras.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosCompras' });

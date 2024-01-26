@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from "../models/ClientesModel";
+import { Cliente, ClienteCarrito, ClienteFavoritos } from "../models/ClientesModel";
+import { Venta, LibrosVendidos } from "../models/VentasModel";
+import Libro from "../models/LibrosModel";
 
 //METODOS PARA CLIENTE
 
@@ -100,25 +102,34 @@ export const deleteLibroFavoritos = async (req: Request, res: Response) => {
   const libroEnFavoritos = await ClienteFavoritos.findOne({
     where: {
       idCliente: idCliente,
-      idLibro: idLibro,
-    },
+      idLibro: idLibro
+    }
   });
   if (libroEnFavoritos) {
-    await ClienteFavoritos.destroy({
-      where: {
-          idCliente: idCliente,
-          idLibro: idLibro,
-      },
-    });
+    await libroEnFavoritos.destroy();
     res.json({
-      msg: `Libro eliminado de favoritos del cliente con id: ${idCliente}`,
+      msg: `Libro eliminado de favoritos del cliente con id: ${idCliente}`
     });
   } else {
     res.status(404).json({
-      msg: `El libro no existe en favoritos del cliente con id: ${idCliente}`,
+      msg: `El libro no existe en favoritos del cliente con id: ${idCliente}`
     });
   }
 }
+
+export const postLibroEnFavoritos = async (req: Request, res: Response) => {
+  const { body } = req;
+
+  try {
+    await ClienteFavoritos.create(body);
+    res.json({
+      msg: 'Libro agregado a favoritos con exito'
+    });
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido agregar el libro a favoritos');
+  }
+} 
 
 //METODOS PARA CARRITO
 
@@ -150,12 +161,7 @@ export const deleteLibroCarrito = async (req: Request, res: Response) => {
     },
   });
   if (libroEnCarrito) {
-    await ClienteCarrito.destroy({
-      where: {
-          idCliente: idCliente,
-          idLibro: idLibro,
-      },
-    });
+    await libroEnCarrito.destroy();
     res.json({
       msg: `Libro eliminado del carrito del cliente con id: ${idCliente}`,
     });
@@ -166,62 +172,50 @@ export const deleteLibroCarrito = async (req: Request, res: Response) => {
   }
 }
 
-//METODOS PARA COMPRAS
-
-export const getCompras = async (req: Request, res: Response) => {
-  const { idCliente } = req.params;
-
-  const compras = await ClienteCompras.findAll({
-    where: {
-      idCliente: idCliente,
-    },
-  });
-  if (compras.length > 0) {
-    res.json(compras);
-  } else {
-    res.status(404).json({
-        msg: `No existen compras para el cliente con id: ${idCliente}`
-    });
-  }
-}
-
-export const postCompra = async (req: Request, res: Response) => {
+export const postLibroEnCarrito = async (req: Request, res: Response) => {
   const { body } = req;
 
   try {
-    await ClienteCompras.create(body);
+    await ClienteCarrito.create(body);
     res.json({
-      msg: 'Compra registrada con exito'
+      msg: 'Libro agregado al carrito con exito'
     });
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido agregar la compra');
+    console.log('No se ha podido agregar el libro al carrito');
   }
 } 
 
-// export const deleteCompra = async (req: Request, res: Response) => {
-//   const { idCliente } = req.params;
-//   const { idCompra } = req.params;
+//GET HISTORIAL CLIENTE
 
-//   const compra = await ClienteCompras.findOne({
-//     where: {
-//       idCliente: idCliente,
-//       idLibro: idLibro,
-//     },
-//   });
-//   if (libroEnCarrito) {
-//     await ClienteCarrito.destroy({
-//       where: {
-//           idCliente: idCliente,
-//           idLibro: idLibro,
-//       },
-//     });
-//     res.json({
-//       msg: `Libro eliminado del carrito del cliente con id: ${idCliente}`,
-//     });
-//   } else {
-//     res.status(404).json({
-//       msg: `El libro no existe en el carrito del cliente con id: ${idCliente}`,
-//     });
-//   }
-// } 
+export const getHistorialComprasCliente = async (req: Request, res: Response) => {
+  const { idCliente } = req.params;
+
+  try {
+    const historialCompras = await Venta.findAll({
+      where: {
+        idCliente: idCliente
+      },
+      include: [{
+        model: LibrosVendidos,
+        attributes: ['idLibro'], 
+        include: [{
+          model: Libro,
+          attributes: ['idLibro', 'titulo', 'genero', 'autor', 'precio']
+        }],
+        as: 'Libros'
+      }]
+    });
+
+    if (historialCompras) {
+      res.json(historialCompras);
+    } else {
+      res.status(404).json({
+        msg: `No existe historial de compras para el cliente con id: ${idCliente}`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    console.log(`No se encontro historial de compras para el cliente con id: ${idCliente}`);
+  }
+};

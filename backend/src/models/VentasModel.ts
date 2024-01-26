@@ -3,7 +3,7 @@ import db from  "../db/connection";
 import Libro from "./LibrosModel";
 import { Cliente } from "./ClientesModel";
 
-enum EstadoVenta{
+export enum EstadoVenta{
   PENDIENTE = 'Pendiente',
   CONFIRMADA = 'Confirmada', 
   RECHAZADA = 'Rechazada'
