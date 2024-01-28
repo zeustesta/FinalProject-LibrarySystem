@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Venta } from 'src/app/interfaces/plantillaVenta';
 import { VentasService } from 'src/app/service/ventas.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EstadoVenta } from 'src/app/utils/enum';
 
 @Component({
   selector: 'app-ventas',
@@ -10,22 +11,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class VentasComponent {
   listaVentas: Venta[] = [];
-  ventaForm: FormGroup;
 
   constructor(private vService: VentasService, private fb: FormBuilder){
-    this.listaVentas = this.vService.getVentas();
-    this.ventaForm = this.fb.group({
-      fecha: ['', Validators.required],
-      total: [0, [Validators.min(0), Validators.required]]
+    this.vService.getVentas();
+  }
+
+  getVentas() {
+    this.vService.getVentas().subscribe((ventas) => {
+      this.listaVentas = ventas;
     })
   }
 
-  confirmarCompra(idVenta: string){
-    this.vService.confirmarCompra(idVenta);
-  }
-
-  rechazarCompra(idVenta: string){
-    this.vService.rechazarCompra(idVenta);
+  cambiarEstadoVenta(idVenta: string, nuevoEstado: string) {
+    if (nuevoEstado === 'Confirmada') {
+      this.vService.updateVenta(idVenta, EstadoVenta.CONFIRMADA).subscribe();
+    } else {
+      this.vService.updateVenta(idVenta, EstadoVenta.RECHAZADA).subscribe();
+    } 
   }
 
   yaConfirmada(idVenta: string){

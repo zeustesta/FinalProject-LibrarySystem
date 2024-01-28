@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
 
@@ -21,7 +20,6 @@ export class FiltroComponent{
     private route: ActivatedRoute,
     private libroService: APIService,
     private uService: UsuariosService, 
-    private cService: CartFavsService, 
     private router: Router
   ) { this.filtrarLibros(); }
 
@@ -38,12 +36,14 @@ export class FiltroComponent{
     });
   }
 
-  addToCart(libro:Libro){
-    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
-      this.cService.agregarAlCarrito(libro);
-      alert('Libro añadido al carrito!');
+  addToCart(idLibro: string){
+    const actual = this.uService.obtenerUsuarioActual();
+
+    if(actual !== null){
+      this.uService.postCart(actual, idLibro).subscribe();
+      alert('Libro agregado correctamente');
     }else{
-      alert('Debe estar logueado');
+      alert('Debe iniciar sesion primero');
     }
   }
 

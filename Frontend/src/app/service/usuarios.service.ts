@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
 import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, ObservableLike, map } from 'rxjs';
 import { environment } from 'src/enviroments/environment.prod';
 import { Libro } from '../interfaces/plantillaLibro';
 
@@ -14,6 +14,7 @@ export class UsuariosService {
   private appUrl: string; 
   private apiUrl: string;
   usuarioActual: string | null;
+  rolActual: boolean = false;
 
   constructor(private storage: StorageService, private http: HttpClient) { 
     this.appUrl = environment.apiUrl;
@@ -43,10 +44,21 @@ export class UsuariosService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCliente/${idCliente}`);
   }
 
+  validarCliente(email: string, password: string): Observable<Usuario | null> {
+    return this.http.post<Usuario | null>(`${this.appUrl}${this.apiUrl}/validarCliente`, { email, password });
+  }
+  
+  validarEmail(email: string): Observable<boolean> {
+    console.log(email);
+    return this.http.get<{ msg: string }>(`${this.appUrl}${this.apiUrl}/validarEmail/${email}`).pipe(
+      map(response => response.msg === 'EXISTE')
+    );
+  }
+
   //METODOS PARA FAVS DEL CLIENTE
 
-  getFavs(idCliente: string): Observable<Libro[]> {
-    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getFavs/${idCliente}`);
+  getFavs(idCliente: string): Observable<any> {
+    return this.http.get<any>(`${this.appUrl}${this.apiUrl}/getFavs/${idCliente}`);
   }
 
   postFav(idCliente: string, idLibro: string): Observable<string> {
@@ -55,13 +67,13 @@ export class UsuariosService {
   }
 
   deleteFav(idCliente: string, idLibro: string): Observable<string> {
-    return this.http.delete<string>(`this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
+    return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
   }
 
   //METODOS PARA CART DEL CLIENTE
 
-  getCart(idCliente: string): Observable<Libro[]> {
-    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getCart/${idCliente}`);
+  getCart(idCliente: string): Observable<any> {
+    return this.http.get<any>(`${this.appUrl}${this.apiUrl}/getCart/${idCliente}`);
   }
 
   postCart(idCliente: string, idLibro: string): Observable<string> {
@@ -71,6 +83,10 @@ export class UsuariosService {
 
   deleteCart(idCliente: string, idLibro: string): Observable<string> {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroCart/${idCliente}/${idLibro}`);
+  }
+
+  cleanCart(idCliente: string): Observable<string> {
+    return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCarrito/${idCliente}`);
   }
 
   //METODO PARA EL HISTORIAL DEL CLIENTE
@@ -88,10 +104,11 @@ export class UsuariosService {
 
   cerrarSesion(): void{
     this.usuarioActual = null;
+    this.rolActual = false;
     this.storage.removeItem('usuarioActual');
   }
 
-  obtenerUsuarioActual(): Usuario | null {
+  obtenerUsuarioActual(): string | null {
     return this.storage.getItem('usuarioActual');
   }
 
@@ -99,11 +116,11 @@ export class UsuariosService {
     if(this.estaLogueado()){
       this.getCliente(this.usuarioActual!).subscribe((userData) => {
         if (userData.rol === 'admin') {
-          return true; //es admin
+          this.rolActual = true; //es admin
         } else {
-          return false; //no es admin
+          this.rolActual = false; //no es admin
         }
-      })
+      });
     }
   }
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 
 @Component({
@@ -10,51 +9,36 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
   styleUrls: ['./favoritos.component.css']
 })
 export class FavoritosComponent {
-  arrayTitulosFavs: string[] | null = null;
+  arrayFavs: Libro[] = [];
 
-  constructor(private uService: UsuariosService, private cfService: CartFavsService, private aService: APIService){
-    if(this.uService.obtenerUsuarioActual() !== null){
-      this.arrayTitulosFavs = this.generarArregloTitulos();
-    }
+  constructor(private uService: UsuariosService, private aService: APIService){
+    this.getFavoritos();
   }
 
-  isLoggedIn(){
-    return this.uService.estaLogueado();
-  }
-
-  generarArregloTitulos(){
-    let arrayIds = this.cfService.getFavsActual();
-    let arrayTitulos: string[] = new Array;
-
-    if(arrayIds !== null){
-      for(let i = 0; i < arrayIds.length; i++){
-        let libro;
-        this.aService.getLibro(arrayIds[i]).subscribe((libro) => {
-          if(libro !== null){
-            arrayTitulos.push(libro.titulo);
-          }
-        }) 
+  getFavoritos() {
+    const actual = this.uService.obtenerUsuarioActual();
+    
+    this.uService.getFavs(actual!).subscribe((favs) => {
+      let arrayIds = favs;
+      if(arrayIds !== null){
+        for(let i = 0; i < arrayIds.length; i++){
+          this.aService.getLibro(arrayIds[i]['idLibro']).subscribe((data) => {
+            let libro: Libro = data;
+            if(libro !== null){
+              this.arrayFavs.push(libro);
+            }
+          }) 
+        }
       }
-    }
-    return arrayTitulos;
+    });
   }
 
-  eliminarDeFavs(titulo: string){
-    let libro = this.aService.listaLibros.find((l) => l.titulo === titulo);
-
-    if(libro){
-      this.cfService.eliminarDeFavs(libro.idLibro);
-      this.arrayTitulosFavs = this.generarArregloTitulos();
-      alert('Libro eliminado de favoritos');
-    }
+  eliminarDeFavs(idLibro: string){
+    this.uService.deleteFav(this.uService.obtenerUsuarioActual()!, idLibro).subscribe();
+    this.arrayFavs.splice(this.arrayFavs.findIndex(item => item.idLibro === idLibro), 1);
   }
 
-  agregarACarrito(titulo: string){
-    let libro = this.aService.listaLibros.find((l) => l.titulo === titulo);
-
-    if(libro){
-      this.cfService.agregarAlCarrito(libro);
-      alert('Libro agregado al carrito');
-    }
+  agregarACarrito(idLibro: string){
+    this.uService.postFav(this.uService.obtenerUsuarioActual()!, idLibro).subscribe();
   }
 }

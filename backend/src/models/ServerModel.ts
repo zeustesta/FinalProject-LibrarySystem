@@ -5,7 +5,7 @@ import routesVentas from '../routes/VentasRoutes';
 import db from '../db/connection';
 import cors from 'cors';
 import { Venta, LibrosVendidos } from './VentasModel';
-import { Cliente, ClienteCarrito, ClienteCompras, ClienteFavoritos } from './ClientesModel';
+import { Cliente, ClienteCarrito, ClienteFavoritos } from './ClientesModel';
 import libroModel from './LibrosModel';
 import { PORT } from '../config';
 
@@ -51,7 +51,6 @@ class Server {
       await libroModel.sync();
       await Cliente.sync();
       await ClienteCarrito.sync();
-      await ClienteCompras.sync();
       await ClienteFavoritos.sync()
       await Venta.sync();
       await LibrosVendidos.sync();

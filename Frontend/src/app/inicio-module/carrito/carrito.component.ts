@@ -3,9 +3,9 @@ import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
 import { Usuario } from 'src/app/interfaces/plantillaUsuario';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { VentasService } from 'src/app/service/ventas.service';
 import { Router } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
@@ -14,38 +14,53 @@ import { Router } from '@angular/router';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent {
-  // carritoActual: Libro[] | null;
-  // usuarioActual: Usuario | null;
+  arrayCarrito: Libro[] = [];
 
-  constructor(private ApiServ: APIService, private cfService: CartFavsService, private vService: VentasService, private uService: UsuariosService, private router: Router){
-    // this.carritoActual = this.cfService.getCarritoActual();
-    // this.usuarioActual = this.uService.obtenerUsuarioActual();
+  constructor(private aService: APIService, private vService: VentasService, private uService: UsuariosService, private router: Router){
+    this.getCarrito();
   }
 
-  // comprarCarrito(){
-  //   if(this.usuarioActual != null && this.carritoActual != null){
-  //     let idUsuarioActual;
-  //     let arrayIds = new Array;
-  //     for(let i = 0; i < this.carritoActual.length; i++){
-  //       arrayIds.push(this.carritoActual[i].idLibro);
-  //     }
-  //     idUsuarioActual = this.usuarioActual.id;
-  //     this.vService.agregarVenta(idUsuarioActual, arrayIds, new Date());
-  //     this.carritoActual = [];
-  //     this.cfService.limpiarCarrito();
-  //     alert('Carrito encargado exitosamente');
-  //     this.router.navigate([`/inicio/inicio`]);
-  //   }else{
-  //     alert('Debe estar logueado!');
-  //   }
-  // }
+  getCarrito() {
+    const actual = this.uService.obtenerUsuarioActual();
+    
+    this.uService.getCart(actual!).subscribe((cart) => {
+      let arrayIds = cart;
+      if(arrayIds !== null){
+        for(let i = 0; i < arrayIds.length; i++){
+          this.aService.getLibro(arrayIds[i]['idLibro']).subscribe((data) => {
+            let libro: Libro = data;
+            if(libro !== null){
+              this.arrayCarrito.push(libro);
+            }
+          }) 
+        }
+      }
+    });
+  }
 
-  // eliminarDeCarrito(idLibro: string){
-  //   if(idLibro && this.usuarioActual){
-  //     this.ApiServ.deleteLibro(idLibro).subscribe(() => {
+  comprarCarrito(){
+    const actual = this.uService.obtenerUsuarioActual();
 
-  //     })
-  //     alert('Libro eliminado de carrito');
-  //   }
-  // }
+    if (actual && this.arrayCarrito) {
+      const idVenta = uuidv4();
+      let total = 0;
+
+      for(let i = 0; i < this.arrayCarrito.length; i++){
+        total = total + this.arrayCarrito[i].precio;
+        this.vService.postLibroVendido(idVenta, this.arrayCarrito[i].idLibro);
+      };
+      this.vService.postVenta(idVenta, actual, total).subscribe();
+      this.uService.cleanCart(actual).subscribe();
+      this.router.navigate([`/inicio/inicio`]);
+    };
+  }
+
+  eliminarDeCarrito(idLibro: string){
+    const actual = this.uService.obtenerUsuarioActual();
+
+    if(actual){
+      this.uService.deleteCart(actual, idLibro).subscribe();
+      alert('Libro eliminado de carrito');
+    }
+  }
 }

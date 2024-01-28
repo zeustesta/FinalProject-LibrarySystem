@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
-import { CartFavsService } from 'src/app/service/cart-favs.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ListaLibrosComponent implements OnInit {
   listaLibros: Libro[] = [];
 
-  constructor(private apiService: APIService, private uService: UsuariosService, private cService: CartFavsService, private router: Router,private aRouter: ActivatedRoute){
+  constructor(private apiService: APIService, private uService: UsuariosService, private router: Router,private aRouter: ActivatedRoute){
     
   }
 
@@ -28,12 +27,14 @@ export class ListaLibrosComponent implements OnInit {
     })
   }
 
-  addToCart(libro:Libro) {
-    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
-      this.cService.agregarAlCarrito(libro);
-      alert('Libro añadido al carrito!');
+  addToCart(idLibro: string) {
+    const actual = this.uService.obtenerUsuarioActual();
+
+    if(actual !== null){
+      this.uService.postCart(actual, idLibro).subscribe();
+      alert('Libro agregado correctamente');
     }else{
-      alert('Debe iniciar sesión primero!');
+      alert('Debe iniciar sesion primero');
     }
   }
 

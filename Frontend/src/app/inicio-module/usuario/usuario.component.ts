@@ -9,11 +9,15 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent {
-  listaUsuarios: Usuario[] = [];
-  usuarioActual: Usuario | null;
+  listaClientes: Usuario[] = [];
 
-  constructor(private usuarioService: UsuariosService){
-    this.listaUsuarios = this.usuarioService.getUserList()
-    this.usuarioActual = this.usuarioService.obtenerUsuarioActual();
+  constructor(private uService: UsuariosService){
+    this.getClientes()
+  }
+
+  getClientes() {
+    this.uService.getClientes().subscribe((clientes) => {
+      this.listaClientes = clientes;
+    })
   }
 }

@@ -17,13 +17,13 @@
       <tbody>
         <tr *ngFor="let venta of listaVentas">
           <td>{{ venta.idVenta }}</td>
-          <td>{{ venta.idUsuario }}</td>
+          <td>{{ venta.idCliente }}</td>
           <td>{{ venta.fechaCompra | date:'yyyy-MM-dd' }}</td>
           <td>{{ venta.total | currency }}</td>
           <td>{{ venta.estado }}</td>
           <td>
-            <button class="btn btn-success mr-1" (click)="confirmarCompra(venta.idVenta)" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Confirmar</button>
-            <button class="btn btn-danger ml-1" (click)="rechazarCompra(venta.idVenta)" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Rechazar</button>
+            <button class="btn btn-success mr-1" (click)="cambiarEstadoVenta(venta.idVenta, 'Confirmada')" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Confirmar</button>
+            <button class="btn btn-danger ml-1" (click)="cambiarEstadoVenta(venta.idVenta, 'Rechazada')" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Rechazar</button>
           </td>
         </tr>
       </tbody>

@@ -33,8 +33,9 @@ export class VentasService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteVenta/${idVenta}`);
   }
 
-  postVenta(newVenta: Venta): Observable<string> {
-    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postVenta`, newVenta);
+  postVenta(idVenta: string, idCliente: string, total: number): Observable<string> {
+    const body = { idCliente: idCliente, total: total };
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postVenta`, body);
   }
 
   updateVenta(idVenta: string, estado: EstadoVenta): Observable<string> {

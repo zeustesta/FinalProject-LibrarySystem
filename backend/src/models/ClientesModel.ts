@@ -54,7 +54,7 @@ export const ClienteFavoritos = db.define('ClienteFavoritos', {
       key: 'idCliente',
     }
   }, 
-  idLibros: {
+  idLibro: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
@@ -85,7 +85,7 @@ export const ClienteCarrito = db.define('ClienteCarrito', {
     primaryKey: true,
     references: {
       model: Cliente,
-      key: 'idCliente',
+      key: 'idCliente'
     },
   }, 
   idLibro: {

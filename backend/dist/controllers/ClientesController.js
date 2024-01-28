@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHistorialComprasCliente = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
+exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
 const ClientesModel_1 = require("../models/ClientesModel");
 const VentasModel_1 = require("../models/VentasModel");
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
@@ -88,6 +88,49 @@ const updateCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.updateCliente = updateCliente;
+const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    try {
+        const clienteEncontrado = yield ClientesModel_1.Cliente.findOne({
+            where: {
+                email: email,
+                password: password
+            }
+        });
+        if (clienteEncontrado) {
+            res.json(clienteEncontrado);
+        }
+        else {
+            res.json({ msg: 'NO_EXISTE' });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido validar el cliente');
+    }
+});
+exports.validarCliente = validarCliente;
+const validarEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { emailBuscado } = req.params;
+    try {
+        const emailEncontrado = yield ClientesModel_1.Cliente.findOne({
+            where: {
+                email: emailBuscado
+            }
+        });
+        if (emailEncontrado) {
+            res.json({ msg: 'EXISTE' });
+        }
+        else {
+            res.json({ msg: 'NO_EXISTE' });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido validar el email');
+    }
+});
+exports.validarEmail = validarEmail;
 //METODOS PARA FAVORITOS
 const getFavoritos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idCliente } = req.params;
@@ -109,22 +152,23 @@ exports.getFavoritos = getFavoritos;
 const deleteLibroFavoritos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idCliente } = req.params;
     const { idLibro } = req.params;
-    const libroEnFavoritos = yield ClientesModel_1.ClienteFavoritos.findOne({
-        where: {
-            idCliente: idCliente,
-            idLibro: idLibro
+    try {
+        const libroEnFavoritos = yield ClientesModel_1.ClienteFavoritos.findOne({
+            where: {
+                idCliente: idCliente,
+                idLibro: idLibro
+            }
+        });
+        if (libroEnFavoritos) {
+            yield libroEnFavoritos.destroy();
+            res.json({
+                msg: `Libro eliminado de favoritos del cliente con id: ${idCliente}`
+            });
         }
-    });
-    if (libroEnFavoritos) {
-        yield libroEnFavoritos.destroy();
-        res.json({
-            msg: `Libro eliminado de favoritos del cliente con id: ${idCliente}`
-        });
     }
-    else {
-        res.status(404).json({
-            msg: `El libro no existe en favoritos del cliente con id: ${idCliente}`
-        });
+    catch (error) {
+        console.log(error);
+        console.log('No se pudo eliminar el libro de favoritos');
     }
 });
 exports.deleteLibroFavoritos = deleteLibroFavoritos;
@@ -196,6 +240,24 @@ const postLibroEnCarrito = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.postLibroEnCarrito = postLibroEnCarrito;
+const deleteCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idCliente } = req.params;
+    try {
+        yield ClientesModel_1.ClienteCarrito.destroy({
+            where: {
+                idCliente: idCliente
+            }
+        });
+        res.json({
+            msg: 'Libro agregado al carrito con exito'
+        });
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido limpiar el carrito');
+    }
+});
+exports.deleteCarrito = deleteCarrito;
 //GET HISTORIAL CLIENTE
 const getHistorialComprasCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idCliente } = req.params;

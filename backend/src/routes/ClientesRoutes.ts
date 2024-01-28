@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteCliente, deleteLibroCarrito, deleteLibroFavoritos, getCarrito, getCliente, getClientes, getFavoritos, getHistorialComprasCliente, postCliente, postLibroEnCarrito, postLibroEnFavoritos, updateCliente } from "../controllers/ClientesController";
+import { deleteCarrito, deleteCliente, deleteLibroCarrito, deleteLibroFavoritos, getCarrito, getCliente, getClientes, getFavoritos, getHistorialComprasCliente, postCliente, postLibroEnCarrito, postLibroEnFavoritos, updateCliente, validarCliente, validarEmail } from "../controllers/ClientesController";
 
 
 const router = Router();
@@ -12,6 +12,9 @@ router.post('/postCliente', postCliente);
 router.put('/updateCliente/:idCliente', updateCliente);
 router.delete('/deleteCliente/:idCliente', deleteCliente);
 
+router.post('/validarCliente', validarCliente);
+router.get('/validarEmail/:email', validarEmail);
+
 //ROUTES PARA FAVORITOS
 
 router.get('/getFavs/:idCliente', getFavoritos);
@@ -23,6 +26,8 @@ router.post('/postLibroEnFavs', postLibroEnFavoritos);
 router.get('/getCart/:idCliente', getCarrito);
 router.delete('/deleteLibroCart/:idCliente/:idLibro', deleteLibroCarrito);
 router.post('/postLibroEnCart', postLibroEnCarrito);
+
+router.delete('/deleteCarrito/:idCliente', deleteCarrito);
 
 //GET HISTORIAL CLIENTE
 router.get('/getHistorial/:idCliente', getHistorialComprasCliente);

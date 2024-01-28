@@ -3,8 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Libro } from '../../interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-import { CartFavsService } from 'src/app/service/cart-favs.service';
-import { TmplAstIdleDeferredTrigger } from '@angular/compiler';
 
 @Component({
   selector: 'app-libro-detalle',
@@ -13,14 +11,14 @@ import { TmplAstIdleDeferredTrigger } from '@angular/compiler';
 })
 
 export class LibroDetalleComponent implements OnInit {
-  libro: Libro | null = null;
+  libro!: Libro;
 
-  constructor(private route: ActivatedRoute, private apiService: APIService, private uService: UsuariosService, private cfService: CartFavsService) {
-
+  constructor(private route: ActivatedRoute, private apiService: APIService, private uService: UsuariosService) {
+    this.getLibro();
   }
 
   ngOnInit(): void {
-    this.getLibro();
+    
   }
 
   getLibro() {
@@ -34,25 +32,25 @@ export class LibroDetalleComponent implements OnInit {
     });
   }
 
-  addToCart(libro: Libro){
-    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
-      if(libro.stock > 0){
-        this.cfService.agregarAlCarrito(libro);
-        alert('Libro añadido al carrito');
-      }else{
-        alert('Ya no quedan libros disponibles')
-      }
+  addToCart(idLibro: string) {
+    const actual = this.uService.obtenerUsuarioActual();
+
+    if(actual !== null){
+      this.uService.postCart(actual, idLibro).subscribe();
+      alert('Libro agregado correctamente');
     }else{
-      alert('Debe iniciar sesión primero!');
+      alert('Debe iniciar sesion primero');
     }
   }
 
-  addToFavs(libro: Libro){
-    if(this.uService.obtenerUsuarioActual() !== null && libro !== null){
-      this.cfService.agregarToFavs(libro.idLibro);
-      alert('Libro agregado a favoritos');
+  addToFavs(idLibro: string) {
+    const actual = this.uService.obtenerUsuarioActual();
+
+    if(actual !== null){
+      this.uService.postFav(actual, idLibro).subscribe();
+      alert('Libro agregado correctamente');
     }else{
-      alert('Debe iniciar sesión primero!');
+      alert('Debe iniciar sesion primero');
     }
   }
 }

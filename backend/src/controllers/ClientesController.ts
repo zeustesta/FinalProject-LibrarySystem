@@ -76,6 +76,49 @@ export const updateCliente = async (req: Request, res: Response) => {
   }
 } 
 
+export const validarCliente = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  try {
+    const clienteEncontrado = await Cliente.findOne({
+      where: {
+        email: email,
+        password: password 
+      }
+    });
+
+    if (clienteEncontrado) {
+      res.json(clienteEncontrado);
+    } else {
+      res.json({ msg: 'NO_EXISTE' });
+    }
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido validar el cliente');
+  }
+};
+
+export const validarEmail = async (req: Request, res: Response) => {
+  const { emailBuscado } = req.params;
+
+  try {
+    const emailEncontrado = await Cliente.findOne({
+      where: {
+        email: emailBuscado
+      }
+    });
+
+    if (emailEncontrado) {
+      res.json({ msg: 'EXISTE' });
+    } else {
+      res.json({ msg: 'NO_EXISTE' });
+    }
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido validar el email');
+  }
+}
+
 //METODOS PARA FAVORITOS
 
 export const getFavoritos = async (req: Request, res: Response) => {
@@ -98,22 +141,22 @@ export const getFavoritos = async (req: Request, res: Response) => {
 export const deleteLibroFavoritos = async (req: Request, res: Response) => {
   const { idCliente } = req.params;
   const { idLibro } = req.params;
-
-  const libroEnFavoritos = await ClienteFavoritos.findOne({
-    where: {
-      idCliente: idCliente,
-      idLibro: idLibro
+  try {
+    const libroEnFavoritos = await ClienteFavoritos.findOne({
+      where: {
+        idCliente: idCliente,
+        idLibro: idLibro
+      }
+    });
+    if (libroEnFavoritos) {
+      await libroEnFavoritos.destroy();
+      res.json({
+        msg: `Libro eliminado de favoritos del cliente con id: ${idCliente}`
+      });
     }
-  });
-  if (libroEnFavoritos) {
-    await libroEnFavoritos.destroy();
-    res.json({
-      msg: `Libro eliminado de favoritos del cliente con id: ${idCliente}`
-    });
-  } else {
-    res.status(404).json({
-      msg: `El libro no existe en favoritos del cliente con id: ${idCliente}`
-    });
+  } catch (error) {
+    console.log(error);
+    console.log('No se pudo eliminar el libro de favoritos');
   }
 }
 
@@ -186,6 +229,24 @@ export const postLibroEnCarrito = async (req: Request, res: Response) => {
   }
 } 
 
+export const deleteCarrito = async (req: Request, res: Response) => {
+  const { idCliente } = req.params;
+
+  try {
+    await ClienteCarrito.destroy({
+      where: {
+        idCliente: idCliente
+      }
+    });
+    res.json({
+      msg: 'Libro agregado al carrito con exito'
+    });
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido limpiar el carrito');
+  }
+}
+
 //GET HISTORIAL CLIENTE
 
 export const getHistorialComprasCliente = async (req: Request, res: Response) => {
@@ -206,7 +267,6 @@ export const getHistorialComprasCliente = async (req: Request, res: Response) =>
         as: 'Libros'
       }]
     });
-
     if (historialCompras) {
       res.json(historialCompras);
     } else {

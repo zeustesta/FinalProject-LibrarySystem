@@ -29,10 +29,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let titulo of arrayTitulosFavs">
-                      <td class="td">{{titulo}}</td>
-                      <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeFavs(titulo)" style="color: #e00606;"></i></td>
-                      <td class="td"><i type="button" class="fa-solid fa-cart-shopping" (click)="agregarACarrito(titulo)"></i></td>
+                    <tr *ngFor="let fav of arrayFavs">
+                      <td class="td">{{fav.titulo}}</td>
+                      <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeFavs(fav.idLibro)" style="color: #e00606;"></i></td>
+                      <td class="td"><i type="button" class="fa-solid fa-cart-shopping" (click)="agregarACarrito(fav.idLibro)"></i></td>
                     </tr>
                     </tbody>
                   </table>

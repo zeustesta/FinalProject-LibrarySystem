@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Sequelize } from "sequelize";
 import db from  "../db/connection";
 import Libro from "./LibrosModel";
 import { Cliente } from "./ClientesModel";
@@ -25,6 +25,7 @@ export const Venta = db.define('Venta', {
   },
   fechaCompra: {
     type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     allowNull: false
   },
   total: {

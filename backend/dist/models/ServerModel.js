@@ -58,7 +58,6 @@ class Server {
                 yield LibrosModel_1.default.sync();
                 yield ClientesModel_1.Cliente.sync();
                 yield ClientesModel_1.ClienteCarrito.sync();
-                yield ClientesModel_1.ClienteCompras.sync();
                 yield ClientesModel_1.ClienteFavoritos.sync();
                 yield VentasModel_1.Venta.sync();
                 yield VentasModel_1.LibrosVendidos.sync();

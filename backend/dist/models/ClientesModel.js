@@ -57,7 +57,7 @@ exports.ClienteFavoritos = connection_1.default.define('ClienteFavoritos', {
             key: 'idCliente',
         }
     },
-    idLibros: {
+    idLibro: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
@@ -86,7 +86,7 @@ exports.ClienteCarrito = connection_1.default.define('ClienteCarrito', {
         primaryKey: true,
         references: {
             model: exports.Cliente,
-            key: 'idCliente',
+            key: 'idCliente'
         },
     },
     idLibro: {

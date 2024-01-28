@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
-
+import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
 
-export class RegistroComponent {
+export class RegistroComponent implements OnInit {
   registerForm: FormGroup;
   emailEnUso: boolean = false;
 
@@ -20,37 +20,50 @@ export class RegistroComponent {
       email:['', [Validators.email, Validators.min(5), Validators.required]],
       password:['', [Validators.required, Validators.minLength(8), Validators.maxLength(24)]]
     })
+  }
 
-    this.ObservarEmail();
+  ngOnInit(): void {
+    // this.ObservarEmail()
   }
 
   addToUsersList(){
     let name = this.registerForm.value.name;
     let surname = this.registerForm.value.surname;
-    let email = this.registerForm.value.email;
     let password = this.registerForm.value.password;
+    let email = this.registerForm.value.email;
+    this.ObservarEmail(email);
+    
 
-    if(this.validarEmail(email)){
-      this.uService.agregarUsuario(name, surname, email, password);
+    const newCliente = {
+      idCliente: uuidv4(),
+      nombre: name,
+      apellido: surname,
+      email: email,
+      password: password,
+      rol: 'usuario'
+    };
+
+    if (this.emailEnUso === true) {
+      console.log('Hola');
+      alert('El email ya esta en uso');
+    } else {
+      this.uService.postCliente(newCliente).subscribe();
       this.router.navigate(['/login']);
     }
   }
 
-  validarEmail(nuevoEmail: string): boolean{
-    for(const usuario of this.uService.listaUsuarios){
-      if(usuario.email.toLowerCase() === nuevoEmail.toLowerCase()){
-        return false; //El correo ya se encuentra en uso
-      }
-    }
-    return true; //El correo es unico
-  }
-
-  ObservarEmail() {
-    const emailControl = this.registerForm.get('email');
-    if (emailControl) { 
-      emailControl.valueChanges.subscribe((nuevoEmail) => {
-        this.emailEnUso = !this.validarEmail(nuevoEmail);
-      });
-    }
+  ObservarEmail(email: string) {
+    // const emailControl = this.registerForm.get('email');
+    const nuevoEmail = this.registerForm.value.email;
+  
+    // if (emailControl) {
+      // emailControl.valueChanges.subscribe((nuevoEmail: string) => {
+        // if (nuevoEmail) {  
+          this.uService.validarEmail(nuevoEmail).subscribe((existe: boolean) => {
+            this.emailEnUso = existe;
+          });
+        // }
+      // });
+    // }
   }
 }

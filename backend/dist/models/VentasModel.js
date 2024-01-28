@@ -30,6 +30,7 @@ exports.Venta = connection_1.default.define('Venta', {
     },
     fechaCompra: {
         type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
     },
     total: {

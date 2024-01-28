@@ -22,14 +22,15 @@ export class LoginComponent {
     let email = this.loginForm.value.email;
     let password = this.loginForm.value.password;
 
-    const usuarioExiste = this.uService.buscarUsuario(email, password);
-  
-    if (usuarioExiste) {
-      this.uService.establecerUsuarioActual(usuarioExiste);
-      alert('Inicio de sesión exitoso');
-      this.router.navigate(['/inicio/inicio']);
-    } else {
-      alert('Email o contraseña incorrectos');
-    }
+    this.uService.validarCliente(email, password).subscribe((cliente) => {
+      if (cliente) {
+        this.uService.establecerUsuarioActual(cliente.idCliente);
+        this.uService.esAdmin();
+        alert('Inicio de sesión exitoso');
+        this.router.navigate(['/inicio/inicio']);
+      } else {
+        alert('Email o contraseña incorrectos');
+      }
+    })
   }
 }
