@@ -27,8 +27,12 @@ export class APIService {
     return this.http.get<Libro>(`${this.appUrl}${this.apiUrl}/getLibro/${idLibro}`)
   }
 
-  updateLibro(idLibro: string, libro: Libro): Observable<void> {
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateLibro/${idLibro}`, libro);
+  updateStock(idLibro: string, newStock: number): Observable<void> {
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateStockLibro/${idLibro}`, newStock);
+  }
+
+  updateCantV(idLibro: string, newCantV: number): Observable<void> {
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateCantVentas/${idLibro}`, newCantV);
   }
 
   filtrarLibrosPorGenero(generoDeseado: string): Observable<Libro[]> {

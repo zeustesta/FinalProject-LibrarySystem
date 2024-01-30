@@ -31,10 +31,10 @@ export class CarritoComponent {
             let libro: Libro = data;
             if(libro !== null){
               this.arrayCarrito.push(libro);
-            }
-          }) 
-        }
-      }
+            };
+          }); 
+        };
+      };
     });
   }
 
@@ -45,9 +45,9 @@ export class CarritoComponent {
       const idVenta = uuidv4();
       let total = 0;
 
-      for(let i = 0; i < this.arrayCarrito.length; i++){
+      for (let i = 0; i < this.arrayCarrito.length; i++) {
         total = total + this.arrayCarrito[i].precio;
-        this.vService.postLibroVendido(idVenta, this.arrayCarrito[i].idLibro);
+        this.vService.postLibroVendido(idVenta, this.arrayCarrito[i].idLibro).subscribe();
       };
       this.vService.postVenta(idVenta, actual, total).subscribe();
       this.uService.cleanCart(actual).subscribe();

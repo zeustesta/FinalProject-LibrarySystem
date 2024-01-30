@@ -13,43 +13,44 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 export class LibroDetalleComponent implements OnInit {
   libro!: Libro;
 
-  constructor(private route: ActivatedRoute, private apiService: APIService, private uService: UsuariosService) {
-    this.getLibro();
-  }
+  constructor(private route: ActivatedRoute, private apiService: APIService, private uService: UsuariosService) {}
 
   ngOnInit(): void {
-    
+    this.getLibro();
   }
 
   getLibro() {
     this.route.paramMap.subscribe((params) =>{
       const idParam = params.get('idLibro');
-      if(idParam !== null){
+      if (idParam !== null) {
         this.apiService.getLibro(idParam).subscribe((data) => {
           this.libro = data;
-        })
-      }
+        });
+      };
     });
   }
 
   addToCart(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
 
-    if(actual !== null){
-      this.uService.postCart(actual, idLibro).subscribe();
+    if (actual !== null) {
+      this.apiService.getLibro(idLibro).subscribe((data) => {
+        this.uService.postCart(actual, idLibro).subscribe();
+        this.apiService.updateStock(idLibro, (data.stock - 1)).subscribe();
+      });
       alert('Libro agregado correctamente');
-    }else{
+    } else {
       alert('Debe iniciar sesion primero');
-    }
+    };
   }
 
   addToFavs(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
 
-    if(actual !== null){
+    if (actual !== null) {
       this.uService.postFav(actual, idLibro).subscribe();
       alert('Libro agregado correctamente');
-    }else{
+    } else {
       alert('Debe iniciar sesion primero');
     }
   }

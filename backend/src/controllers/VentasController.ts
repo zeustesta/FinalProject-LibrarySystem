@@ -90,3 +90,21 @@ export const postLibroPorVenta = async (req: Request, res: Response) => {
     console.log('No se ha podido agregar el libro vendidos');
   }
 } 
+
+export const getLibrosPorVenta = async (req: Request, res: Response) => {
+  const { idVenta } = req.params;
+  const librosPorVenta = await Venta.findAll({
+    where: {
+      idVenta: idVenta
+    },
+    attributes: ['idLibro']
+  });
+
+  if (librosPorVenta.length > 0) {
+    res.json(librosPorVenta);
+  } else {
+    res.status(404).json({
+      msg: `No existen libros para una venta con id: ${idVenta}`
+    });
+  }
+} 

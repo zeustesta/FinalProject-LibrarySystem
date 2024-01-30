@@ -47,6 +47,10 @@ export class VentasService {
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroVendido`, libroVendido);
   }
 
+  getLibrosPorVenta(idVenta: string): Observable<any> {
+    return this.http.get<any>(`${this.appUrl}${this.apiUrl}/getLibrosPorVenta/${idVenta}`);
+  }
+
   calcularTotal(arrayIds: string[]) {
     let total: number = 0;
     for(let idLibro of arrayIds){
