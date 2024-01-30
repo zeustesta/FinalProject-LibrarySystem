@@ -24,14 +24,16 @@ export class CarrouselComponent implements OnInit{
   getLibros(){
     this.loading = true;
     this.apiService.getLibros().subscribe((data) => {
+      console.log(data);
         let results = data;
         let listaAux: Libro []=[];
         for(let i = 0; i < results.length; i++){
           if(results[i].autor[0] !== undefined){
-            // this.apiService.cargarLibro(results[i].id, results[i].title, results[i].authors[0].name, results[i].formats["image/jpeg"],listaAux);
+            listaAux.push(results[i]);
           }
         }
-        this.listaLibros= this.apiService.getTop5(listaAux);
+        listaAux.sort((a,b) => b.cantVentas - a.cantVentas);
+        this.listaLibros= listaAux.slice(0,5);
         console.log(this.listaLibros);
         this.loading= false;
       })
