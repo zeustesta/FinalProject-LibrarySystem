@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postLibroPorVenta = exports.updateStatusVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
+exports.getLibrosPorVenta = exports.postLibroPorVenta = exports.updateStatusVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
 const VentasModel_1 = require("../models/VentasModel");
 //METODOS PARA VENTA
 const getVentas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -99,3 +99,21 @@ const postLibroPorVenta = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.postLibroPorVenta = postLibroPorVenta;
+const getLibrosPorVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idVenta } = req.params;
+    const librosPorVenta = yield VentasModel_1.Venta.findAll({
+        where: {
+            idVenta: idVenta
+        },
+        attributes: ['idLibro']
+    });
+    if (librosPorVenta.length > 0) {
+        res.json(librosPorVenta);
+    }
+    else {
+        res.status(404).json({
+            msg: `No existen libros para una venta con id: ${idVenta}`
+        });
+    }
+});
+exports.getLibrosPorVenta = getLibrosPorVenta;

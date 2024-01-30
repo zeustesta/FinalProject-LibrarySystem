@@ -48,11 +48,8 @@ export class UsuariosService {
     return this.http.post<Usuario | null>(`${this.appUrl}${this.apiUrl}/validarCliente`, { email, password });
   }
   
-  validarEmail(email: string): Observable<boolean> {
-    console.log(email);
-    return this.http.get<{ msg: string }>(`${this.appUrl}${this.apiUrl}/validarEmail/${email}`).pipe(
-      map(response => response.msg === 'EXISTE')
-    );
+  validarEmail(email: string): Observable<string> {
+    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/validarEmail`, { email: email });
   }
 
   //METODOS PARA FAVS DEL CLIENTE
@@ -62,12 +59,28 @@ export class UsuariosService {
   }
 
   postFav(idCliente: string, idLibro: string): Observable<string> {
-    const body = { idCliente, idLibro };
+    const body = { idCliente: idCliente, idLibro: idLibro };
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnFavs`, body);
   }
 
   deleteFav(idCliente: string, idLibro: string): Observable<string> {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
+  }
+
+  buscarEnFavs(idLibro: string): boolean {
+    const actual = this.obtenerUsuarioActual();
+
+    let existe: boolean = false;
+    this.getFavs(actual!).subscribe((favs) => {
+      if(favs !== null){
+        for(let i = 0; i < favs.length; i++){
+          if (idLibro === favs[i]['idLibro']) {
+            existe = true;
+          };
+        };
+      };
+    });
+    return existe; //TRUE: EXISTE - FALSE: NO EXISTE
   }
 
   //METODOS PARA CART DEL CLIENTE
@@ -87,6 +100,22 @@ export class UsuariosService {
 
   cleanCart(idCliente: string): Observable<string> {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCarrito/${idCliente}`);
+  }
+
+  buscarEnCart(idLibro: string): boolean {
+    const actual = this.obtenerUsuarioActual();
+
+    let existe: boolean = false;
+    this.getCart(actual!).subscribe((cart) => {
+      if(cart !== null){
+        for(let i = 0; i < cart.length; i++){
+          if (idLibro === cart[i]['idLibro']) {
+            existe = true;
+          };
+        };
+      };
+    });
+    return existe; //TRUE: EXISTE - FALSE: NO EXISTE
   }
 
   //METODO PARA EL HISTORIAL DEL CLIENTE

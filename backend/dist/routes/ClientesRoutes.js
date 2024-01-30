@@ -10,7 +10,7 @@ router.post('/postCliente', ClientesController_1.postCliente);
 router.put('/updateCliente/:idCliente', ClientesController_1.updateCliente);
 router.delete('/deleteCliente/:idCliente', ClientesController_1.deleteCliente);
 router.post('/validarCliente', ClientesController_1.validarCliente);
-router.get('/validarEmail/:email', ClientesController_1.validarEmail);
+router.post('/validarEmail', ClientesController_1.validarEmail);
 //ROUTES PARA FAVORITOS
 router.get('/getFavs/:idCliente', ClientesController_1.getFavoritos);
 router.delete('/deleteLibroFavs/:idCliente/:idLibro', ClientesController_1.deleteLibroFavoritos);

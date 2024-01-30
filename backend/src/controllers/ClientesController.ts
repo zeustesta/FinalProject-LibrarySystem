@@ -99,17 +99,17 @@ export const validarCliente = async (req: Request, res: Response) => {
 };
 
 export const validarEmail = async (req: Request, res: Response) => {
-  const { emailBuscado } = req.params;
+  const { email } = req.body;
 
   try {
     const emailEncontrado = await Cliente.findOne({
       where: {
-        email: emailBuscado
+        email: email
       }
     });
 
     if (emailEncontrado) {
-      res.json({ msg: 'EXISTE' });
+      res.json(emailEncontrado);
     } else {
       res.json({ msg: 'NO_EXISTE' });
     }
@@ -132,9 +132,7 @@ export const getFavoritos = async (req: Request, res: Response) => {
   if (favoritos.length > 0) {
     res.json(favoritos);
   } else {
-    res.status(404).json({
-        msg: `No existen favoritos para el cliente con id: ${idCliente}`
-    });
+    res.json([]);
   }
 }
 
@@ -187,9 +185,7 @@ export const getCarrito = async (req: Request, res: Response) => {
   if (carrito.length > 0) {
     res.json(carrito);
   } else {
-    res.status(404).json({
-        msg: `No existe un carrito para el cliente con id: ${idCliente}`
-    });
+    res.json([]);
   }
 }
 

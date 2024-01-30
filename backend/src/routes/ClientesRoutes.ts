@@ -13,7 +13,7 @@ router.put('/updateCliente/:idCliente', updateCliente);
 router.delete('/deleteCliente/:idCliente', deleteCliente);
 
 router.post('/validarCliente', validarCliente);
-router.get('/validarEmail/:email', validarEmail);
+router.post('/validarEmail', validarEmail);
 
 //ROUTES PARA FAVORITOS
 

@@ -29,16 +29,21 @@ export class ListaLibrosComponent implements OnInit {
 
   addToCart(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
+    let existe = this.uService.buscarEnCart(idLibro);
 
-    if (actual !== null) {
-      this.apiService.getLibro(idLibro).subscribe((data) => {
-        this.uService.postCart(actual, idLibro).subscribe();
-        this.apiService.updateStock(idLibro, (data.stock - 1)).subscribe();
-      });
-      alert('Libro agregado correctamente');
+    if (actual) {
+      if (existe !== true) {
+        this.apiService.getLibro(idLibro).subscribe((data) => {
+          this.uService.postCart(actual, idLibro).subscribe();
+          this.apiService.updateStock(idLibro, (data.stock - 1)).subscribe();
+        });        
+        alert('Libro agregado al carrito');
+      } else {
+        alert('El libro ya existe en el carrito');
+      }
     } else {
       alert('Debe iniciar sesion primero');
-    };
+    }
   }
 
   verInformacionDetallada(id: string) {

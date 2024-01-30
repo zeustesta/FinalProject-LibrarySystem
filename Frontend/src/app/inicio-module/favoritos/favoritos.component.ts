@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ɵsetAlternateWeakRefImpl } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { CarritoComponent } from '../carrito/carrito.component';
 
 @Component({
   selector: 'app-favoritos',
@@ -39,6 +40,23 @@ export class FavoritosComponent {
   }
 
   agregarACarrito(idLibro: string){
-    this.uService.postFav(this.uService.obtenerUsuarioActual()!, idLibro).subscribe();
+    const actual = this.uService.obtenerUsuarioActual();
+    
+    this.uService.getCart(actual!).subscribe((cart) => {
+      if(cart !== null){
+        let existe = false;
+        for(let i = 0; i < cart.length; i++){
+          if (idLibro === cart[i]['idLibro']) {
+            existe = true;
+          };
+        };
+        if (existe === false) {
+          this.uService.postCart(actual!, idLibro).subscribe();
+          alert('Libro agregado al carrito');
+        } else {
+          alert('El libro ya existe en el carrito');
+        };
+      };
+    });
   }
 }

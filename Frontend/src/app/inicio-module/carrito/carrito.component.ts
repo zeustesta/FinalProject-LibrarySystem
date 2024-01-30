@@ -60,6 +60,7 @@ export class CarritoComponent {
 
     if(actual){
       this.uService.deleteCart(actual, idLibro).subscribe();
+      this.arrayCarrito.splice(this.arrayCarrito.findIndex((idLibro) => idLibro = idLibro), 1);
       alert('Libro eliminado de carrito');
     }
   }

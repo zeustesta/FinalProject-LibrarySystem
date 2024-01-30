@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateLibro = exports.postLibro = exports.deleteLibro = exports.getLibro = exports.getLibros = void 0;
+exports.updateStockLibro = exports.updateCantVentasLibro = exports.postLibro = exports.deleteLibro = exports.getLibro = exports.getLibros = void 0;
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
 const getLibros = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listaLibros = yield LibrosModel_1.default.findAll();
@@ -62,8 +62,8 @@ const postLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.postLibro = postLibro;
-const updateLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { body } = req;
+const updateCantVentasLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { newCantVentas } = req.body;
     const { idLibro } = req.params;
     try {
         const libro = yield LibrosModel_1.default.findByPk(idLibro);
@@ -73,15 +73,40 @@ const updateLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             });
         }
         else {
-            yield libro.update(body);
+            libro.setDataValue('cantVentas', newCantVentas);
+            yield libro.save();
             res.json({
-                msg: 'Libro actualizado con exito'
+                msg: 'Cantidad de ventas actualizada con exito'
             });
         }
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido actualizar el libro');
+        console.log('No se ha podido actualizar la cantidad de ventas');
     }
 });
-exports.updateLibro = updateLibro;
+exports.updateCantVentasLibro = updateCantVentasLibro;
+const updateStockLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { newStock } = req.body;
+    const { idLibro } = req.params;
+    try {
+        const libro = yield LibrosModel_1.default.findByPk(idLibro);
+        if (!libro) {
+            res.status(404).json({
+                msg: `No existe un libro con id: ${idLibro}`
+            });
+        }
+        else {
+            libro.setDataValue('stock', newStock);
+            yield libro.save();
+            res.json({
+                msg: 'Stock actualizado con exito'
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido actualizar el stock');
+    }
+});
+exports.updateStockLibro = updateStockLibro;

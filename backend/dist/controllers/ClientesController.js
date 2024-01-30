@@ -111,15 +111,15 @@ const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.validarCliente = validarCliente;
 const validarEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { emailBuscado } = req.params;
+    const { email } = req.body;
     try {
         const emailEncontrado = yield ClientesModel_1.Cliente.findOne({
             where: {
-                email: emailBuscado
+                email: email
             }
         });
         if (emailEncontrado) {
-            res.json({ msg: 'EXISTE' });
+            res.json(emailEncontrado);
         }
         else {
             res.json({ msg: 'NO_EXISTE' });
@@ -143,9 +143,7 @@ const getFavoritos = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.json(favoritos);
     }
     else {
-        res.status(404).json({
-            msg: `No existen favoritos para el cliente con id: ${idCliente}`
-        });
+        res.json([]);
     }
 });
 exports.getFavoritos = getFavoritos;
@@ -198,9 +196,7 @@ const getCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json(carrito);
     }
     else {
-        res.status(404).json({
-            msg: `No existe un carrito para el cliente con id: ${idCliente}`
-        });
+        res.json([]);
     }
 });
 exports.getCarrito = getCarrito;

@@ -11,4 +11,5 @@ router.post('/postVenta', VentasController_1.postVenta);
 router.put('/updateVenta/:idVenta', VentasController_1.updateStatusVenta);
 //ROUTES PARA LIBROS X VENTA
 router.post('/postLibroVendido', VentasController_1.postLibroPorVenta);
+router.get('/getLibrosPorVenta/:idVenta', VentasController_1.getLibrosPorVenta);
 exports.default = router;
