@@ -24,7 +24,6 @@ export class CarrouselComponent implements OnInit{
   getLibros(){
     this.loading = true;
     this.apiService.getLibros().subscribe((data) => {
-      console.log(data);
         let results = data;
         let listaAux: Libro []=[];
         for(let i = 0; i < results.length; i++){
@@ -32,6 +31,7 @@ export class CarrouselComponent implements OnInit{
             listaAux.push(results[i]);
           }
         }
+        console.log(listaAux);
         listaAux.sort((a,b) => b.cantVentas - a.cantVentas);
         this.listaLibros= listaAux.slice(0,5);
         console.log(this.listaLibros);

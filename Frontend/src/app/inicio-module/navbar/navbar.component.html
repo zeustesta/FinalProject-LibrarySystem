@@ -34,6 +34,9 @@
       <li class="nav-item mt-2 ml-2">
         <i type="button" class="fa-solid fa-heart" [routerLink]="['/inicio/favoritos']"></i>
       </li>
+      <li class="nav-item mt-2 ml-2">
+        <i type="button" class="fa-solid fa-clock-rotate-left" [routerLink]="['/inicio/historial']"></i>
+      </li>
       <li class="nav-item mt-2 ml-2" *ngIf="!isLoggedIn()">
         <i type="button" class="fa-solid fa-user" [routerLink]="['/inicio/login']"></i>
       </li>

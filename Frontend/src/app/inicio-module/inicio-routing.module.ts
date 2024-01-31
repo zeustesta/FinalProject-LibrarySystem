@@ -12,6 +12,7 @@ import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { usersGuard } from '../utils/auth.guard';
 import { adminGuard } from '../utils/admin-guard.guard';
+import { HistorialCompraComponent } from './historial-compra/historial-compra.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,11 @@ const routes: Routes = [
         path: 'usuarios',
         component: UsuarioComponent,
         canActivate: [adminGuard]
+      },
+      {
+        path:'historial',
+        component: HistorialCompraComponent,
+        canActivate: [usersGuard]
       },
       {
         path: 'carrito',
