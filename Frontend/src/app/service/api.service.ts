@@ -46,13 +46,5 @@ export class APIService {
       return libro.precio;
     })
   }
-
-  getTop5(listaTop:Libro[]) {
-    const ventasOrdenadas = listaTop.sort((a,b) => b.cantVentas - a.cantVentas);
-    console.log(ventasOrdenadas);
-    const top5Ventas = ventasOrdenadas.slice(0,5);
-    
-    return top5Ventas;
-  }
 }
 
