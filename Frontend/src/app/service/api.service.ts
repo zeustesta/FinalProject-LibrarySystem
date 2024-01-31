@@ -40,11 +40,5 @@ export class APIService {
       map((libros: Libro[]) => libros.filter(libro => libro.genero === generoDeseado))
     );
   }
-
-  retornarPrecio(idLibro: string) {
-    this.getLibro(idLibro).subscribe((libro) => {
-      return libro.precio;
-    })
-  }
 }
 

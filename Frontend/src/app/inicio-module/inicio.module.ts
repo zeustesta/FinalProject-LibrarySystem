@@ -12,6 +12,7 @@ import { LibroDetalleComponent } from './libro-detalle/libro-detalle.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { FormsModule } from '@angular/forms';
 import { HistorialCompraComponent } from './historial-compra/historial-compra.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -32,7 +33,8 @@ import { HistorialCompraComponent } from './historial-compra/historial-compra.co
     CommonModule,
     InicioModuleRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ]
 })
 export class InicioModuleModule { }

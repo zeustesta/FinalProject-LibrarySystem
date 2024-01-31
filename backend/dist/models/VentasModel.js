@@ -34,7 +34,7 @@ exports.Venta = connection_1.default.define('Venta', {
         allowNull: false
     },
     total: {
-        type: sequelize_1.DataTypes.FLOAT,
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
     estado: {

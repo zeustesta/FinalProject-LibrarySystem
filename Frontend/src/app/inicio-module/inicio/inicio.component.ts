@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
+import { UsuariosService } from 'src/app/service/usuarios.service';
 
 @Component({
   selector: 'app-inicio',
@@ -10,7 +11,7 @@ import { APIService } from 'src/app/service/api.service';
 export class InicioComponent {
   listaLibros: Libro[] | null = null;
 
-  constructor(private aService: APIService) {
+  constructor(private aService: APIService, private uService: UsuariosService) {
     this.getListaLibros();
   }
 

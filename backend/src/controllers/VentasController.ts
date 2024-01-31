@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import { Venta, LibrosVendidos, EstadoVenta } from "../models/VentasModel";
+import { Sequelize } from 'sequelize/types';
+import { Venta, LibrosVendidos } from "../models/VentasModel";
+import Libro from "../models/LibrosModel";
 
 //METODOS PARA VENTA
 

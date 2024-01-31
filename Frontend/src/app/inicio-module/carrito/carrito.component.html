@@ -35,7 +35,7 @@
                       <td class="td">{{ libro.titulo }}</td>
                       <td class="td">{{ libro.autor }}</td>
                       <td class="td">{{ libro.genero }}</td>
-                      <td class="td">${{ libro.precio }}</td>
+                      <td class="td">{{ libro.precio | currency }}</td>
                       <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeCarrito(libro.idLibro)" style="color: #e00606;"></i></td>
                     </tr>
                     </tbody>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
-          <!-- <button class="btn btn-secondary" type="button" (click)="comprarCarrito()">Encargar</button> -->
+          <button class="btn btn-secondary" type="button" (click)="comprarCarrito()">Encargar</button>
         </div>
       </section>
     </div>

@@ -191,6 +191,7 @@ const getCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         where: {
             idCliente: idCliente,
         },
+        attributes: ['idLibro']
     });
     if (carrito.length > 0) {
         res.json(carrito);

@@ -54,8 +54,8 @@ export class UsuariosService {
 
   //METODOS PARA FAVS DEL CLIENTE
 
-  getFavs(idCliente: string): Observable<any> {
-    return this.http.get<any>(`${this.appUrl}${this.apiUrl}/getFavs/${idCliente}`);
+  getFavs(idCliente: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getFavs/${idCliente}`);
   }
 
   postFav(idCliente: string, idLibro: string): Observable<string> {
@@ -85,8 +85,8 @@ export class UsuariosService {
 
   //METODOS PARA CART DEL CLIENTE
 
-  getCart(idCliente: string): Observable<any> {
-    return this.http.get<any>(`${this.appUrl}${this.apiUrl}/getCart/${idCliente}`);
+  getCart(idCliente: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getCart/${idCliente}`);
   }
 
   postCart(idCliente: string, idLibro: string): Observable<string> {

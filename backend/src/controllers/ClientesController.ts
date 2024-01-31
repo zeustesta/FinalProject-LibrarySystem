@@ -181,6 +181,7 @@ export const getCarrito = async (req: Request, res: Response) => {
     where: {
       idCliente: idCliente,
     },
+    attributes: ['idLibro']
   });
   if (carrito.length > 0) {
     res.json(carrito);

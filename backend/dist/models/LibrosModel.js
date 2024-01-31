@@ -28,7 +28,7 @@ const Libro = connection_1.default.define('Libro', {
         allowNull: false
     },
     precio: {
-        type: sequelize_1.DataTypes.DECIMAL(8, 2),
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
     portada: {

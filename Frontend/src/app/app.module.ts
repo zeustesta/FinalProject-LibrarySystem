@@ -20,7 +20,7 @@ import { SpinnerComponent } from './inicio-module/spinner/spinner.component';
     CarrouselComponent,
     FiltroComponent,
     FooterComponent,
-    SpinnerComponent
+    SpinnerComponent,
     
   ],
   imports: [

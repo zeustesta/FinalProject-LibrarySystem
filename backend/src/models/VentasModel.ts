@@ -29,7 +29,7 @@ export const Venta = db.define('Venta', {
     allowNull: false
   },
   total: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   estado: {

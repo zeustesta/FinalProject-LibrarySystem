@@ -24,7 +24,7 @@ const Libro = db.define('Libro', {
     allowNull: false
   },
   precio: {
-    type: DataTypes.DECIMAL(8, 2),
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   portada: {

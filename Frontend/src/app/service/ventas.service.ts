@@ -5,9 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
 import { EstadoVenta } from '../utils/enum';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/enviroments/environment.prod';
+import { Libro } from '../interfaces/plantillaLibro';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class VentasService {
   }
 
   postVenta(idVenta: string, idCliente: string, total: number): Observable<string> {
-    const body = { idCliente: idCliente, total: total };
+    const body = { idVenta: idVenta, idCliente: idCliente, total: total };
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postVenta`, body);
   }
 
@@ -52,13 +53,16 @@ export class VentasService {
   }
 
   calcularTotal(arrayIds: string[]) {
-    let total: number = 0;
-    for(let idLibro of arrayIds){
-      let aux = this.aService.retornarPrecio(idLibro);
-      if(aux != null){
-        total = total + aux;
+    const arrayObservables = arrayIds.map(idLibro => this.aService.getLibro(idLibro));
+
+    forkJoin(arrayObservables).subscribe((libros: Libro[]) => {
+      const arrayValores: number[] = libros.map(libro => Number(libro.precio));
+
+      let total = 0;
+      for (let i = 0; i < arrayValores.length; i++) {
+        total = total + arrayValores[i];
       }
-    }
-    return total;
+      return total;
+    });
   }
 }
