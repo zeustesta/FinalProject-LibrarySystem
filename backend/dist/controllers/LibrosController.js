@@ -87,30 +87,23 @@ const updateCantVentasLibro = (req, res) => __awaiter(void 0, void 0, void 0, fu
 });
 exports.updateCantVentasLibro = updateCantVentasLibro;
 const updateLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { updateLibro } = req.body;
+    const { body } = req.body;
     const { idLibro } = req.params;
+    console.log('Stock en update del endpoint: ' + body + ' Typeof: ' + typeof body);
     try {
         const libro = yield LibrosModel_1.default.findByPk(idLibro);
         if (libro) {
-            console.log('Updateando');
-            console.log(updateLibro);
-            // await Libro.update(updateLibro, {
-            //   where: {
-            //     idLibro: idLibro
-            //   }
-            // });
-            // libro.stock = updateLibro;
-            yield libro.save({ fields: ['stock'] });
-            yield libro.reload();
+            libro.set({ stock: body });
+            yield libro.save();
             res.json({
                 msg: 'Stock actualizado con exito'
             });
         }
-        // else {
-        // res.status(404).json({
-        //   msg: `No existe un libro con id: ${idLibro}`
-        // });
-        // }
+        else {
+            res.status(404).json({
+                msg: `No existe un libro con id: ${idLibro}`
+            });
+        }
     }
     catch (error) {
         console.log(error);

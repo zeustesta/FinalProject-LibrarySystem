@@ -27,8 +27,9 @@ export class APIService {
     return this.http.get<Libro>(`${this.appUrl}${this.apiUrl}/getLibro/${idLibro}`)
   }
 
-  updateLibro(idLibro: string, updateLibro: Libro): Observable<void> {
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateLibro/${idLibro}`, updateLibro);
+  updateStockLibro(idLibro: string, newStock: number): Observable<void> {
+    console.log('Stock en update del service: ' + newStock + ' Typeof: ' + typeof newStock);
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateLibro/${idLibro}`, { newStock });
   }
 
   updateCantV(idLibro: string, newCantV: number): Observable<void> {

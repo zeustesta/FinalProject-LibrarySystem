@@ -42,8 +42,7 @@ export class VentasComponent {
         this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
           const libros = this.obtenerLibros(librosVendidos);
           for (let i = 0; libros.length < i; i++) {
-            libros[i].stock = libros[i].stock - 1;
-            this.apiService.updateLibro(libros[i].idLibro, (libros[i])).subscribe(() => {
+            this.apiService.updateStockLibro(libros[i].idLibro, (libros[i].stock - 1)).subscribe(() => {
               console.log('Stock actualizado master'); 
             });
           };

@@ -42,8 +42,8 @@ export class ListaLibrosComponent implements OnInit {
       } else {
         this.apiService.getLibro(idLibro).subscribe((libro) => {
           this.uService.postCart(actual, idLibro).subscribe(() => {
-            libro.stock = libro.stock - 1;
-            this.apiService.updateLibro(idLibro, libro).subscribe(() => {
+            console.log('Stock en addToCart: ' + libro.stock);
+            this.apiService.updateStockLibro(idLibro, libro.stock - 1).subscribe(() => {
               alert('Libro agregado al carrito');
             });
           });

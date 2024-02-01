@@ -47,8 +47,20 @@ class Server {
         this.app.use('/api/ventas', VentasRoutes_1.default);
     }
     middlewares() {
+        const corsOptions = {
+            origin: 'http://localhost:4200', // Reemplaza con el dominio de tu frontend
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            credentials: true, // Habilita las cookies y credenciales de autorización
+            optionsSuccessStatus: 204, // Responde con un 204 No Content para las solicitudes OPTIONS
+        };
         this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)());
+        this.app.use((0, cors_1.default)(corsOptions));
+        this.app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*'); // O el dominio específico que estás usando
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+            res.header('Access-Control-Allow-Headers', 'Content-Type');
+            next();
+        });
     }
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
