@@ -32,36 +32,46 @@ export class LibroDetalleComponent implements OnInit {
 
   addToCart(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
-    let existe = this.uService.buscarEnCart(idLibro);
 
-    if (actual) {
-      if (existe !== true) {
-        this.apiService.getLibro(idLibro).subscribe((data) => {
-          this.uService.postCart(actual, idLibro).subscribe();
-          this.apiService.updateStock(idLibro, (data.stock - 1)).subscribe();
-        });        
-        alert('Libro agregado al carrito');
-      } else {
-        alert('El libro ya existe en el carrito');
-      }
-    } else {
-      alert('Debe iniciar sesion primero');
+    if (!actual) {
+      alert('Debe iniciar sesión primero');
+      return;
     }
+
+    this.uService.buscarEnCart(idLibro).subscribe((existe) => {
+      if (existe) {
+        alert('El libro ya existe en el carrito');
+      } else {
+        this.apiService.getLibro(idLibro).subscribe((libro) => {
+          this.uService.postCart(actual, idLibro).subscribe(() => {
+            libro.stock = libro.stock - 1;
+            this.apiService.updateLibro(idLibro, libro).subscribe(() => {
+              alert('Libro agregado al carrito');
+            });
+          });
+        });
+      }
+    });
   }
 
   addToFavs(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
-    let existe = this.uService.buscarEnFavs(idLibro);
 
-    if (actual) {
-      if (existe !== true) {
-        this.uService.postFav(actual, idLibro).subscribe();
-        alert('Libro agregado correctamente');
-      } else {
-        alert('El libro ya existe en favoritos');
-      }
-    } else {
-      alert('Debe iniciar sesion primero');
+    if (!actual) {
+      alert('Debe iniciar sesión primero');
+      return;
     }
+
+    this.uService.buscarEnFavs(idLibro).subscribe((existe) => {
+      if (existe) {
+        alert('El libro ya existe en favoritos');
+      } else {
+        this.apiService.getLibro(idLibro).subscribe((libro) => {
+          this.uService.postFav(actual, idLibro).subscribe(() => {
+            alert('Libro agregado a favoritos');
+          });
+        });
+      }
+    });
   }
 }

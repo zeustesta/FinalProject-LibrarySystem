@@ -53,6 +53,7 @@ const deleteCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.deleteCliente = deleteCliente;
 const postCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
+    console.log(body);
     try {
         yield ClientesModel_1.Cliente.create(body);
         res.json({

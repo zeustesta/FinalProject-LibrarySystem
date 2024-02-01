@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
 import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ObservableLike, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/enviroments/environment.prod';
 import { Libro } from '../interfaces/plantillaLibro';
 
@@ -67,20 +67,21 @@ export class UsuariosService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
   }
 
-  buscarEnFavs(idLibro: string): boolean {
+  buscarEnFavs(idLibro: string) {
     const actual = this.obtenerUsuarioActual();
 
-    let existe: boolean = false;
-    this.getFavs(actual!).subscribe((favs) => {
-      if(favs !== null){
-        for(let i = 0; i < favs.length; i++){
-          if (idLibro === favs[i]['idLibro']) {
-            existe = true;
-          };
-        };
-      };
-    });
-    return existe; //TRUE: EXISTE - FALSE: NO EXISTE
+    return this.getFavs(actual!).pipe(
+        map((favs) => {
+            if (favs) {
+                for (let i = 0; i < favs.length; i++) {
+                    if (idLibro === favs[i]['idLibro']) {
+                        return true;  // El libro existe en el carrito
+                    }
+                }
+            }
+            return false;  // El libro no existe en el carrito
+        })
+    );
   }
 
   //METODOS PARA CART DEL CLIENTE
@@ -102,20 +103,21 @@ export class UsuariosService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCarrito/${idCliente}`);
   }
 
-  buscarEnCart(idLibro: string): boolean {
+  buscarEnCart(idLibro: string) {
     const actual = this.obtenerUsuarioActual();
 
-    let existe: boolean = false;
-    this.getCart(actual!).subscribe((cart) => {
-      if(cart !== null){
-        for(let i = 0; i < cart.length; i++){
-          if (idLibro === cart[i]['idLibro']) {
-            existe = true;
-          };
-        };
-      };
-    });
-    return existe; //TRUE: EXISTE - FALSE: NO EXISTE
+    return this.getCart(actual!).pipe(
+        map((cart) => {
+            if (cart) {
+                for (let i = 0; i < cart.length; i++) {
+                    if (idLibro === cart[i]['idLibro']) {
+                        return true;  // El libro existe en el carrito
+                    }
+                }
+            }
+            return false;  // El libro no existe en el carrito
+        })
+    );
   }
 
   //METODO PARA EL HISTORIAL DEL CLIENTE

@@ -41,6 +41,7 @@ export const deleteCliente = async (req: Request, res: Response) => {
 
 export const postCliente = async (req: Request, res: Response) => {
   const { body } = req;
+  console.log(body)
 
   try {
     await Cliente.create(body);

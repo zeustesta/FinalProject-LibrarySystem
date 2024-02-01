@@ -27,23 +27,28 @@ export class VentasComponent {
 
   cambiarEstadoVenta(idVenta: string, nuevoEstado: string) {
     if (nuevoEstado === 'Confirmada') {
-      this.vService.updateVenta(idVenta, EstadoVenta.CONFIRMADA).subscribe();
-      this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
-        const libros = this.obtenerLibros(librosVendidos);
-        for (let i = 0; libros.length < i; i++) {
-          this.apiService.updateCantV(libros[i].idLibro, (libros[i].cantVentas + 1)).subscribe();
-        };
+      this.vService.updateVenta(idVenta, EstadoVenta.CONFIRMADA).subscribe(() => {
+        this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
+          const libros = this.obtenerLibros(librosVendidos);
+          for (let i = 0; libros.length < i; i++) {
+            this.apiService.updateCantV(libros[i].idLibro, (libros[i].cantVentas + 1)).subscribe(() => {
+              console.log('CantVentas actualizadas master');
+            });
+          };
+        });
       });
-      console.log('Todo joya master');
     } else {
-      this.vService.updateVenta(idVenta, EstadoVenta.RECHAZADA).subscribe();
-      this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
-        const libros = this.obtenerLibros(librosVendidos);
-        for (let i = 0; libros.length < i; i++) {
-          this.apiService.updateStock(libros[i].idLibro, (libros[i].stock + 1)).subscribe();
-        };
+      this.vService.updateVenta(idVenta, EstadoVenta.RECHAZADA).subscribe(() => {
+        this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
+          const libros = this.obtenerLibros(librosVendidos);
+          for (let i = 0; libros.length < i; i++) {
+            libros[i].stock = libros[i].stock - 1;
+            this.apiService.updateLibro(libros[i].idLibro, (libros[i])).subscribe(() => {
+              console.log('Stock actualizado master'); 
+            });
+          };
+        });
       });
-      console.log('Todo mal master');
     } 
   }
 

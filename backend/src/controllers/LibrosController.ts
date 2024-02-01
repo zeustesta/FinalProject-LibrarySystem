@@ -73,24 +73,33 @@ export const updateCantVentasLibro = async (req: Request, res: Response) => {
   }
 } 
 
-export const updateStockLibro = async (req: Request, res: Response) => {
-  const { newStock } = req.body;
+export const updateLibro = async (req: Request, res: Response) => {
+  const { updateLibro } = req.body;
   const { idLibro } = req.params;
 
   try {
     const libro = await Libro.findByPk(idLibro);
   
-    if (!libro) {
-      res.status(404).json({
-        msg: `No existe un libro con id: ${idLibro}`
-      });
-    } else {
-      libro.setDataValue('stock', newStock);
-      await libro.save();
+    if (libro) {
+      console.log('Updateando')
+      console.log(updateLibro);
+      // await Libro.update(updateLibro, {
+      //   where: {
+      //     idLibro: idLibro
+      //   }
+      // });
+      // libro.stock = updateLibro;
+      await libro.save({ fields: ['stock'] });
+      await libro.reload();
       res.json({
         msg: 'Stock actualizado con exito'
       });
-    }
+    } 
+    // else {
+      // res.status(404).json({
+      //   msg: `No existe un libro con id: ${idLibro}`
+      // });
+    // }
   } catch (error) {
     console.log(error);
     console.log('No se ha podido actualizar el stock');
