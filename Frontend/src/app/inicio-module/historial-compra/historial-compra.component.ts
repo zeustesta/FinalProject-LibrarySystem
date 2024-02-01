@@ -11,15 +11,17 @@ export class HistorialCompraComponent {
   ventas: Venta [] = [];
 
   constructor(private usuarioService:UsuariosService){
-
+    this.getHistorial();
   }
 
   getHistorial(){
-    if(this.usuarioService.obtenerUsuarioActual()){
+    console.log(this.usuarioService.obtenerUsuarioActual());
+    const user = this.usuarioService.obtenerUsuarioActual();
+
       this.usuarioService.getHistorial(this.usuarioService.obtenerUsuarioActual()!).subscribe((data) => {
         console.log(data);
-      });
-    }
+        console.log("SE METE");
+    });
   }
 
 }
