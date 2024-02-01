@@ -28,12 +28,11 @@ export class APIService {
   }
 
   updateStockLibro(idLibro: string, newStock: number): Observable<void> {
-    console.log('Stock en update del service: ' + newStock + ' Typeof: ' + typeof newStock);
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateLibro/${idLibro}`, { newStock });
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateStockLibro/${idLibro}`, { stock: newStock });
   }
 
   updateCantV(idLibro: string, newCantV: number): Observable<void> {
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateCantVentas/${idLibro}`, newCantV);
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateCantVentas/${idLibro}`, { cantVentas: newCantV});
   }
 
   filtrarLibrosPorGenero(generoDeseado: string): Observable<Libro[]> {

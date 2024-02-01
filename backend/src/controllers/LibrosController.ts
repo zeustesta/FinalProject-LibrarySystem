@@ -50,40 +50,41 @@ export const postLibro = async (req: Request, res: Response) => {
 } 
 
 export const updateCantVentasLibro = async (req: Request, res: Response) => {
-  const { newCantVentas } = req.body;
+  const { cantVentas } = req.body;
   const { idLibro } = req.params;
-
-  try {
-    const libro = await Libro.findByPk(idLibro);
-  
-    if (!libro) {
-      res.status(404).json({
-        msg: `No existe un libro con id: ${idLibro}`
-      });
-    } else {
-      libro.setDataValue('cantVentas', newCantVentas);
-      await libro.save();
-      res.json({
-        msg: 'Cantidad de ventas actualizada con exito'
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    console.log('No se ha podido actualizar la cantidad de ventas');
-  }
-} 
-
-export const updateLibro = async (req: Request, res: Response) => {
-  const { body } = req.body;
-  const { idLibro } = req.params;
-  console.log('Stock en update del endpoint: ' + body + ' Typeof: ' + typeof body);
   try {
     const libro = await Libro.findByPk(idLibro);
   
     if (libro) {
-      libro.set({stock: body})
+      libro.set({cantVentas: cantVentas})
       await libro.save();
-      
+      res.json({
+        msg: 'Cantidad de ventas actualizada con exito'
+      });
+    } 
+    else {
+      res.status(404).json({
+        msg: `No existe un libro con id: ${idLibro}`
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      msg: `No se ha podido actualizar la cantidad de ventas`,
+      error
+    });
+  }
+} 
+
+export const updateStockLibro = async (req: Request, res: Response) => {
+  const { stock } = req.body;
+  const { idLibro } = req.params;
+  try {
+    const libro = await Libro.findByPk(idLibro);
+  
+    if (libro) {
+      libro.set({stock: stock})
+      await libro.save();
       res.json({
         msg: 'Stock actualizado con exito'
       });
@@ -95,6 +96,9 @@ export const updateLibro = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido actualizar el stock');
+    res.status(404).json({
+      msg: `No se ha podido actualizar el stock: ${idLibro}`,
+      error
+    });
   }
 } 

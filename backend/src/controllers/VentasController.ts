@@ -55,7 +55,7 @@ export const postVenta = async (req: Request, res: Response) => {
 
 export const updateStatusVenta = async (req: Request, res: Response) => {
   const { idVenta } = req.params;
-  const { nuevoEstado } = req.body;
+  const { estado } = req.body;
 
   try {
     const venta = await Venta.findByPk(idVenta);
@@ -65,7 +65,7 @@ export const updateStatusVenta = async (req: Request, res: Response) => {
         msg: `No existe una venta con id: ${idVenta}`
       });
     } else {
-      venta.setDataValue('estado', nuevoEstado);
+      venta.set({ estado: estado });
       await venta.save()
       res.json({
         msg: 'Venta actualizada con exito'

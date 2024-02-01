@@ -40,7 +40,7 @@ export class VentasService {
   }
 
   updateVenta(idVenta: string, estado: EstadoVenta): Observable<string> {
-    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateVenta/${idVenta}`, estado);
+    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateVenta/${idVenta}`, { estado: estado });
   }
 
   postLibroVendido(idVenta: string, idLibro: string): Observable<string> {

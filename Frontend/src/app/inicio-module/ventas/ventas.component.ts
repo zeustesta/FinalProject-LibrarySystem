@@ -16,7 +16,7 @@ export class VentasComponent {
   listaVentas: Venta[] = [];
 
   constructor(private vService: VentasService, private apiService: APIService, private fb: FormBuilder){
-    this.vService.getVentas();
+    this.getVentas();
   }
 
   getVentas() {
@@ -31,10 +31,9 @@ export class VentasComponent {
         this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
           const libros = this.obtenerLibros(librosVendidos);
           for (let i = 0; libros.length < i; i++) {
-            this.apiService.updateCantV(libros[i].idLibro, (libros[i].cantVentas + 1)).subscribe(() => {
-              console.log('CantVentas actualizadas master');
-            });
+            this.apiService.updateCantV(libros[i].idLibro, (libros[i].cantVentas + 1)).subscribe();
           };
+          alert('Estado cambiado correctamente');
         });
       });
     } else {
@@ -42,10 +41,9 @@ export class VentasComponent {
         this.vService.getLibrosPorVenta(idVenta).subscribe((librosVendidos) => {
           const libros = this.obtenerLibros(librosVendidos);
           for (let i = 0; libros.length < i; i++) {
-            this.apiService.updateStockLibro(libros[i].idLibro, (libros[i].stock - 1)).subscribe(() => {
-              console.log('Stock actualizado master'); 
-            });
+            this.apiService.updateStockLibro(libros[i].idLibro, (libros[i].stock - 1)).subscribe();
           };
+          alert('Estado cambiado correctamente');
         });
       });
     } 

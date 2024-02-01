@@ -8,5 +8,5 @@ router.get('/getLibro/:idLibro', LibrosController_1.getLibro);
 router.delete('/deleteLibro/:idLibro', LibrosController_1.deleteLibro);
 router.post('/postLibro', LibrosController_1.postLibro);
 router.put('/updateCantVentas/:idLibro', LibrosController_1.updateCantVentasLibro);
-router.put('/updateLibro/:idLibro', LibrosController_1.updateLibro);
+router.put('/updateStockLibro/:idLibro', LibrosController_1.updateStockLibro);
 exports.default = router;

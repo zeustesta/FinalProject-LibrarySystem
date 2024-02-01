@@ -62,7 +62,7 @@ const postVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.postVenta = postVenta;
 const updateStatusVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idVenta } = req.params;
-    const { nuevoEstado } = req.body;
+    const { estado } = req.body;
     try {
         const venta = yield VentasModel_1.Venta.findByPk(idVenta);
         if (!venta) {
@@ -71,7 +71,7 @@ const updateStatusVenta = (req, res) => __awaiter(void 0, void 0, void 0, functi
             });
         }
         else {
-            venta.setDataValue('estado', nuevoEstado);
+            venta.set({ estado: estado });
             yield venta.save();
             res.json({
                 msg: 'Venta actualizada con exito'

@@ -67,9 +67,14 @@ export class CarritoComponent {
     const actual = this.uService.obtenerUsuarioActual();
 
     if(actual){
-      this.uService.deleteCart(actual, idLibro).subscribe();
-      this.arrayCarrito.splice(this.arrayCarrito.findIndex((idLibro) => idLibro = idLibro), 1);
-      alert('Libro eliminado de carrito');
+      this.aService.getLibro(idLibro).subscribe((libro) => {
+        this.uService.deleteCart(actual, idLibro).subscribe(() => {
+          this.arrayCarrito.splice(this.arrayCarrito.findIndex((idLibro) => idLibro = idLibro), 1);
+          this.aService.updateStockLibro(idLibro, libro.stock + 1).subscribe(() => {
+            alert('Libro eliminado de carrito');          
+          });
+        });
+      });
     }
   }
 }
