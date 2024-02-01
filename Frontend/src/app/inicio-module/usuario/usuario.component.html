@@ -1,0 +1,51 @@
+<body class="hold-transition sidebar-mini">
+  <div>    
+    <div>
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Lista de Usuarios</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Administradores y Clientes de la Libreria</h3>
+                </div>
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th class="th">ID</th>
+                      <th class="th">Nombre</th>
+                      <th class="th">Apellido</th>
+                      <th class="th">Correo Electronico</th>
+                      <th class="th">Tipo de Usuario</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let usuario of listaClientes">
+                      <td class="td">{{usuario.idCliente}}</td>
+                      <td class="td">{{usuario.nombre}}</td>
+                      <td class="td">{{usuario.apellido}}</td>
+                      <td class="td">{{usuario.email}}</td>
+                      <td class="td">{{usuario.rol}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>   
+</body>

@@ -1,0 +1,75 @@
+.div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.mensaje-vacio {
+  text-align: center;
+  padding: 350px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 18vw;
+  height: 25vw;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(122, 117, 111, 0.342);
+  box-shadow: 0px 0px 5px 0px rgba(207, 193, 193, 0.651);
+}
+
+.img{
+  width:8vw;
+  height: 8vw;
+  margin: 20px;
+  margin-top: -20px;
+}
+
+.text {
+  justify-content: center;
+  text-decoration: none;
+  font-family: 'Verdana', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.genero{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.boton{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  text-decoration: none;
+  margin-top: -200px;
+}
+
+.h5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
