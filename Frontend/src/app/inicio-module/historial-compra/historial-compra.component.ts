@@ -19,7 +19,6 @@ export class HistorialCompraComponent {
     const user = this.usuarioService.obtenerUsuarioActual();
 
       this.usuarioService.getHistorial(this.usuarioService.obtenerUsuarioActual()!).subscribe((data) => {
-        console.log(data);
         console.log("SE METE");
     });
   }
