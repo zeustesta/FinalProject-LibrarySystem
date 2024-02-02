@@ -48,8 +48,8 @@ export class UsuariosService {
     return this.http.post<Usuario | null>(`${this.appUrl}${this.apiUrl}/validarCliente`, { email, password });
   }
   
-  validarEmail(email: string): Observable<string> {
-    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/validarEmail`, { email: email });
+  validarEmail(email: string): Observable<{ msg: string}> {
+    return this.http.post<{ msg: string}>(`${this.appUrl}${this.apiUrl}/validarEmail`, { email: email });
   }
 
   //METODOS PARA FAVS DEL CLIENTE

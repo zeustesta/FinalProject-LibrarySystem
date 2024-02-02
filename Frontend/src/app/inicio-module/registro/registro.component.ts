@@ -29,9 +29,7 @@ export class RegistroComponent {
     let email = this.registerForm.value.email;
 
     this.uService.validarEmail(email).subscribe((existe) => {
-      if (existe) {
-        alert('El email ya esta en uso');
-      } else {
+      if (existe.msg === 'NO_EXISTE' ) {
         const newCliente = {
           idCliente: uuidv4(),
           nombre: name,
@@ -40,8 +38,11 @@ export class RegistroComponent {
           password: password,
           rol: 'usuario'
         };
+        alert('Registrado de forma exitosa');
         this.uService.postCliente(newCliente).subscribe();
         this.router.navigate(['/inicio/login']);
+      } else {
+        alert('El email ya esta en uso');
       }
     });
   }

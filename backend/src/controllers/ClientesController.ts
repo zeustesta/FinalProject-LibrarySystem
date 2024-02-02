@@ -110,7 +110,7 @@ export const validarEmail = async (req: Request, res: Response) => {
     });
 
     if (emailEncontrado) {
-      res.json(emailEncontrado);
+      res.json({ msg: 'EXISTE' });
     } else {
       res.json({ msg: 'NO_EXISTE' });
     }

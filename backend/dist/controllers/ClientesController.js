@@ -120,7 +120,7 @@ const validarEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             }
         });
         if (emailEncontrado) {
-            res.json(emailEncontrado);
+            res.json({ msg: 'EXISTE' });
         }
         else {
             res.json({ msg: 'NO_EXISTE' });
