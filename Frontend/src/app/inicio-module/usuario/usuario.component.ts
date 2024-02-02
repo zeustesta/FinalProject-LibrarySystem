@@ -20,4 +20,10 @@ export class UsuarioComponent {
       this.listaClientes = clientes;
     })
   }
+
+  updateRolCliente(idCliente:string,nuevoRol:string){
+    this.uService.updateRolCliente(idCliente,nuevoRol).subscribe((data) =>{
+      console.log(data);
+    });
+  }
 }
