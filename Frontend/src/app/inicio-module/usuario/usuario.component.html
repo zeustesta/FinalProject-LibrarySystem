@@ -37,6 +37,13 @@
                       <td class="td">{{usuario.apellido}}</td>
                       <td class="td">{{usuario.email}}</td>
                       <td class="td">{{usuario.rol}}</td>
+                      <td class="td">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Filtrar</a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" (click)="updateRolCliente(usuario.idCliente, 'usuario')">Cliente</a>
+                          <a class="dropdown-item" (click)="updateRolCliente(usuario.idCliente, 'admin')">Administrador</a>
+                        </div>
+                    </td>
                     </tr>
                     </tbody>
                   </table>

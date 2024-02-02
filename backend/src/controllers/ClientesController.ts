@@ -77,6 +77,30 @@ export const updateCliente = async (req: Request, res: Response) => {
   }
 } 
 
+export const updateClienteRol = async (req: Request, res: Response) => {
+  const { idCliente } = req.params;
+  const { rol } = req.body;
+
+  try {
+    const cliente = await Cliente.findByPk(idCliente);
+  
+    if (!cliente) {
+      res.status(404).json({
+        msg: `No existe un usuario con id: ${idCliente}`
+      });
+    } else {
+      cliente.set({ rol: rol });
+      await cliente.save()
+      res.json({
+        msg: 'Usuario actualizado con exito'
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido actualizar el usuario');
+  }
+} 
+
 export const validarCliente = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 

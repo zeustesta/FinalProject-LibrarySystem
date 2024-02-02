@@ -40,6 +40,10 @@ export class UsuariosService {
     return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateCliente/${idCliente}`, update);
   }
 
+  updateRolCliente(idCliente: string,rol:string):Observable<string>{
+    return this.http.put<string>(`${this.apiUrl}${this.apiUrl}/updateClienteRol/${idCliente}`,rol);  
+  }
+
   deleteCliente(idCliente: string): Observable<string> { 
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCliente/${idCliente}`);
   }

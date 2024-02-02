@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
+exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateClienteRol = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
 const ClientesModel_1 = require("../models/ClientesModel");
 const VentasModel_1 = require("../models/VentasModel");
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
@@ -89,6 +89,30 @@ const updateCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.updateCliente = updateCliente;
+const updateClienteRol = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idCliente } = req.params;
+    const { rol } = req.body;
+    try {
+        const cliente = yield ClientesModel_1.Cliente.findByPk(idCliente);
+        if (!cliente) {
+            res.status(404).json({
+                msg: `No existe un usuario con id: ${idCliente}`
+            });
+        }
+        else {
+            cliente.set({ rol: rol });
+            yield cliente.save();
+            res.json({
+                msg: 'Usuario actualizado con exito'
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        console.log('No se ha podido actualizar el usuario');
+    }
+});
+exports.updateClienteRol = updateClienteRol;
 const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
