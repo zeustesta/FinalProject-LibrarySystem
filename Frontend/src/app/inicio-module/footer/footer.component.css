@@ -2,7 +2,7 @@
     background-color: #476aac;
     color: #fff;
     padding-bottom: 0;
-    bottom: 0;
+    /* bottom: 0; */
 }
 
 .footer.content .block {
