@@ -8,7 +8,7 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
   styleUrls: ['./historial-compra.component.css']
 })
 export class HistorialCompraComponent {
-  historial: Venta [] = [];
+  historial: any = [];
 
   constructor(private uService: UsuariosService){}
 
@@ -20,7 +20,19 @@ export class HistorialCompraComponent {
     const actual = this.uService.obtenerUsuarioActual();
 
     this.uService.getHistorial(actual!).subscribe((data) => {
-      console.log(data['LibrosVendidos'])
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].LibrosVendidos.length; j++) {
+          const compra = {
+            idLibro: data[i].LibrosVendidos[j].LibrosVenta['idLibro'],
+            titulo: data[i].LibrosVendidos[j].LibrosVenta['titulo'],
+            autor: data[i].LibrosVendidos[j].LibrosVenta['autor'],
+            precio: data[i].LibrosVendidos[j].LibrosVenta['precio'],
+            fechaCompra: data[i]['fechaCompra'],
+            estado: data[i]['estado']
+          }
+          this.historial.push(compra);
+        }
+      }
     });
   }
 }

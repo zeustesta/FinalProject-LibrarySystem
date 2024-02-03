@@ -294,12 +294,12 @@ const getHistorialComprasCliente = (req, res) => __awaiter(void 0, void 0, void 
             where: {
                 idCliente: idCliente
             },
+            attributes: ['estado', 'fechaCompra'],
             include: [{
                     model: VentasModel_1.LibrosVendidos,
-                    attributes: ['idLibro'],
+                    attributes: ['idVenta'],
                     include: [{
                             model: LibrosModel_1.default,
-                            attributes: ['titulo', 'genero', 'autor', 'precio'],
                             as: 'LibrosVenta'
                         }],
                     as: 'LibrosVendidos'

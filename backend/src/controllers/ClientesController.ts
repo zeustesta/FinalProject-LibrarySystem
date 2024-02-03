@@ -285,12 +285,12 @@ export const getHistorialComprasCliente = async (req: Request, res: Response) =>
       where: {
         idCliente: idCliente
       },
+      attributes: ['estado', 'fechaCompra'],
       include: [{
         model: LibrosVendidos,
-        attributes: ['idLibro'],
+        attributes: ['idVenta'],
         include: [{
           model: Libro,
-          attributes: ['titulo', 'genero', 'autor', 'precio'],
           as: 'LibrosVenta'
         }],
         as: 'LibrosVendidos'
