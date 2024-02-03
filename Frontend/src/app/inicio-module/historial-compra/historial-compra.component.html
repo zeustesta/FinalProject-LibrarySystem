@@ -1,1 +1,32 @@
-<p>historial-compra works!</p>
+<body>
+  <div class="container mt-4 separador">
+    <h1 class="text-center">Lista de Ventas</h1>
+  
+    <table class="table border border-3">
+      <thead>
+        <tr>
+          <th>ID Venta</th>
+          <th>ID Usuario</th>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compra of historial">
+          <td>{{ compra.idVenta }}</td>
+          <td>{{ compra.idCliente }}</td>
+          <td>{{ compra.fechaCompra | date:'yyyy-MM-dd' }}</td>
+          <td>{{ compra.total | currency }}</td>
+          <td>{{ compra.estado }}</td>
+          <td>
+            <button class="btn btn-success mr-1">Confirmar</button>
+            <button class="btn btn-danger ml-1">Rechazar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>

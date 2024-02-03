@@ -82,5 +82,6 @@ exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
     tableName: 'LIBROSPORVENTA'
 });
 exports.Venta.belongsTo(ClientesModel_1.Cliente, { foreignKey: 'idCliente', as: 'ClienteVenta' });
-exports.LibrosVendidos.belongsTo(exports.Venta, { foreignKey: 'idVenta', as: 'Venta' });
+exports.Venta.hasMany(exports.LibrosVendidos, { foreignKey: 'idVenta', as: 'LibrosVendidos' });
+exports.LibrosVendidos.belongsTo(exports.Venta, { foreignKey: 'idVenta', as: 'VentaAsociada' });
 exports.LibrosVendidos.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosVenta' });

@@ -115,7 +115,7 @@ export const validarCliente = async (req: Request, res: Response) => {
     if (clienteEncontrado !== undefined && clienteEncontrado !== null) {
       res.json(clienteEncontrado);
     } else {
-      res.json({ msg: 'NO_EXISTE' });
+      res.json(null);
     }
   } catch (error) {
     console.log(error);
@@ -287,20 +287,21 @@ export const getHistorialComprasCliente = async (req: Request, res: Response) =>
       },
       include: [{
         model: LibrosVendidos,
-        attributes: ['idLibro'], 
+        attributes: ['idLibro'],
         include: [{
           model: Libro,
-          attributes: ['idLibro', 'titulo', 'genero', 'autor', 'precio']
+          attributes: ['titulo', 'genero', 'autor', 'precio'],
+          as: 'LibrosVenta'
         }],
-        as: 'Libros'
+        as: 'LibrosVendidos'
       }]
     });
+
     if (historialCompras) {
       res.json(historialCompras);
     } else {
-      res.status(404).json({
-        msg: `No existe historial de compras para el cliente con id: ${idCliente}`,
-      });
+      res.json([]);
+
     }
   } catch (error) {
     console.log(error);

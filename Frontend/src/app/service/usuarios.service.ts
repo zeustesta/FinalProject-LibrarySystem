@@ -100,22 +100,33 @@ export class UsuariosService {
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
   }
 
-  addToCart(idLibro: string) {
+  addToCart(idLibro: string): boolean {
     const actual = this.obtenerUsuarioActual();
 
     this.buscarEnCart(idLibro).subscribe((existe) => {
       if (existe) {
         alert('El libro ya existe en el carrito');
+        return false;
       } else {
         this.aService.getLibro(idLibro).subscribe((libro) => {
-          this.postCart(actual!, idLibro).subscribe(() => {
-            this.aService.updateStockLibro(idLibro, libro.stock - 1).subscribe(() => {
-              alert('Libro agregado al carrito');
+          if (libro.stock > 0) {
+            this.postCart(actual!, idLibro).subscribe(() => {
+              this.aService.updateStockLibro(idLibro, libro.stock - 1).subscribe(() => {
+                alert('Libro agregado al carrito');
+                return true;
+              });
+              return false;
             });
-          });
+            return false;
+          } else {
+            alert('No quedan mas libros disponibles');
+            return false;
+          }
         });
+        return false;
       }
     });
+    return false;
   }
 
   deleteCart(idCliente: string, idLibro: string): Observable<string> {

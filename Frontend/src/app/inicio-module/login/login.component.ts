@@ -29,7 +29,7 @@ export class LoginComponent {
         alert('Inicio de sesión exitoso');
         this.router.navigate(['/inicio/inicio']);
       } else {
-        alert('Email o contraseña incorrectos');
+        alert('No existe un usuario con esas credenciales');
       }
     })
   }

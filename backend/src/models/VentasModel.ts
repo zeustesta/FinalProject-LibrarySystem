@@ -81,6 +81,7 @@ export const LibrosVendidos = db.define('LibrosVendidos', {
 });
 
 Venta.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteVenta' });
+Venta.hasMany(LibrosVendidos, { foreignKey: 'idVenta', as: 'LibrosVendidos' });
 
-LibrosVendidos.belongsTo(Venta, { foreignKey: 'idVenta', as: 'Venta' });
+LibrosVendidos.belongsTo(Venta, { foreignKey: 'idVenta', as: 'VentaAsociada' }); 
 LibrosVendidos.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosVenta' });

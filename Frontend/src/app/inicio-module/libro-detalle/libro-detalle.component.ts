@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from '../../interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
@@ -31,7 +31,10 @@ export class LibroDetalleComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    this.uService.addToCart(idLibro);
+    const agregado = this.uService.addToCart(idLibro);
+    if (agregado) {
+      this.libro.stock = this.libro.stock - 1;
+    }
   }
 
   addToFavs(idLibro: string) {

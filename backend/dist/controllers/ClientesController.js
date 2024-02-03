@@ -126,7 +126,7 @@ const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function*
             res.json(clienteEncontrado);
         }
         else {
-            res.json({ msg: 'NO_EXISTE' });
+            res.json(null);
         }
     }
     catch (error) {
@@ -299,18 +299,17 @@ const getHistorialComprasCliente = (req, res) => __awaiter(void 0, void 0, void 
                     attributes: ['idLibro'],
                     include: [{
                             model: LibrosModel_1.default,
-                            attributes: ['idLibro', 'titulo', 'genero', 'autor', 'precio']
+                            attributes: ['titulo', 'genero', 'autor', 'precio'],
+                            as: 'LibrosVenta'
                         }],
-                    as: 'Libros'
+                    as: 'LibrosVendidos'
                 }]
         });
         if (historialCompras) {
             res.json(historialCompras);
         }
         else {
-            res.status(404).json({
-                msg: `No existe historial de compras para el cliente con id: ${idCliente}`,
-            });
+            res.json([]);
         }
     }
     catch (error) {
