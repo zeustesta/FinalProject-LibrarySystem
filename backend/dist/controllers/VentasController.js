@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLibrosPorVenta = exports.postLibroPorVenta = exports.updateStatusVenta = exports.postVenta = exports.deleteVenta = exports.getVenta = exports.getVentas = void 0;
 const VentasModel_1 = require("../models/VentasModel");
+const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
 //METODOS PARA VENTA
 const getVentas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listaVentas = yield VentasModel_1.Venta.findAll();
@@ -56,7 +60,10 @@ const postVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido agregar la venta');
+        res.status(404).json({
+            msg: 'No se ha podido agregar la venta',
+            error
+        });
     }
 });
 exports.postVenta = postVenta;
@@ -80,7 +87,10 @@ const updateStatusVenta = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido actualizar la venta');
+        res.status(404).json({
+            msg: 'No se ha podido actualizar la venta',
+            error
+        });
     }
 });
 exports.updateStatusVenta = updateStatusVenta;
@@ -95,17 +105,23 @@ const postLibroPorVenta = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido agregar el libro vendidos');
+        res.status(404).json({
+            msg: 'No se ha podido agregar el libro vendido',
+            error
+        });
     }
 });
 exports.postLibroPorVenta = postLibroPorVenta;
 const getLibrosPorVenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idVenta } = req.params;
-    const librosPorVenta = yield VentasModel_1.Venta.findAll({
+    const librosPorVenta = yield VentasModel_1.LibrosVendidos.findAll({
         where: {
             idVenta: idVenta
         },
-        attributes: ['idLibro']
+        include: [{
+                model: LibrosModel_1.default,
+                as: 'LibrosVenta'
+            }]
     });
     if (librosPorVenta.length > 0) {
         res.json(librosPorVenta);

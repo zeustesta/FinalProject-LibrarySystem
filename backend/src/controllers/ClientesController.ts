@@ -112,14 +112,17 @@ export const validarCliente = async (req: Request, res: Response) => {
       }
     });
 
-    if (clienteEncontrado) {
+    if (clienteEncontrado !== undefined && clienteEncontrado !== null) {
       res.json(clienteEncontrado);
     } else {
       res.json({ msg: 'NO_EXISTE' });
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido validar el cliente');
+    res.status(404).json({
+      msg: `No se pudo validar el cliente`,
+      error
+    });
   }
 };
 
@@ -140,7 +143,10 @@ export const validarEmail = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido validar el email');
+    res.status(404).json({
+      msg: `No se pudo validar el email`,
+      error
+    });
   }
 }
 
@@ -298,6 +304,9 @@ export const getHistorialComprasCliente = async (req: Request, res: Response) =>
     }
   } catch (error) {
     console.log(error);
-    console.log(`No se encontro historial de compras para el cliente con id: ${idCliente}`);
+    res.status(404).json({
+      msg: `No se pudo encontrar un historial`,
+      error
+    });
   }
 };

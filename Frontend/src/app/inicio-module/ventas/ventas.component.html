@@ -22,8 +22,8 @@
           <td>{{ venta.total | currency }}</td>
           <td>{{ venta.estado }}</td>
           <td>
-            <button class="btn btn-success mr-1" (click)="cambiarEstadoVenta(venta.idVenta, 'Confirmada')" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Confirmar</button>
-            <button class="btn btn-danger ml-1" (click)="cambiarEstadoVenta(venta.idVenta, 'Rechazada')" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Rechazar</button>
+            <button class="btn btn-success mr-1" (click)="cambiarEstadoVenta(venta.idVenta, 'CONFIRMADA')" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Confirmar</button>
+            <button class="btn btn-danger ml-1" (click)="cambiarEstadoVenta(venta.idVenta, 'RECHAZADA')" *ngIf="!yaConfirmada(venta.idVenta) && !yaRechazada(venta.idVenta)">Rechazar</button>
           </td>
         </tr>
       </tbody>

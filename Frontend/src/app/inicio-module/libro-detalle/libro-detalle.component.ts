@@ -31,42 +31,18 @@ export class LibroDetalleComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    const actual = this.uService.obtenerUsuarioActual();
-
-    if (!actual) {
-      alert('Debe iniciar sesión primero');
-      return;
-    }
-
-    this.uService.buscarEnCart(idLibro).subscribe((existe) => {
-      if (existe) {
-        alert('El libro ya existe en el carrito');
-      } else {
-        this.apiService.getLibro(idLibro).subscribe((libro) => {
-          this.uService.postCart(actual, idLibro).subscribe(() => {
-            this.apiService.updateStockLibro(idLibro, (libro.stock - 1)).subscribe(() => {
-              alert('Libro agregado al carrito');
-            });
-          });
-        });
-      }
-    });
+    this.uService.addToCart(idLibro);
   }
 
   addToFavs(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
-
-    if (!actual) {
-      alert('Debe iniciar sesión primero');
-      return;
-    }
 
     this.uService.buscarEnFavs(idLibro).subscribe((existe) => {
       if (existe) {
         alert('El libro ya existe en favoritos');
       } else {
         this.apiService.getLibro(idLibro).subscribe((libro) => {
-          this.uService.postFav(actual, idLibro).subscribe(() => {
+          this.uService.postFav(actual!, idLibro).subscribe(() => {
             alert('Libro agregado a favoritos');
           });
         });

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/enviroments/environment.prod';
 import { Libro } from '../interfaces/plantillaLibro';
+import { APIService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UsuariosService {
   usuarioActual: string | null;
   rolActual: boolean = false;
 
-  constructor(private storage: StorageService, private http: HttpClient) { 
+  constructor(private storage: StorageService, private http: HttpClient, private aService: APIService) { 
     this.appUrl = environment.apiUrl;
     this.apiUrl = '/api/clientes';
     this.usuarioActual = null;
@@ -97,6 +98,24 @@ export class UsuariosService {
   postCart(idCliente: string, idLibro: string): Observable<string> {
     const body = { idCliente, idLibro };
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
+  }
+
+  addToCart(idLibro: string) {
+    const actual = this.obtenerUsuarioActual();
+
+    this.buscarEnCart(idLibro).subscribe((existe) => {
+      if (existe) {
+        alert('El libro ya existe en el carrito');
+      } else {
+        this.aService.getLibro(idLibro).subscribe((libro) => {
+          this.postCart(actual!, idLibro).subscribe(() => {
+            this.aService.updateStockLibro(idLibro, libro.stock - 1).subscribe(() => {
+              alert('Libro agregado al carrito');
+            });
+          });
+        });
+      }
+    });
   }
 
   deleteCart(idCliente: string, idLibro: string): Observable<string> {

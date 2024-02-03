@@ -32,7 +32,7 @@
                     <tr *ngFor="let fav of arrayFavs">
                       <td class="td">{{fav.titulo}}</td>
                       <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeFavs(fav.idLibro)" style="color: #e00606;"></i></td>
-                      <td class="td"><i type="button" class="fa-solid fa-cart-shopping" (click)="agregarACarrito(fav.idLibro)"></i></td>
+                      <td class="td"><i type="button" class="fa-solid fa-cart-shopping" (click)="addToCart(fav.idLibro)"></i></td>
                     </tr>
                     </tbody>
                   </table>

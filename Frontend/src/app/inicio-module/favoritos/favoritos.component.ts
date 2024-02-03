@@ -39,24 +39,7 @@ export class FavoritosComponent {
     this.arrayFavs.splice(this.arrayFavs.findIndex(item => item.idLibro === idLibro), 1);
   }
 
-  agregarACarrito(idLibro: string){
-    const actual = this.uService.obtenerUsuarioActual();
-    
-    this.uService.getCart(actual!).subscribe((cart) => {
-      if(cart !== null){
-        let existe = false;
-        for(let i = 0; i < cart.length; i++){
-          if (idLibro === cart[i]['idLibro']) {
-            existe = true;
-          };
-        };
-        if (existe === false) {
-          this.uService.postCart(actual!, idLibro).subscribe();
-          alert('Libro agregado al carrito');
-        } else {
-          alert('El libro ya existe en el carrito');
-        };
-      };
-    });
+  addToCart(idLibro: string) {
+    this.uService.addToCart(idLibro);
   }
 }

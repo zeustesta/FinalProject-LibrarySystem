@@ -9,6 +9,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Angular Proyect';
   constructor(){
-    // localStorage.removeItem('usuarioActual');
+    localStorage.removeItem('usuarioActual');
   }
 }

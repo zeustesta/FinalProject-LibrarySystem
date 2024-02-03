@@ -49,14 +49,17 @@ export const postVenta = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido agregar la venta');
+    res.status(404).json({
+      msg: 'No se ha podido agregar la venta',
+      error
+    });  
   }
 } 
 
 export const updateStatusVenta = async (req: Request, res: Response) => {
   const { idVenta } = req.params;
   const { estado } = req.body;
-
+  
   try {
     const venta = await Venta.findByPk(idVenta);
   
@@ -73,7 +76,10 @@ export const updateStatusVenta = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido actualizar la venta');
+    res.status(404).json({
+      msg: 'No se ha podido actualizar la venta',
+      error
+    });
   }
 } 
 
@@ -88,18 +94,24 @@ export const postLibroPorVenta = async (req: Request, res: Response) => {
       msg: 'Libro vendido agregado con exito'
     });
   } catch (error) {
-    console.log(error);
-    console.log('No se ha podido agregar el libro vendidos');
+    console.log(error); 
+    res.status(404).json({
+      msg: 'No se ha podido agregar el libro vendido',
+      error
+    });  
   }
 } 
 
 export const getLibrosPorVenta = async (req: Request, res: Response) => {
   const { idVenta } = req.params;
-  const librosPorVenta = await Venta.findAll({
+  const librosPorVenta = await LibrosVendidos.findAll({
     where: {
       idVenta: idVenta
     },
-    attributes: ['idLibro']
+    include: [{ 
+      model: Libro, 
+      as: 'LibrosVenta' 
+    }] 
   });
 
   if (librosPorVenta.length > 0) {

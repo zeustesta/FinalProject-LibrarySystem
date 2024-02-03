@@ -122,7 +122,7 @@ const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 password: password
             }
         });
-        if (clienteEncontrado) {
+        if (clienteEncontrado !== undefined && clienteEncontrado !== null) {
             res.json(clienteEncontrado);
         }
         else {
@@ -131,7 +131,10 @@ const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido validar el cliente');
+        res.status(404).json({
+            msg: `No se pudo validar el cliente`,
+            error
+        });
     }
 });
 exports.validarCliente = validarCliente;
@@ -152,7 +155,10 @@ const validarEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido validar el email');
+        res.status(404).json({
+            msg: `No se pudo validar el email`,
+            error
+        });
     }
 });
 exports.validarEmail = validarEmail;
@@ -309,7 +315,10 @@ const getHistorialComprasCliente = (req, res) => __awaiter(void 0, void 0, void 
     }
     catch (error) {
         console.log(error);
-        console.log(`No se encontro historial de compras para el cliente con id: ${idCliente}`);
+        res.status(404).json({
+            msg: `No se pudo encontrar un historial`,
+            error
+        });
     }
 });
 exports.getHistorialComprasCliente = getHistorialComprasCliente;
