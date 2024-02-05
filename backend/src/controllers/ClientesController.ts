@@ -96,8 +96,10 @@ export const updateClienteRol = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    console.log('No se ha podido actualizar el usuario');
+    res.status(404).json({
+      msg: 'No se pudo actualizar el rol',
+      error
+    })
   }
 } 
 
@@ -118,7 +120,6 @@ export const validarCliente = async (req: Request, res: Response) => {
       res.json(null);
     }
   } catch (error) {
-    console.log(error);
     res.status(404).json({
       msg: `No se pudo validar el cliente`,
       error

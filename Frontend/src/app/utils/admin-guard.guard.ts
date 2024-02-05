@@ -11,7 +11,7 @@ export const adminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: 
   if (actual) {
     return uService.getCliente(actual).pipe(
       map(cliente => {
-        if (cliente.rol  !== 'admin') {
+        if (cliente.rol  !== 'ADMIN') {
           alert('Solo administradores!');
           router.navigate(['/inicio']);
           return false;

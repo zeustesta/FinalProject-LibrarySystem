@@ -108,8 +108,10 @@ const updateClienteRol = (req, res) => __awaiter(void 0, void 0, void 0, functio
         }
     }
     catch (error) {
-        console.log(error);
-        console.log('No se ha podido actualizar el usuario');
+        res.status(404).json({
+            msg: 'No se pudo actualizar el rol',
+            error
+        });
     }
 });
 exports.updateClienteRol = updateClienteRol;
@@ -130,7 +132,6 @@ const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function*
         }
     }
     catch (error) {
-        console.log(error);
         res.status(404).json({
             msg: `No se pudo validar el cliente`,
             error

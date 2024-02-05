@@ -12,7 +12,7 @@ export const usersGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: 
   if (actual) {
     return uService.getCliente(actual).pipe(
       map(cliente => {
-        if (cliente.rol !== 'usuario' && cliente.rol !== 'admin') {
+        if (cliente.rol !== 'USER' && cliente.rol !== 'ADMIN') {
           console.log('Verificando si es algo');
           router.navigate(['/inicio/login']);
           return false;

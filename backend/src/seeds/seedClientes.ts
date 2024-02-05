@@ -7,15 +7,15 @@ export async function seedClients(){
       apellido: "admin",
       email: "admin@gmail.com",
       password: "admin",
-      rol: "admin"
+      rol: "ADMIN"
     });
 
     await Cliente.create({
       nombre: "usuario",
       apellido: "usuario",
-      email: "usuario@gmail.com",
+      email: "user@gmail.com",
       password: "usuario",
-      rol: "usuario"
+      rol: "USER"
     });
   } catch (error) {
     console.log(error)

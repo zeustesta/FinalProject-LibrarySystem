@@ -41,8 +41,8 @@ export class UsuariosService {
     return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateCliente/${idCliente}`, update);
   }
 
-  updateRolCliente(idCliente: string,rol:string):Observable<string>{
-    return this.http.put<string>(`${this.apiUrl}${this.apiUrl}/updateClienteRol/${idCliente}`,rol);  
+  updateRolCliente(idCliente: string, rol: string):Observable<string>{
+    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateClienteRol/${idCliente}`, { rol: rol});  
   }
 
   deleteCliente(idCliente: string): Observable<string> { 
@@ -180,7 +180,7 @@ export class UsuariosService {
   esAdmin(){
     if(this.estaLogueado()){
       this.getCliente(this.usuarioActual!).subscribe((userData) => {
-        if (userData.rol === 'admin') {
+        if (userData.rol === 'ADMIN') {
           this.rolActual = true; //es admin
         } else {
           this.rolActual = false; //no es admin

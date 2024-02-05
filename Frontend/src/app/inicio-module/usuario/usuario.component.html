@@ -22,29 +22,29 @@
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
-                    <tr>
-                      <th class="th">ID</th>
-                      <th class="th">Nombre</th>
-                      <th class="th">Apellido</th>
-                      <th class="th">Correo Electronico</th>
-                      <th class="th">Tipo de Usuario</th>
-                    </tr>
+                      <tr>
+                        <th class="th">ID</th>
+                        <th class="th">Nombre</th>
+                        <th class="th">Apellido</th>
+                        <th class="th">Correo Electronico</th>
+                        <th class="th">Tipo de Usuario</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let usuario of listaClientes">
-                      <td class="td">{{usuario.idCliente}}</td>
-                      <td class="td">{{usuario.nombre}}</td>
-                      <td class="td">{{usuario.apellido}}</td>
-                      <td class="td">{{usuario.email}}</td>
-                      <td class="td">{{usuario.rol}}</td>
-                      <td class="td">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Filtrar</a>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" (click)="updateRolCliente(usuario.idCliente, 'usuario')">Cliente</a>
-                          <a class="dropdown-item" (click)="updateRolCliente(usuario.idCliente, 'admin')">Administrador</a>
-                        </div>
-                    </td>
-                    </tr>
+                      <tr *ngFor="let usuario of listaClientes">
+                        <td class="td">{{usuario.idCliente}}</td>
+                        <td class="td">{{usuario.nombre}}</td>
+                        <td class="td">{{usuario.apellido}}</td>
+                        <td class="td">{{usuario.email}}</td>
+                        <td class="td">{{usuario.rol}}</td>
+                        <td class="td">
+                          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Filtrar</a>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" (click)="updateRolCliente(usuario.idCliente, 'USER')">Cliente</a>
+                              <a class="dropdown-item" (click)="updateRolCliente(usuario.idCliente, 'ADMIN')">Administrador</a>
+                            </div>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
