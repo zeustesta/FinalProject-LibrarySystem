@@ -13,8 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ListaLibrosComponent implements OnInit {
   listaLibros: Libro[] = [];
 
-  constructor(private apiService: APIService, private uService: UsuariosService, private router: Router,private aRouter: ActivatedRoute){
-    
+  constructor(private aService: APIService, private uService: UsuariosService, private router: Router, private aRouter: ActivatedRoute){
   }
 
   ngOnInit(): void {
@@ -22,9 +21,22 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   getListaLibros() {
-    this.apiService.getLibros().subscribe((data: Libro[]) => {
-      this.listaLibros = data;
-    })
+    this.aRouter.paramMap.subscribe((params) =>{
+      const tituloParam = params.get('titulo');
+      if (tituloParam) {
+       this.aService.filtrarPorBusqueda(tituloParam).subscribe((data) => {
+        if (data) {
+          this.listaLibros = data;
+        } else {
+          alert("No hay libros con ese titulo");
+        }
+       })
+      } else {
+        this.aService.getLibros().subscribe((data: Libro[]) => {
+          this.listaLibros = data;
+        })
+      }
+    });
   }
 
   addToCart(idLibro: string) {

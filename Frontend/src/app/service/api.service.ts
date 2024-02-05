@@ -40,5 +40,11 @@ export class APIService {
       map((libros: Libro[]) => libros.filter(libro => libro.genero === generoDeseado))
     );
   }
+
+  filtrarPorBusqueda(titulo: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getLibros`).pipe(
+      map((libros: Libro[]) => libros.filter(libro => libro.titulo.toLowerCase().includes(titulo.toLowerCase())))
+    );
+  }
 }
 

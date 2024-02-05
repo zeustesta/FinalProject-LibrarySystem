@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 })
 
 export class FiltroComponent{
-  generoSeleccionado: string | undefined;
   librosFiltrados: Libro[] = [];
 
   constructor(
