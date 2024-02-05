@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['/inicio/inicio']">Library</a>
+    <a class="navbar-brand" [routerLink]="['/inicio']">Library</a>
     <form class="d-flex">
       <input class="form-control me-sm-2" type="search" placeholder="Ingrese Título" [(ngModel)]="tituloBusqueda" name="tituloBusqueda" (keyup.enter)="buscarLibros()">
       <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click)="buscarLibros()" >Buscar</button>
@@ -38,10 +38,10 @@
         <i type="button" class="fa-solid fa-clock-rotate-left" [routerLink]="['/inicio/historial']"></i>
       </li>
       <li class="nav-item mt-2 ml-2" *ngIf="!isLoggedIn()">
-        <i type="button" class="fa-solid fa-user" [routerLink]="['/inicio/login']"></i>
+        <i type="button" class="fa-solid fa-user" [routerLink]="['/login']"></i>
       </li>
       <li class="nav-item mt-2 ml-2" *ngIf="isLoggedIn()">
-        <i type="button" class="fa-solid fa-right-from-bracket" [routerLink]="['/inicio/inicio']" (click)="logOut()"></i>
+        <i type="button" class="fa-solid fa-right-from-bracket" [routerLink]="['/inicio']" (click)="logOut()"></i>
       </li>
     </ul>
   </div>

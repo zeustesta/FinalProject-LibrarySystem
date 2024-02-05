@@ -57,7 +57,7 @@ export class CarritoComponent {
   
           alert('Carrito encargado exitosamente, será redirigido');
           this.uService.cleanCart(actual).subscribe();
-          this.router.navigate([`/inicio/inicio`]);
+          this.router.navigate(['/inicio']);
         });
       });
     }

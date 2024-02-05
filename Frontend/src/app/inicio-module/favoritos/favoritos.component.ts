@@ -1,8 +1,7 @@
-import { Component, ɵsetAlternateWeakRefImpl } from '@angular/core';
+import { Component } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-import { CarritoComponent } from '../carrito/carrito.component';
 
 @Component({
   selector: 'app-favoritos',

@@ -33,7 +33,7 @@ export class UsuarioComponent {
           if (this.uService.obtenerUsuarioActual() === idCliente && nuevoRol === 'USER') {
             alert('Usted ya no es más administrador, inicie sesion nuevamente');
             this.uService.cerrarSesion();
-            this.router.navigate(['/inicio/login']);
+            this.router.navigate(['/login']);
           }
         });
       }

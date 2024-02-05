@@ -3,7 +3,6 @@ import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-lista-libros',

@@ -17,19 +17,11 @@ import { HistorialCompraComponent } from './historial-compra/historial-compra.co
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', 
     children: [
       {
-        path: 'inicio',
+        path: '',
         component: InicioComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegistroComponent
       },
       {
         path: 'libros/:titulo',
@@ -74,7 +66,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'inicio' 
+        redirectTo: '' 
       }
     ]
   }

@@ -13,8 +13,7 @@ export const usersGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: 
     return uService.getCliente(actual).pipe(
       map(cliente => {
         if (cliente.rol !== 'USER' && cliente.rol !== 'ADMIN') {
-          console.log('Verificando si es algo');
-          router.navigate(['/inicio/login']);
+          router.navigate(['/login']);
           return false;
         }
         return true;
@@ -22,7 +21,7 @@ export const usersGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: 
     );
   } else {
     alert('Debe iniciar sesión');
-    router.navigate(['/inicio/login']);
+    router.navigate(['/login']);
     return false;
   }
 };

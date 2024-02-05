@@ -103,6 +103,11 @@ export class UsuariosService {
   addToCart(idLibro: string): boolean {
     const actual = this.obtenerUsuarioActual();
 
+    if (actual === null) {
+      alert('Debe iniciar sesion');
+      return false;
+    }
+
     this.buscarEnCart(idLibro).subscribe((existe) => {
       if (existe) {
         alert('El libro ya existe en el carrito');

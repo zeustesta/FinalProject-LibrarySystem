@@ -21,7 +21,7 @@ export const adminGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: 
     );
   } else {
     alert('Debe iniciar sesión primero!');
-    router.navigate(['/inicio/login']);
+    router.navigate(['/login']);
     return false;
   }
 };

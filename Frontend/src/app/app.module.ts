@@ -10,6 +10,8 @@ import { CarrouselComponent } from './inicio-module/carrousel/carrousel.componen
 import { FiltroComponent } from './inicio-module/filtro/filtro.component';
 import { FooterComponent } from './inicio-module/footer/footer.component';
 import { SpinnerComponent } from './inicio-module/spinner/spinner.component';
+import { LoginComponent } from './inicio-module/login/login.component';
+import { RegistroComponent } from './inicio-module/registro/registro.component';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { SpinnerComponent } from './inicio-module/spinner/spinner.component';
     FiltroComponent,
     FooterComponent,
     SpinnerComponent,
-    
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
