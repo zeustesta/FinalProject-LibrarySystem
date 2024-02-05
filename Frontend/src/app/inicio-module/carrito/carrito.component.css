@@ -3,6 +3,12 @@
 }
 
 body{
-  margin-bottom: 8rem;
-  padding: 150px;
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-family: Playfair Display;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }

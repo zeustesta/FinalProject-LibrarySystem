@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class ListaLibrosComponent implements OnInit {
+  loading: boolean = false;
   listaLibros: Libro[] = [];
 
   constructor(private aService: APIService, private uService: UsuariosService, private router: Router, private aRouter: ActivatedRoute){
@@ -21,6 +22,7 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   getListaLibros() {
+    this.loading = true;
     this.aRouter.paramMap.subscribe((params) =>{
       const tituloParam = params.get('titulo');
       if (tituloParam) {
@@ -30,10 +32,16 @@ export class ListaLibrosComponent implements OnInit {
         } else {
           alert("No hay libros con ese titulo");
         }
+        setTimeout(() => {
+          this.loading = false;
+        }, 800)
        })
       } else {
         this.aService.getLibros().subscribe((data: Libro[]) => {
           this.listaLibros = data;
+          setTimeout(() => {
+            this.loading = false;
+          }, 800)        
         })
       }
     });

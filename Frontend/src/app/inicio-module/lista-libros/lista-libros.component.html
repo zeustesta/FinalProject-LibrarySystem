@@ -1,6 +1,6 @@
 <div class="div">
-
-  <div class="cards">
+  <app-spinner *ngIf="loading"></app-spinner>
+  <div class="cards" *ngIf="!loading">
     <div *ngFor="let libro of listaLibros" class="card">
       <img class="img" src='{{libro.portada}}' alt="imagen">
       <h5 class="h5" type="button" (click)="verInformacionDetallada(libro.idLibro)">{{libro.titulo}}</h5>

@@ -11,6 +11,7 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
 import { FormsModule } from '@angular/forms';
 import { HistorialCompraComponent } from './historial-compra/historial-compra.component';
 import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -23,7 +24,7 @@ import { RouterModule } from '@angular/router';
     LibroDetalleComponent,
     FavoritosComponent,
     HistorialCompraComponent,
-
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
