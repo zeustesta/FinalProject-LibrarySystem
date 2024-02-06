@@ -1,47 +1,41 @@
 <body class="hold-transition">
-  <div>    
-    <div>
-      <section class="content-header title">
-        <h1>Carrito de Compras</h1>
-      </section>
-  
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                      <th class="th">Título</th>
-                      <th class="th">Autor</th>
-                      <th class="th">Genero</th>
-                      <th class="th">Precio</th>
-                      <th class="th">Eliminar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let libro of arrayCarrito">
-                      <td class="td">{{ libro.titulo }}</td>
-                      <td class="td">{{ libro.autor }}</td>
-                      <td class="td">{{ libro.genero }}</td>
-                      <td class="td">{{ libro.precio | currency }}</td>
-                      <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeCarrito(libro.idLibro)" style="color: #e00606;"></i></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-secondary" type="button" (click)="comprarCarrito()">Encargar</button>
-        </div>
-      </section>
-    </div>
-  </div>  
+  <div class="content-box" *ngIf="arrayCarrito.length > 0">
+    <section class="content-header d-flex justify-content-center align-items-center">
+      <h1 class="title">Carrito</h1>
+    </section>
 
+    <section class="content">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th class="th">Título</th>
+              <th class="th">Autor</th>
+              <th class="th">Genero</th>
+              <th class="th">Precio</th>
+              <th class="th">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let libro of arrayCarrito">
+              <td class="td">{{ libro.titulo }}</td>
+              <td class="td">{{ libro.autor }}</td>
+              <td class="td">{{ libro.genero }}</td>
+              <td class="td">{{ libro.precio | currency }}</td>
+              <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeCarrito(libro.idLibro)" style="color: #e00606;"></i></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="d-grid gap-2 col-1 mx-auto">
+        <button class="btn btn-secondary" type="button" (click)="comprarCarrito()">Encargar</button>
+      </div>
+    </section>
+  </div>
+  <div class="warning" *ngIf="arrayCarrito.length ===  0">
+    <h1>No hay libros en Carrito.</h1>
+  </div>
 </body>
 

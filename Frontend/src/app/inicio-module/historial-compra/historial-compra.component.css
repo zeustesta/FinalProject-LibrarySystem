@@ -1,0 +1,12 @@
+.th, .td{
+  text-align: center;
+}
+
+body{
+  margin-bottom: 4rem;
+}
+
+.content {
+  margin-left: 5rem;
+  margin-right: 5rem;
+}

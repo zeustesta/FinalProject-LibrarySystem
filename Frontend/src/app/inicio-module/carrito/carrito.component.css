@@ -2,13 +2,7 @@
     text-align: center;
 }
 
-body{
-  margin-bottom: 4rem;
-}
-
-.title {
-  font-family: Playfair Display;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
+.content {
+  margin-left: 5rem;
+  margin-right: 5rem;
 }

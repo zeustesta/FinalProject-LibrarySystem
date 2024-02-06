@@ -1,7 +1,10 @@
+// MODULES
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegistroComponent } from './registro/registro.component';
+
+// COMPONENTS
+
 import { ListaLibrosComponent } from './lista-libros/lista-libros.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { CarritoComponent } from './carrito/carrito.component';
@@ -13,7 +16,6 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
 import { usersGuard } from '../utils/auth.guard';
 import { adminGuard } from '../utils/admin-guard.guard';
 import { HistorialCompraComponent } from './historial-compra/historial-compra.component';
-
 
 const routes: Routes = [
   {
@@ -76,4 +78,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class InicioModuleRoutingModule { }
+export class InicioModuleRouting { }

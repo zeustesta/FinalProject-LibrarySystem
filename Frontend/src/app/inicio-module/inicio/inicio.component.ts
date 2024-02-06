@@ -9,15 +9,20 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent {
-  listaLibros: Libro[] | null = null;
+  loading: boolean = false;
+  listaLibros: Libro[] = [];
 
   constructor(private aService: APIService, private uService: UsuariosService) {
     this.getListaLibros();
   }
 
   getListaLibros() {
+    this.loading = true;
     this.aService.getLibros().subscribe((data: Libro[]) => {
       this.listaLibros = data;
+      setTimeout(() => {
+        this.loading = false;
+      }, 800)
     })
   }
 }

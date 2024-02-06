@@ -1,4 +1,12 @@
-.div{
+body {
+    box-sizing: border-box;
+    margin-top: 2rem;
+}
+
+.content-box {
     background-color: #EBF5FB;
-    margin-top: -10px;
+}
+
+.spinner-box {
+    margin-top: 10rem;
 }
