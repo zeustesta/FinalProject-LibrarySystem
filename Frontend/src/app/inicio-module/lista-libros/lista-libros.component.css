@@ -58,12 +58,19 @@ app-spinner {
   text-decoration: none;
 }
 
-.boton{
-  display: flex;
-  flex-direction: row;
-  justify-content: right;
+.boton {
   text-decoration: none;
-  margin-top: -200px;
+  color: black;
+  text-align: center;
+  padding: 0.6rem;
+  border-radius: 2rem;
+  transition: all .4s ease;
+  margin-bottom: 0.5rem;
+}
+
+.boton:hover {
+  background-color: #027bc0;
+  color: white;
 }
 
 .h5 {

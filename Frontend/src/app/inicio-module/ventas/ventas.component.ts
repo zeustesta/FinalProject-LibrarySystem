@@ -47,7 +47,7 @@ export class VentasComponent {
           if (confirmada) {
             this.apiService.updateCantV(libros[i].idLibro, (libros[i].cantVentas + 1)).subscribe();
           } else {
-            this.apiService.updateStockLibro(libros[i].idLibro, (libros[i].stock - 1)).subscribe();
+            this.apiService.updateStockLibro(libros[i].idLibro, (libros[i].stock + 1)).subscribe();
           }
         }
         alert('Estado cambiado correctamente');
