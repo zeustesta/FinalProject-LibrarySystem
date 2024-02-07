@@ -16,9 +16,9 @@
                 <th class="th" (click)="iconoFecha ? filterFechaLejanaACercana() : filterFechaCercanaALejana()">
                   <i class="fa-solid fa-arrow-up" *ngIf="iconoFecha"></i>
                   Fecha de Compra</th>
-                  <th class="th" (click)="iconoPrecio ? filterPrecioMenoraMayor() : filterPrecioMayoraMenor()">
-                    <i class="fa-solid fa-arrow-down" *ngIf="iconoPrecio === false"></i>
-                    <i class="fa-solid fa-arrow-up" *ngIf="iconoPrecio === true"></i>
+                  <th class="th" (click)="alternarOrden()">
+                    <i class="fa-solid fa-arrow-down" *ngIf="iconoPrecio=== false"></i>
+                    <i class="fa-solid fa-arrow-up" *ngIf="iconoPrecio=== true"></i>
                     Total
                   </th>
                 <th class="th">Estado</th>

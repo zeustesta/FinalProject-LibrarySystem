@@ -11,9 +11,11 @@ export class HistorialCompraComponent {
   historial: any = [];
   iconoPrecio:boolean | null = null;
   iconoFecha:boolean | null = null;
+  ordenActual: string = 'fecha'; // Por defecto, ordenar por fecha
+
   loading: boolean= false;
 
-  constructor(private uService: UsuariosService){    this.iconoPrecio= null;
+  constructor(private uService: UsuariosService){    
   }
 
   ngOnInit(): void {
@@ -58,6 +60,8 @@ export class HistorialCompraComponent {
     this.iconoPrecio= null;
     // Ordenar las compras por fecha de compra de más lejana a más cercana
     this.historial.sort((a: any, b: any) => new Date(a.fechaCompra).getTime() - new Date(b.fechaCompra).getTime());
+    this.ordenActual = 'fechaLejanaACercana';
+
   }
   
   filterPrecioMayoraMenor() {
@@ -65,6 +69,8 @@ export class HistorialCompraComponent {
     this.iconoFecha= false;
 
     this.historial.sort((a: any, b: any) => b.precio - a.precio);
+    this.ordenActual = 'precioMayoraMenor';
+
   }
 
   filterPrecioMenoraMayor() {
@@ -73,7 +79,22 @@ export class HistorialCompraComponent {
   
     // Ordenar las compras por precio de menor a mayor
     this.historial.sort((a: any, b: any) => a.precio - b.precio);
+    this.ordenActual = 'precioMenoraMayor';
+
   }  
+
+  alternarOrden() {
+    switch (this.ordenActual) {
+      case 'precioMayoraMenor':
+        this.filterPrecioMenoraMayor();
+        break;
+      case 'precioMenoraMayor':
+        this.filterFechaLejanaACercana();
+        break;
+      default:
+        this.filterPrecioMayoraMenor();
+    }
+  }
 }
   
 
