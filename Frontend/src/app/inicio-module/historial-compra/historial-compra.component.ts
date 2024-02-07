@@ -8,6 +8,8 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 })
 export class HistorialCompraComponent {
   historial: any = [];
+  icono:boolean = false;
+  loading: boolean= false;
 
   constructor(private uService: UsuariosService){}
 
@@ -16,7 +18,9 @@ export class HistorialCompraComponent {
   }
 
   getHistorial() {
+    this.loading= true;
     const actual = this.uService.obtenerUsuarioActual();
+    this.historial= [];
 
     this.uService.getHistorial(actual!).subscribe((data) => {
       for (let i = 0; i < data.length; i++) {
@@ -30,8 +34,32 @@ export class HistorialCompraComponent {
             estado: data[i]['estado']
           }
           this.historial.push(compra);
+          this.icono= false;
         }
       }
+      setTimeout( () => {
+        this.loading= false;
+      },800)
     });
   }
+
+  filterPrecioMayoraMenor() {
+    this.icono = true;
+  
+    // Filtrar las compras con precio mayor que 0
+    const comprasFiltradas = [];
+    for (let i = 0; i < this.historial.length; i++) {
+      if (this.historial[i].precio > 0) {
+        comprasFiltradas.push(this.historial[i]);
+      }
+    }
+  
+    // Ordenar las compras filtradas por precio de mayor a menor
+    comprasFiltradas.sort((a, b) => b.precio - a.precio);
+  
+    // Actualizar el historial con las compras filtradas y ordenadas
+    this.historial = comprasFiltradas;
+  }
 }
+  
+

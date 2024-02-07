@@ -1,5 +1,6 @@
 <body class="hold-transition">
-  <div class="content-box" *ngIf="historial.length > 0">
+  <app-spinner *ngIf="loading"></app-spinner>
+  <div class="content-box" *ngIf="historial.length > 0 && !loading">
     <section class="content-header d-flex justify-content-center align-items-center">
       <h1 class="title">Historial de Compras</h1>
     </section>
@@ -13,7 +14,10 @@
                 <th class="th">Titulo</th>
                 <th class="th">Autor</th>
                 <th class="th">Fecha de Compra</th>
-                <th class="th">Total</th>
+                <th class="th" (click)="filterPrecioMayoraMenor()">
+                  <i class="fa-solid fa-arrow-down" *ngIf="icono"></i>
+                  Total
+                </th>
                 <th class="th">Estado</th>
               </tr>
             </thead>
@@ -31,7 +35,7 @@
       </div>
     </section>
   </div>
-  <div class="warning" *ngIf="historial.length === 0">
+  <div class="warning" *ngIf="historial.length === 0 && !loading">
     <h1>Aun no ha realizado compras.</h1>
   </div>
 </body>
