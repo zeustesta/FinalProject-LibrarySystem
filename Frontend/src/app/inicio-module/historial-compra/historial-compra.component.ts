@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { filter } from 'rxjs';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 
 @Component({
@@ -8,10 +9,12 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 })
 export class HistorialCompraComponent {
   historial: any = [];
-  icono:boolean = false;
+  iconoPrecio:boolean | null = null;
+  iconoFecha:boolean | null = null;
   loading: boolean= false;
 
-  constructor(private uService: UsuariosService){}
+  constructor(private uService: UsuariosService){    this.iconoPrecio= null;
+  }
 
   ngOnInit(): void {
     this.getHistorial();
@@ -34,32 +37,43 @@ export class HistorialCompraComponent {
             estado: data[i]['estado']
           }
           this.historial.push(compra);
-          this.icono= false;
         }
       }
+      this.filterFechaLejanaACercana();
       setTimeout( () => {
         this.loading= false;
       },800)
     });
   }
 
-  filterPrecioMayoraMenor() {
-    this.icono = true;
-  
-    // Filtrar las compras con precio mayor que 0
-    const comprasFiltradas = [];
-    for (let i = 0; i < this.historial.length; i++) {
-      if (this.historial[i].precio > 0) {
-        comprasFiltradas.push(this.historial[i]);
-      }
-    }
-  
-    // Ordenar las compras filtradas por precio de mayor a menor
-    comprasFiltradas.sort((a, b) => b.precio - a.precio);
-  
-    // Actualizar el historial con las compras filtradas y ordenadas
-    this.historial = comprasFiltradas;
+  filterFechaCercanaALejana() {
+    this.iconoFecha = true; // Ocultar el icono de orden descendente
+    this.iconoPrecio= null;
+    // Ordenar las compras por fecha de compra de más cercana a más lejana
+    this.historial.sort((a: any, b: any) => new Date(b.fechaCompra).getTime() - new Date(a.fechaCompra).getTime());
   }
+  
+  filterFechaLejanaACercana() {
+    this.iconoFecha = false; 
+    this.iconoPrecio= null;
+    // Ordenar las compras por fecha de compra de más lejana a más cercana
+    this.historial.sort((a: any, b: any) => new Date(a.fechaCompra).getTime() - new Date(b.fechaCompra).getTime());
+  }
+  
+  filterPrecioMayoraMenor() {
+    this.iconoPrecio = true;
+    this.iconoFecha= false;
+
+    this.historial.sort((a: any, b: any) => b.precio - a.precio);
+  }
+
+  filterPrecioMenoraMayor() {
+    this.iconoPrecio = false; // Mostrar el icono de orden ascendente
+    this.iconoFecha= false;
+  
+    // Ordenar las compras por precio de menor a mayor
+    this.historial.sort((a: any, b: any) => a.precio - b.precio);
+  }  
 }
   
 
