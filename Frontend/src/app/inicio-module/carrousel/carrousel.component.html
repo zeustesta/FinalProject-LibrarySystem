@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Más populares</h2>
+  <h2 class="popular">Más populares</h2>
   <div class="div">
     <div *ngIf="!loading" id="carouselExampleCaptions" class="carousel slide">
         <div class="carousel-indicators">
@@ -50,5 +50,38 @@
           <span class="visually-hidden">Siguiente</span>
         </button>
       </div>
+  </div>
+  <div class="categorias">
+    <h2>Ya sabes que vas a leer hoy?</h2>
+    <div class="row">
+      <div class="col-md-3 text-center">
+        <a [routerLink]="['/inicio/filtro','Fantasía']">
+          <img src="https://cdn-icons-png.flaticon.com/512/2368/2368498.png" alt="Fantasía" >
+          <h3>Fantasía</h3>
+        </a>
+        
+      </div>
+      <div class="col-md-3 text-center">
+        <a [routerLink]="['/inicio/filtro','Ciencia Ficción']">
+          <img src="https://cdn-icons-png.flaticon.com/512/4114/4114764.png" alt="Ciencia Ficción" >
+          <h3>Ciencia Ficción</h3>
+        </a>
+        
+      </div>
+      <div class="col-md-3 text-center">
+        <a [routerLink]="['/inicio/filtro','Horror']">
+          <img src="https://cdn-icons-png.flaticon.com/512/3773/3773795.png" alt="Horror" >
+          <h3>Horror</h3>
+        </a>
+        
+      </div>
+      <div class="col-md-3 text-center">
+        <a [routerLink]="['/inicio/filtro','Suspenso']">
+          <img src="https://cdn-icons-png.flaticon.com/512/1048/1048962.png" alt="Drama" >
+          <h3>Drama</h3>
+        </a>
+        
+      </div>
+    </div>
   </div>
 </div>
