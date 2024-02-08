@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
+exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateClienteRol = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
 const ClientesModel_1 = require("../models/ClientesModel");
 const VentasModel_1 = require("../models/VentasModel");
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
@@ -53,6 +53,7 @@ const deleteCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.deleteCliente = deleteCliente;
 const postCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
+    console.log(body);
     try {
         yield ClientesModel_1.Cliente.create(body);
         res.json({
@@ -88,6 +89,32 @@ const updateCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.updateCliente = updateCliente;
+const updateClienteRol = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idCliente } = req.params;
+    const { rol } = req.body;
+    try {
+        const cliente = yield ClientesModel_1.Cliente.findByPk(idCliente);
+        if (!cliente) {
+            res.status(404).json({
+                msg: `No existe un usuario con id: ${idCliente}`
+            });
+        }
+        else {
+            cliente.set({ rol: rol });
+            yield cliente.save();
+            res.json({
+                msg: 'Usuario actualizado con exito'
+            });
+        }
+    }
+    catch (error) {
+        res.status(404).json({
+            msg: 'No se pudo actualizar el rol',
+            error
+        });
+    }
+});
+exports.updateClienteRol = updateClienteRol;
 const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
@@ -97,16 +124,18 @@ const validarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 password: password
             }
         });
-        if (clienteEncontrado) {
+        if (clienteEncontrado !== undefined && clienteEncontrado !== null) {
             res.json(clienteEncontrado);
         }
         else {
-            res.json({ msg: 'NO_EXISTE' });
+            res.json(null);
         }
     }
     catch (error) {
-        console.log(error);
-        console.log('No se ha podido validar el cliente');
+        res.status(404).json({
+            msg: `No se pudo validar el cliente`,
+            error
+        });
     }
 });
 exports.validarCliente = validarCliente;
@@ -119,7 +148,7 @@ const validarEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             }
         });
         if (emailEncontrado) {
-            res.json(emailEncontrado);
+            res.json({ msg: 'EXISTE' });
         }
         else {
             res.json({ msg: 'NO_EXISTE' });
@@ -127,7 +156,10 @@ const validarEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido validar el email');
+        res.status(404).json({
+            msg: `No se pudo validar el email`,
+            error
+        });
     }
 });
 exports.validarEmail = validarEmail;
@@ -263,28 +295,30 @@ const getHistorialComprasCliente = (req, res) => __awaiter(void 0, void 0, void 
             where: {
                 idCliente: idCliente
             },
+            attributes: ['estado', 'fechaCompra'],
             include: [{
                     model: VentasModel_1.LibrosVendidos,
-                    attributes: ['idLibro'],
+                    attributes: ['idVenta'],
                     include: [{
                             model: LibrosModel_1.default,
-                            attributes: ['idLibro', 'titulo', 'genero', 'autor', 'precio']
+                            as: 'LibrosVenta'
                         }],
-                    as: 'Libros'
+                    as: 'LibrosVendidos'
                 }]
         });
         if (historialCompras) {
             res.json(historialCompras);
         }
         else {
-            res.status(404).json({
-                msg: `No existe historial de compras para el cliente con id: ${idCliente}`,
-            });
+            res.json([]);
         }
     }
     catch (error) {
         console.log(error);
-        console.log(`No se encontro historial de compras para el cliente con id: ${idCliente}`);
+        res.status(404).json({
+            msg: `No se pudo encontrar un historial`,
+            error
+        });
     }
 });
 exports.getHistorialComprasCliente = getHistorialComprasCliente;

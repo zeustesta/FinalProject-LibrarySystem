@@ -1,24 +1,27 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn,Router, RouterStateSnapshot } from '@angular/router';
 import { UsuariosService } from '../service/usuarios.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-export const usersGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const usersGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean | Observable<boolean> => {
   const router: Router = inject(Router);
-  const uService: UsuariosService = inject(UsuariosService); 
-  const actual = uService.obtenerUsuarioActual(); 
+  const uService: UsuariosService = inject(UsuariosService);
+  const actual = uService.obtenerUsuarioActual();
 
-  if (actual === undefined) {
-    alert('Debe iniciar sesión primero!');
-    router.navigate(['/inicio/login']);
-    return false;
-  } else if(actual !== null) {
-    uService.getCliente(actual).subscribe((usuario) => {
-      if (usuario.rol === 'usuario' || usuario.rol === 'admin') {
+  if (actual) {
+    return uService.getCliente(actual).pipe(
+      map(cliente => {
+        if (cliente.rol !== 'USER' && cliente.rol !== 'ADMIN') {
+          router.navigate(['/login']);
+          return false;
+        }
         return true;
-      } else {
-        return false;
-      };
-    });  
-  };
-  return true;
+      })
+    );
+  } else {
+    alert('Debe iniciar sesión');
+    router.navigate(['/login']);
+    return false;
+  }
 };

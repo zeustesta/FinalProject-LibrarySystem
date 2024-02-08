@@ -1,3 +1,10 @@
-<div class="div">
-    <app-carrousel></app-carrousel>
-</div>
+<body>
+  <div class="container">
+    <div class="spinner-box" *ngIf="loading">
+      <app-spinner></app-spinner>
+    </div>
+    <div class="carrousel-box">
+      <app-carrousel *ngIf="!loading"></app-carrousel>
+    </div>  
+  </div>
+</body>

@@ -1,6 +1,5 @@
-<body class="hold-transition login-page">
+<body class="hold-transition">
   <div class="login-box">
-    <!-- SE ME PERDIERON LOS ICONOS -->
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
         <a href="../../index2.html" class="h1"><b>Library</b>System</a>
@@ -28,31 +27,23 @@
             </div>
           </div>
           <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Es necesario completar la contraseña!</span>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="remember" class="mr-1">
-                <label for="remember">
-                  Recuerdame
-                </label>
-              </div>
-            </div>
+          <div class="row mt-3">
             <div class="col-12">
               <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block" (click)="signIn()">Iniciar Sesión</button>
             </div>
           </div>
         </form>
         <p class="mb-0">
-          <a [routerLink]="['/inicio/register']" class="text-center">Crear una cuenta nueva</a>
+          <a [routerLink]="['/register']" class="text-center">Crear una cuenta nueva</a>
         </p>
       </div>
     </div>
   </div>
 
   <!-- jQuery -->
-  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- <script src="../../plugins/jquery/jquery.min.js"></script> -->
   <!-- Bootstrap 4 -->
-  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
   <!-- AdminLTE App -->
-  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- <script src="../../dist/js/adminlte.min.js"></script> -->
   </body>

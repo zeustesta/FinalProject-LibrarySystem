@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 })
 
 export class FiltroComponent{
-  generoSeleccionado: string | undefined;
   librosFiltrados: Libro[] = [];
 
   constructor(
@@ -37,14 +36,7 @@ export class FiltroComponent{
   }
 
   addToCart(idLibro: string){
-    const actual = this.uService.obtenerUsuarioActual();
-
-    if(actual !== null){
-      this.uService.postCart(actual, idLibro).subscribe();
-      alert('Libro agregado correctamente');
-    }else{
-      alert('Debe iniciar sesion primero');
-    }
+    this.uService.addToCart(idLibro);
   }
 
   verInformacionDetallada(id: string){

@@ -50,49 +50,55 @@ export const postLibro = async (req: Request, res: Response) => {
 } 
 
 export const updateCantVentasLibro = async (req: Request, res: Response) => {
-  const { newCantVentas } = req.body;
+  const { cantVentas } = req.body;
   const { idLibro } = req.params;
-
   try {
     const libro = await Libro.findByPk(idLibro);
   
-    if (!libro) {
-      res.status(404).json({
-        msg: `No existe un libro con id: ${idLibro}`
-      });
-    } else {
-      libro.setDataValue('cantVentas', newCantVentas);
+    if (libro) {
+      libro.set({cantVentas: cantVentas})
       await libro.save();
       res.json({
         msg: 'Cantidad de ventas actualizada con exito'
       });
+    } 
+    else {
+      res.status(404).json({
+        msg: `No existe un libro con id: ${idLibro}`
+      });
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido actualizar la cantidad de ventas');
+    res.status(404).json({
+      msg: `No se ha podido actualizar la cantidad de ventas`,
+      error
+    });
   }
 } 
 
 export const updateStockLibro = async (req: Request, res: Response) => {
-  const { newStock } = req.body;
+  const { stock } = req.body;
   const { idLibro } = req.params;
-
   try {
     const libro = await Libro.findByPk(idLibro);
   
-    if (!libro) {
-      res.status(404).json({
-        msg: `No existe un libro con id: ${idLibro}`
-      });
-    } else {
-      libro.setDataValue('stock', newStock);
+    if (libro) {
+      libro.set({stock: stock})
       await libro.save();
       res.json({
         msg: 'Stock actualizado con exito'
       });
+    } 
+    else {
+      res.status(404).json({
+        msg: `No existe un libro con id: ${idLibro}`
+      });
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido actualizar el stock');
+    res.status(404).json({
+      msg: `No se ha podido actualizar el stock: ${idLibro}`,
+      error
+    });
   }
 } 

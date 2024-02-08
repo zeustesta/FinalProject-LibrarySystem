@@ -11,10 +11,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class ListaLibrosComponent implements OnInit {
+  loading: boolean = false;
   listaLibros: Libro[] = [];
 
-  constructor(private apiService: APIService, private uService: UsuariosService, private router: Router,private aRouter: ActivatedRoute){
-    
+  constructor(private aService: APIService, private uService: UsuariosService, private router: Router, private aRouter: ActivatedRoute){
   }
 
   ngOnInit(): void {
@@ -22,28 +22,33 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   getListaLibros() {
-    this.apiService.getLibros().subscribe((data: Libro[]) => {
-      this.listaLibros = data;
-    })
+    this.loading = true;
+    this.aRouter.paramMap.subscribe((params) =>{
+      const tituloParam = params.get('titulo');
+      if (tituloParam) {
+       this.aService.filtrarPorBusqueda(tituloParam).subscribe((data) => {
+        if (data) {
+          this.listaLibros = data;
+        } else {
+          alert("No hay libros con ese titulo");
+        }
+        setTimeout(() => {
+          this.loading = false;
+        }, 800)
+       })
+      } else {
+        this.aService.getLibros().subscribe((data: Libro[]) => {
+          this.listaLibros = data;
+          setTimeout(() => {
+            this.loading = false;
+          }, 800)        
+        })
+      }
+    });
   }
 
   addToCart(idLibro: string) {
-    const actual = this.uService.obtenerUsuarioActual();
-    let existe = this.uService.buscarEnCart(idLibro);
-
-    if (actual) {
-      if (existe !== true) {
-        this.apiService.getLibro(idLibro).subscribe((data) => {
-          this.uService.postCart(actual, idLibro).subscribe();
-          this.apiService.updateStock(idLibro, (data.stock - 1)).subscribe();
-        });        
-        alert('Libro agregado al carrito');
-      } else {
-        alert('El libro ya existe en el carrito');
-      }
-    } else {
-      alert('Debe iniciar sesion primero');
-    }
+    this.uService.addToCart(idLibro);
   }
 
   verInformacionDetallada(id: string) {

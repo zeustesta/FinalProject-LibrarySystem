@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from '../../interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
@@ -31,37 +31,25 @@ export class LibroDetalleComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    const actual = this.uService.obtenerUsuarioActual();
-    let existe = this.uService.buscarEnCart(idLibro);
-
-    if (actual) {
-      if (existe !== true) {
-        this.apiService.getLibro(idLibro).subscribe((data) => {
-          this.uService.postCart(actual, idLibro).subscribe();
-          this.apiService.updateStock(idLibro, (data.stock - 1)).subscribe();
-        });        
-        alert('Libro agregado al carrito');
-      } else {
-        alert('El libro ya existe en el carrito');
-      }
-    } else {
-      alert('Debe iniciar sesion primero');
+    const agregado = this.uService.addToCart(idLibro);
+    if (agregado) {
+      this.libro.stock = this.libro.stock - 1;
     }
   }
 
   addToFavs(idLibro: string) {
     const actual = this.uService.obtenerUsuarioActual();
-    let existe = this.uService.buscarEnFavs(idLibro);
 
-    if (actual) {
-      if (existe !== true) {
-        this.uService.postFav(actual, idLibro).subscribe();
-        alert('Libro agregado correctamente');
-      } else {
+    this.uService.buscarEnFavs(idLibro).subscribe((existe) => {
+      if (existe) {
         alert('El libro ya existe en favoritos');
+      } else {
+        this.apiService.getLibro(idLibro).subscribe((libro) => {
+          this.uService.postFav(actual!, idLibro).subscribe(() => {
+            alert('Libro agregado a favoritos');
+          });
+        });
       }
-    } else {
-      alert('Debe iniciar sesion primero');
-    }
+    });
   }
 }

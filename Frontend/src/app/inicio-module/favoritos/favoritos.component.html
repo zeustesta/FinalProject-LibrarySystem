@@ -1,47 +1,33 @@
-<body class="hold-transition sidebar-mini">
-  <div>    
-    <div>
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Lista de Favoritos</h1>
-            </div>
-          </div>
+<body class="hold-transition">
+  <div class="content-box" *ngIf="arrayFavs.length > 0">
+    <section class="content-header d-flex justify-content-center align-items-center">
+      <h1 class="title">Favoritos</h1>
+    </section>
+
+    <section class="content">
+      <div class="card">
+        <div class="card-body">
+          <table id="example2" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th class="th">Título</th>
+              <th class="th">Eliminar</th>
+              <th class="th">Agregar al Carrito</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fav of arrayFavs">
+                <td class="td">{{fav.titulo}}</td>
+                <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeFavs(fav.idLibro)" style="color: #e00606;"></i></td>
+                <td class="td"><i type="button" class="fa-solid fa-cart-shopping" (click)="addToCart(fav.idLibro)"></i></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </section>
-  
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Elimine o Agregue al carrito a sus libros favoritos</h3>
-                </div>
-                <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                      <th class="th">Título</th>
-                      <th class="th">Eliminar</th>
-                      <th class="th">Añadir al Carrito</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let fav of arrayFavs">
-                      <td class="td">{{fav.titulo}}</td>
-                      <td class="td"><i type="button" class="fa-solid fa-trash" (click)="eliminarDeFavs(fav.idLibro)" style="color: #e00606;"></i></td>
-                      <td class="td"><i type="button" class="fa-solid fa-cart-shopping" (click)="agregarACarrito(fav.idLibro)"></i></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>   
+      </div>
+    </section>
+  </div>
+  <div *ngIf="arrayFavs.length === 0" class="warning">
+    <h1>No hay libros en Favoritos.</h1>
+  </div>
 </body>

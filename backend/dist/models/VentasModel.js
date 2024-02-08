@@ -3,17 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LibrosVendidos = exports.Venta = exports.EstadoVenta = void 0;
+exports.LibrosVendidos = exports.Venta = void 0;
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
 const LibrosModel_1 = __importDefault(require("./LibrosModel"));
 const ClientesModel_1 = require("./ClientesModel");
-var EstadoVenta;
-(function (EstadoVenta) {
-    EstadoVenta["PENDIENTE"] = "Pendiente";
-    EstadoVenta["CONFIRMADA"] = "Confirmada";
-    EstadoVenta["RECHAZADA"] = "Rechazada";
-})(EstadoVenta || (exports.EstadoVenta = EstadoVenta = {}));
 exports.Venta = connection_1.default.define('Venta', {
     idVenta: {
         type: sequelize_1.DataTypes.UUID,
@@ -38,9 +32,9 @@ exports.Venta = connection_1.default.define('Venta', {
         allowNull: false
     },
     estado: {
-        type: sequelize_1.DataTypes.ENUM(...Object.values(EstadoVenta)),
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        defaultValue: EstadoVenta.PENDIENTE
+        defaultValue: 'PENDIENTE'
     },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
@@ -88,5 +82,6 @@ exports.LibrosVendidos = connection_1.default.define('LibrosVendidos', {
     tableName: 'LIBROSPORVENTA'
 });
 exports.Venta.belongsTo(ClientesModel_1.Cliente, { foreignKey: 'idCliente', as: 'ClienteVenta' });
-exports.LibrosVendidos.belongsTo(exports.Venta, { foreignKey: 'idVenta', as: 'Venta' });
+exports.Venta.hasMany(exports.LibrosVendidos, { foreignKey: 'idVenta', as: 'LibrosVendidos' });
+exports.LibrosVendidos.belongsTo(exports.Venta, { foreignKey: 'idVenta', as: 'VentaAsociada' });
 exports.LibrosVendidos.belongsTo(LibrosModel_1.default, { foreignKey: 'idLibro', as: 'LibrosVenta' });

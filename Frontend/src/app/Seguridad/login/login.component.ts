@@ -27,9 +27,9 @@ export class LoginComponent {
         this.uService.establecerUsuarioActual(cliente.idCliente);
         this.uService.esAdmin();
         alert('Inicio de sesión exitoso');
-        this.router.navigate(['/inicio/inicio']);
+        this.router.navigate(['/inicio']);
       } else {
-        alert('Email o contraseña incorrectos');
+        alert('No existe un usuario con esas credenciales');
       }
     })
   }

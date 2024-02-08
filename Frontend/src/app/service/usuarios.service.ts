@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
 import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ObservableLike, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/enviroments/environment.prod';
 import { Libro } from '../interfaces/plantillaLibro';
+import { APIService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UsuariosService {
   usuarioActual: string | null;
   rolActual: boolean = false;
 
-  constructor(private storage: StorageService, private http: HttpClient) { 
+  constructor(private storage: StorageService, private http: HttpClient, private aService: APIService) { 
     this.appUrl = environment.apiUrl;
     this.apiUrl = '/api/clientes';
     this.usuarioActual = null;
@@ -40,6 +41,10 @@ export class UsuariosService {
     return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateCliente/${idCliente}`, update);
   }
 
+  updateRolCliente(idCliente: string, rol: string):Observable<string>{
+    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateClienteRol/${idCliente}`, { rol: rol});  
+  }
+
   deleteCliente(idCliente: string): Observable<string> { 
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCliente/${idCliente}`);
   }
@@ -48,8 +53,8 @@ export class UsuariosService {
     return this.http.post<Usuario | null>(`${this.appUrl}${this.apiUrl}/validarCliente`, { email, password });
   }
   
-  validarEmail(email: string): Observable<string> {
-    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/validarEmail`, { email: email });
+  validarEmail(email: string): Observable<{ msg: string}> {
+    return this.http.post<{ msg: string}>(`${this.appUrl}${this.apiUrl}/validarEmail`, { email: email });
   }
 
   //METODOS PARA FAVS DEL CLIENTE
@@ -67,20 +72,21 @@ export class UsuariosService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
   }
 
-  buscarEnFavs(idLibro: string): boolean {
+  buscarEnFavs(idLibro: string) {
     const actual = this.obtenerUsuarioActual();
 
-    let existe: boolean = false;
-    this.getFavs(actual!).subscribe((favs) => {
-      if(favs !== null){
-        for(let i = 0; i < favs.length; i++){
-          if (idLibro === favs[i]['idLibro']) {
-            existe = true;
-          };
-        };
-      };
-    });
-    return existe; //TRUE: EXISTE - FALSE: NO EXISTE
+    return this.getFavs(actual!).pipe(
+        map((favs) => {
+            if (favs) {
+                for (let i = 0; i < favs.length; i++) {
+                    if (idLibro === favs[i]['idLibro']) {
+                        return true;  // El libro existe en el carrito
+                    }
+                }
+            }
+            return false;  // El libro no existe en el carrito
+        })
+    );
   }
 
   //METODOS PARA CART DEL CLIENTE
@@ -94,6 +100,40 @@ export class UsuariosService {
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
   }
 
+  addToCart(idLibro: string): boolean {
+    const actual = this.obtenerUsuarioActual();
+
+    if (actual === null) {
+      alert('Debe iniciar sesion');
+      return false;
+    }
+
+    this.buscarEnCart(idLibro).subscribe((existe) => {
+      if (existe) {
+        alert('El libro ya existe en el carrito');
+        return false;
+      } else {
+        this.aService.getLibro(idLibro).subscribe((libro) => {
+          if (libro.stock > 0) {
+            this.postCart(actual!, idLibro).subscribe(() => {
+              this.aService.updateStockLibro(idLibro, libro.stock - 1).subscribe(() => {
+                alert('Libro agregado al carrito');
+                return true;
+              });
+              return false;
+            });
+            return false;
+          } else {
+            alert('No quedan mas libros disponibles');
+            return false;
+          }
+        });
+        return false;
+      }
+    });
+    return false;
+  }
+
   deleteCart(idCliente: string, idLibro: string): Observable<string> {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroCart/${idCliente}/${idLibro}`);
   }
@@ -102,20 +142,21 @@ export class UsuariosService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCarrito/${idCliente}`);
   }
 
-  buscarEnCart(idLibro: string): boolean {
+  buscarEnCart(idLibro: string) {
     const actual = this.obtenerUsuarioActual();
 
-    let existe: boolean = false;
-    this.getCart(actual!).subscribe((cart) => {
-      if(cart !== null){
-        for(let i = 0; i < cart.length; i++){
-          if (idLibro === cart[i]['idLibro']) {
-            existe = true;
-          };
-        };
-      };
-    });
-    return existe; //TRUE: EXISTE - FALSE: NO EXISTE
+    return this.getCart(actual!).pipe(
+        map((cart) => {
+            if (cart) {
+                for (let i = 0; i < cart.length; i++) {
+                    if (idLibro === cart[i]['idLibro']) {
+                        return true;  // El libro existe en el carrito
+                    }
+                }
+            }
+            return false;  // El libro no existe en el carrito
+        })
+    );
   }
 
   //METODO PARA EL HISTORIAL DEL CLIENTE
@@ -144,7 +185,7 @@ export class UsuariosService {
   esAdmin(){
     if(this.estaLogueado()){
       this.getCliente(this.usuarioActual!).subscribe((userData) => {
-        if (userData.rol === 'admin') {
+        if (userData.rol === 'ADMIN') {
           this.rolActual = true; //es admin
         } else {
           this.rolActual = false; //no es admin

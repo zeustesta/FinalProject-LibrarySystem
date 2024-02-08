@@ -1,1 +1,44 @@
-<p>historial-compra works!</p>
+<body class="hold-transition">
+  <app-spinner *ngIf="loading"></app-spinner>
+  <div class="content-box" *ngIf="historial.length > 0 && !loading">
+    <section class="content-header d-flex justify-content-center align-items-center">
+      <h1 class="title">Historial de Compras</h1>
+    </section>
+
+    <section class="content">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="th">Titulo</th>
+                <th class="th">Autor</th>
+                <th class="th" (click)="iconoFecha ? filterFechaLejanaACercana() : filterFechaCercanaALejana()">
+                  <i class="fa-solid fa-arrow-up" *ngIf="iconoFecha"></i>
+                  Fecha de Compra</th>
+                  <th class="th" (click)="alternarOrden()">
+                    <i class="fa-solid fa-arrow-down" *ngIf="iconoPrecio=== false"></i>
+                    <i class="fa-solid fa-arrow-up" *ngIf="iconoPrecio=== true"></i>
+                    Total
+                  </th>
+                <th class="th">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let compra of historial">
+                <td class="td">{{ compra.titulo }}</td>
+                <td class="td">{{ compra.autor }}</td>
+                <td class="td">{{ compra.fechaCompra | date:'yyyy-MM-dd' }}</td>
+                <td class="td">{{ compra.precio | currency }}</td>
+                <td class="td">{{ compra.estado }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="warning" *ngIf="historial.length === 0 && !loading">
+    <h1>Aun no ha realizado compras.</h1>
+  </div>
+</body>

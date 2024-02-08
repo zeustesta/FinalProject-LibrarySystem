@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -29,19 +30,20 @@ export class RegistroComponent {
     let email = this.registerForm.value.email;
 
     this.uService.validarEmail(email).subscribe((existe) => {
-      if (existe) {
-        alert('El email ya esta en uso');
-      } else {
+      if (existe.msg === 'NO_EXISTE' ) {
         const newCliente = {
           idCliente: uuidv4(),
           nombre: name,
           apellido: surname,
           email: email,
           password: password,
-          rol: 'usuario'
+          rol: 'USER'
         };
+        alert('Registrado de forma exitosa');
         this.uService.postCliente(newCliente).subscribe();
-        this.router.navigate(['/inicio/login']);
+        this.router.navigate(['/login']);
+      } else {
+        alert('El email ya esta en uso');
       }
     });
   }

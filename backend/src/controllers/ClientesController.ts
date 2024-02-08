@@ -41,6 +41,7 @@ export const deleteCliente = async (req: Request, res: Response) => {
 
 export const postCliente = async (req: Request, res: Response) => {
   const { body } = req;
+  console.log(body)
 
   try {
     await Cliente.create(body);
@@ -76,6 +77,32 @@ export const updateCliente = async (req: Request, res: Response) => {
   }
 } 
 
+export const updateClienteRol = async (req: Request, res: Response) => {
+  const { idCliente } = req.params;
+  const { rol } = req.body;
+
+  try {
+    const cliente = await Cliente.findByPk(idCliente);
+  
+    if (!cliente) {
+      res.status(404).json({
+        msg: `No existe un usuario con id: ${idCliente}`
+      });
+    } else {
+      cliente.set({ rol: rol });
+      await cliente.save()
+      res.json({
+        msg: 'Usuario actualizado con exito'
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      msg: 'No se pudo actualizar el rol',
+      error
+    })
+  }
+} 
+
 export const validarCliente = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -87,14 +114,16 @@ export const validarCliente = async (req: Request, res: Response) => {
       }
     });
 
-    if (clienteEncontrado) {
+    if (clienteEncontrado !== undefined && clienteEncontrado !== null) {
       res.json(clienteEncontrado);
     } else {
-      res.json({ msg: 'NO_EXISTE' });
+      res.json(null);
     }
   } catch (error) {
-    console.log(error);
-    console.log('No se ha podido validar el cliente');
+    res.status(404).json({
+      msg: `No se pudo validar el cliente`,
+      error
+    });
   }
 };
 
@@ -109,13 +138,16 @@ export const validarEmail = async (req: Request, res: Response) => {
     });
 
     if (emailEncontrado) {
-      res.json(emailEncontrado);
+      res.json({ msg: 'EXISTE' });
     } else {
       res.json({ msg: 'NO_EXISTE' });
     }
   } catch (error) {
     console.log(error);
-    console.log('No se ha podido validar el email');
+    res.status(404).json({
+      msg: `No se pudo validar el email`,
+      error
+    });
   }
 }
 
@@ -254,25 +286,29 @@ export const getHistorialComprasCliente = async (req: Request, res: Response) =>
       where: {
         idCliente: idCliente
       },
+      attributes: ['estado', 'fechaCompra'],
       include: [{
         model: LibrosVendidos,
-        attributes: ['idLibro'], 
+        attributes: ['idVenta'],
         include: [{
           model: Libro,
-          attributes: ['idLibro', 'titulo', 'genero', 'autor', 'precio']
+          as: 'LibrosVenta'
         }],
-        as: 'Libros'
+        as: 'LibrosVendidos'
       }]
     });
+
     if (historialCompras) {
       res.json(historialCompras);
     } else {
-      res.status(404).json({
-        msg: `No existe historial de compras para el cliente con id: ${idCliente}`,
-      });
+      res.json([]);
+
     }
   } catch (error) {
     console.log(error);
-    console.log(`No se encontro historial de compras para el cliente con id: ${idCliente}`);
+    res.status(404).json({
+      msg: `No se pudo encontrar un historial`,
+      error
+    });
   }
 };

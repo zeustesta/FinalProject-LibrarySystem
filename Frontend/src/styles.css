@@ -1,0 +1,18 @@
+.title {
+  font-family: Playfair Display;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border-style: double;
+  border-radius: 20px;
+  width: 20rem;
+  padding: 1rem;
+}
+
+.warning {
+  margin-top: 10rem;
+  text-align: center;
+  font-size: xx-large;
+  font-family: Playfair Display;
+}
+

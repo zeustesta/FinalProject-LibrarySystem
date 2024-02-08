@@ -27,17 +27,23 @@ export class APIService {
     return this.http.get<Libro>(`${this.appUrl}${this.apiUrl}/getLibro/${idLibro}`)
   }
 
-  updateStock(idLibro: string, newStock: number): Observable<void> {
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateStockLibro/${idLibro}`, newStock);
+  updateStockLibro(idLibro: string, newStock: number): Observable<void> {
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateStockLibro/${idLibro}`, { stock: newStock });
   }
 
   updateCantV(idLibro: string, newCantV: number): Observable<void> {
-    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateCantVentas/${idLibro}`, newCantV);
+    return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateCantVentas/${idLibro}`, { cantVentas: newCantV});
   }
 
   filtrarLibrosPorGenero(generoDeseado: string): Observable<Libro[]> {
     return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getLibros`).pipe(
       map((libros: Libro[]) => libros.filter(libro => libro.genero === generoDeseado))
+    );
+  }
+
+  filtrarPorBusqueda(titulo: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getLibros`).pipe(
+      map((libros: Libro[]) => libros.filter(libro => libro.titulo.toLowerCase().includes(titulo.toLowerCase())))
     );
   }
 }

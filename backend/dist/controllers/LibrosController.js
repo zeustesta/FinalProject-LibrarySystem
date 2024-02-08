@@ -63,50 +63,56 @@ const postLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.postLibro = postLibro;
 const updateCantVentasLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { newCantVentas } = req.body;
+    const { cantVentas } = req.body;
     const { idLibro } = req.params;
     try {
         const libro = yield LibrosModel_1.default.findByPk(idLibro);
-        if (!libro) {
-            res.status(404).json({
-                msg: `No existe un libro con id: ${idLibro}`
-            });
-        }
-        else {
-            libro.setDataValue('cantVentas', newCantVentas);
+        if (libro) {
+            libro.set({ cantVentas: cantVentas });
             yield libro.save();
             res.json({
                 msg: 'Cantidad de ventas actualizada con exito'
             });
         }
-    }
-    catch (error) {
-        console.log(error);
-        console.log('No se ha podido actualizar la cantidad de ventas');
-    }
-});
-exports.updateCantVentasLibro = updateCantVentasLibro;
-const updateStockLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { newStock } = req.body;
-    const { idLibro } = req.params;
-    try {
-        const libro = yield LibrosModel_1.default.findByPk(idLibro);
-        if (!libro) {
+        else {
             res.status(404).json({
                 msg: `No existe un libro con id: ${idLibro}`
             });
         }
-        else {
-            libro.setDataValue('stock', newStock);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(404).json({
+            msg: `No se ha podido actualizar la cantidad de ventas`,
+            error
+        });
+    }
+});
+exports.updateCantVentasLibro = updateCantVentasLibro;
+const updateStockLibro = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { stock } = req.body;
+    const { idLibro } = req.params;
+    try {
+        const libro = yield LibrosModel_1.default.findByPk(idLibro);
+        if (libro) {
+            libro.set({ stock: stock });
             yield libro.save();
             res.json({
                 msg: 'Stock actualizado con exito'
             });
         }
+        else {
+            res.status(404).json({
+                msg: `No existe un libro con id: ${idLibro}`
+            });
+        }
     }
     catch (error) {
         console.log(error);
-        console.log('No se ha podido actualizar el stock');
+        res.status(404).json({
+            msg: `No se ha podido actualizar el stock: ${idLibro}`,
+            error
+        });
     }
 });
 exports.updateStockLibro = updateStockLibro;

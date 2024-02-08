@@ -3,12 +3,6 @@ import db from  "../db/connection";
 import Libro from "./LibrosModel";
 import { Cliente } from "./ClientesModel";
 
-export enum EstadoVenta{
-  PENDIENTE = 'Pendiente',
-  CONFIRMADA = 'Confirmada', 
-  RECHAZADA = 'Rechazada'
-}
-
 export const Venta = db.define('Venta', {
   idVenta: {
     type: DataTypes.UUID,
@@ -33,9 +27,9 @@ export const Venta = db.define('Venta', {
     allowNull: false
   },
   estado: {
-    type: DataTypes.ENUM(...Object.values(EstadoVenta)),
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: EstadoVenta.PENDIENTE
+    defaultValue: 'PENDIENTE'
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -87,6 +81,7 @@ export const LibrosVendidos = db.define('LibrosVendidos', {
 });
 
 Venta.belongsTo(Cliente, { foreignKey: 'idCliente', as: 'ClienteVenta' });
+Venta.hasMany(LibrosVendidos, { foreignKey: 'idVenta', as: 'LibrosVendidos' });
 
-LibrosVendidos.belongsTo(Venta, { foreignKey: 'idVenta', as: 'Venta' });
+LibrosVendidos.belongsTo(Venta, { foreignKey: 'idVenta', as: 'VentaAsociada' }); 
 LibrosVendidos.belongsTo(Libro, { foreignKey: 'idLibro', as: 'LibrosVenta' });

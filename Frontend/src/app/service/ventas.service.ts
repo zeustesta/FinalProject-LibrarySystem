@@ -4,7 +4,6 @@ import { UsuariosService } from './usuarios.service';
 import { v4 as uuidv4 } from 'uuid';
 import { APIService } from './api.service';
 import { StorageService } from './storage.service';
-import { EstadoVenta } from '../utils/enum';
 import { Observable, Observer, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/enviroments/environment.prod';
@@ -39,8 +38,8 @@ export class VentasService {
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postVenta`, body);
   }
 
-  updateVenta(idVenta: string, estado: EstadoVenta): Observable<string> {
-    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateVenta/${idVenta}`, estado);
+  updateVenta(idVenta: string, estado: string): Observable<string> {
+    return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateVenta/${idVenta}`, { estado: estado });
   }
 
   postLibroVendido(idVenta: string, idLibro: string): Observable<string> {
