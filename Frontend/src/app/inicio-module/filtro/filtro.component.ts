@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 
 export class FiltroComponent{
   librosFiltrados: Libro[] = [];
+  loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,15 +24,19 @@ export class FiltroComponent{
   ) { this.filtrarLibros(); }
 
   filtrarLibros() {
+    this.loading = true;
     this.route.paramMap.subscribe((params) =>{
       const generoParam = params.get('genero');
       if (generoParam) {
-       this.libroService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
-         this.librosFiltrados = data;
-       })
+        this.libroService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
+          this.librosFiltrados = data;
+          setTimeout(() => {
+            this.loading = false;
+          }, 800);
+        });
       } else {
        alert("No hay libros de ese genero");
-      }
+      };
     });
   }
 
