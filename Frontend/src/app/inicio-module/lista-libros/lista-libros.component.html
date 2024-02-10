@@ -6,9 +6,9 @@
       <h5 class="h5">{{libro.titulo}}</h5>
       <h6>{{libro.autor}}</h6>
       <br>
-      <div class="genero">
+      <!-- <div class="genero"> -->
         <p class="text">{{libro.precio | currency}}</p>
-      </div>
+      <!-- </div> -->
       <div class="d-flex flex-column align-items-center">
         <button class="boton" (click)="addToCart(libro.idLibro)">Agregar al Carrito</button>
         <button class="boton" (click)="verInformacionDetallada(libro.idLibro)">Ver detalles</button>

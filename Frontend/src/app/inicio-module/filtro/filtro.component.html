@@ -5,9 +5,9 @@
       <h5 class="h5" type="button" (click)="verInformacionDetallada(libro.idLibro)">{{libro.titulo}}</h5>
       <h6>{{libro.autor}}</h6>
       <br>
-      <div class="genero">
-        <p class="text">${{libro.precio}}</p>
-      </div>
+      <!-- <div class="genero"> -->
+        <p class="text">{{libro.precio | currency}}</p>
+      <!-- </div> -->
       <div class="">
         <button class="btn btn-primary" (click)="addToCart(libro.idLibro)">Agregar al Carrito</button>
       </div>

@@ -46,14 +46,6 @@
     font-weight: 900;
   }
   
-  .genero{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-  }
-  
   .boton{
     display: flex;
     flex-direction: row;
