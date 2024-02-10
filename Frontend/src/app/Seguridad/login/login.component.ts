@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private uService: UsuariosService, private router: Router){
+  constructor(private fb: FormBuilder, private cService: ClienteService, private router: Router){
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.minLength(5), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
@@ -22,10 +22,10 @@ export class LoginComponent {
     let email = this.loginForm.value.email;
     let password = this.loginForm.value.password;
 
-    this.uService.validarCliente(email, password).subscribe((cliente) => {
+    this.cService.validarCliente(email, password).subscribe((cliente) => {
       if (cliente) {
-        this.uService.establecerUsuarioActual(cliente.idCliente);
-        this.uService.esAdmin();
+        this.cService.establecerUsuarioActual(cliente.idCliente);
+        this.cService.esAdmin();
         alert('Inicio de sesión exitoso');
         this.router.navigate(['/inicio']);
       } else {

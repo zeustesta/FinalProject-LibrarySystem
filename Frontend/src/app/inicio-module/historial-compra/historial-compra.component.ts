@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { filter } from 'rxjs';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
   selector: 'app-historial-compra',
@@ -15,7 +14,7 @@ export class HistorialCompraComponent {
 
   loading: boolean= false;
 
-  constructor(private uService: UsuariosService){    
+  constructor(private cService: ClienteService){    
   }
 
   ngOnInit(): void {
@@ -24,10 +23,10 @@ export class HistorialCompraComponent {
 
   getHistorial() {
     this.loading= true;
-    const actual = this.uService.obtenerUsuarioActual();
+    const actual = this.cService.obtenerUsuarioActual();
     this.historial= [];
 
-    this.uService.getHistorial(actual!).subscribe((data) => {
+    this.cService.getHistorial(actual!).subscribe((data) => {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].LibrosVendidos.length; j++) {
           const compra = {

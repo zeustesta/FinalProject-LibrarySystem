@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn,Router, RouterStateSnapshot } from '@angular/router';
-import { UsuariosService } from '../service/usuarios.service';
+import { ClienteService } from '../service/cliente.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export const usersGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean | Observable<boolean> => {
   const router: Router = inject(Router);
-  const uService: UsuariosService = inject(UsuariosService);
+  const uService: ClienteService = inject(ClienteService);
   const actual = uService.obtenerUsuarioActual();
 
   if (actual) {
