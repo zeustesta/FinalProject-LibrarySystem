@@ -38,20 +38,23 @@ export class LibroDetalleComponent implements OnInit {
     })
   }
   
-
   addToFavs(idLibro: string) {
     const actual = this.cService.obtenerUsuarioActual();
 
-    this.cService.buscarEnFavs(idLibro).subscribe((existe) => {
-      if (existe) {
-        alert('El libro ya existe en favoritos');
-      } else {
-        this.apiService.getLibro(idLibro).subscribe((libro) => {
-          this.cService.postFav(actual!, idLibro).subscribe(() => {
-            alert('Libro agregado a favoritos');
+    if (actual) {
+      this.cService.buscarEnFavs(idLibro, actual).subscribe((existe) => {
+        if (existe) {
+          alert('El libro ya existe en favoritos');
+        } else {
+          this.apiService.getLibro(idLibro).subscribe((libro) => {
+            this.cService.postFav(actual!, idLibro).subscribe(() => {
+              alert('Libro agregado a favoritos');
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    } else {
+      alert('Debe iniciar sesion');
+    }
   }
 }

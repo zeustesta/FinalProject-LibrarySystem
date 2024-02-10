@@ -72,10 +72,8 @@ export class ClienteService {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteLibroFavs/${idCliente}/${idLibro}`);
   }
 
-  buscarEnFavs(idLibro: string) {
-    const actual = this.obtenerUsuarioActual();
-
-    return this.getFavs(actual!).pipe(
+  buscarEnFavs(idLibro: string, idCliente: string) {
+    return this.getFavs(idCliente).pipe(
         map((favs) => {
             if (favs) {
                 for (let i = 0; i < favs.length; i++) {

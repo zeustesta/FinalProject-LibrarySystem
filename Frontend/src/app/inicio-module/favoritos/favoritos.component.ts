@@ -36,6 +36,7 @@ export class FavoritosComponent {
   eliminarDeFavs(idLibro: string){
     this.cService.deleteFav(this.cService.obtenerUsuarioActual()!, idLibro).subscribe();
     this.arrayFavs.splice(this.arrayFavs.findIndex(item => item.idLibro === idLibro), 1);
+    alert('Libro eliminado de favoritos');
   }
 
   addToCart(idLibro: string) {
