@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 import { Router } from '@angular/router';
 
 
@@ -18,8 +18,8 @@ export class FiltroComponent{
 
   constructor(
     private route: ActivatedRoute,
-    private libroService: APIService,
-    private uService: UsuariosService, 
+    private aService: APIService,
+    private cService: ClienteService, 
     private router: Router
   ) { this.filtrarLibros(); }
 
@@ -28,7 +28,7 @@ export class FiltroComponent{
     this.route.paramMap.subscribe((params) =>{
       const generoParam = params.get('genero');
       if (generoParam) {
-        this.libroService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
+        this.aService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
           this.librosFiltrados = data;
           setTimeout(() => {
             this.loading = false;
@@ -41,7 +41,7 @@ export class FiltroComponent{
   }
 
   addToCart(idLibro: string){
-    this.uService.addToCart(idLibro);
+    this.cService.addToCart(idLibro);
   }
 
   verInformacionDetallada(id: string){

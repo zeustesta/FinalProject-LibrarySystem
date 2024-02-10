@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/plantillaUsuario';
 import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/enviroments/environment.prod';
 import { Libro } from '../interfaces/plantillaLibro';
 import { APIService } from './api.service';
@@ -11,7 +11,7 @@ import { APIService } from './api.service';
   providedIn: 'root'
 })
 
-export class UsuariosService {
+export class ClienteService {
   private appUrl: string; 
   private apiUrl: string;
   usuarioActual: string | null;
@@ -100,38 +100,40 @@ export class UsuariosService {
     return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
   }
 
-  addToCart(idLibro: string): boolean {
+  addToCart(idLibro: string): Observable<boolean> {
     const actual = this.obtenerUsuarioActual();
-
+  
     if (actual === null) {
-      alert('Debe iniciar sesion');
-      return false;
+      alert('Debe iniciar sesión');
+      return of(false);
     }
-
-    this.buscarEnCart(idLibro).subscribe((existe) => {
-      if (existe) {
-        alert('El libro ya existe en el carrito');
-        return false;
-      } else {
-        this.aService.getLibro(idLibro).subscribe((libro) => {
-          if (libro.stock > 0) {
-            this.postCart(actual!, idLibro).subscribe(() => {
-              this.aService.updateStockLibro(idLibro, libro.stock - 1).subscribe(() => {
-                alert('Libro agregado al carrito');
-                return true;
-              });
-              return false;
-            });
-            return false;
-          } else {
-            alert('No quedan mas libros disponibles');
-            return false;
-          }
-        });
-        return false;
-      }
-    });
-    return false;
+  
+    return this.buscarEnCart(idLibro).pipe(
+      switchMap((existe) => {
+        if (existe) {
+          alert('El libro ya existe en el carrito');
+          return of(false);
+        } else {
+          return this.aService.getLibro(idLibro).pipe(
+            switchMap((libro) => {
+              if (libro.stock > 0) {
+                return this.postCart(actual!, idLibro).pipe(
+                  switchMap(() => this.aService.updateStockLibro(idLibro, libro.stock - 1)),
+                  tap(() => {
+                    alert('Libro agregado al carrito');
+                    libro.stock = libro.stock - 1;
+                  }),
+                  map(() => true)
+                );
+              } else {
+                alert('No hay más stock');
+                return of(false);
+              }
+            })
+          );
+        }
+      })
+    );
   }
 
   deleteCart(idCliente: string, idLibro: string): Observable<string> {

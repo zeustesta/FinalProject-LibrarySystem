@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from '../../interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-libro-detalle',
@@ -13,7 +14,7 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 export class LibroDetalleComponent implements OnInit {
   libro!: Libro;
 
-  constructor(private route: ActivatedRoute, private apiService: APIService, private uService: UsuariosService) {}
+  constructor(private route: ActivatedRoute, private apiService: APIService, private cService: ClienteService) {}
 
   ngOnInit(): void {
     this.getLibro();
@@ -31,21 +32,23 @@ export class LibroDetalleComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    const agregado = this.uService.addToCart(idLibro);
-    if (agregado) {
-      this.libro.stock = this.libro.stock - 1;
-    }
+    this.cService.addToCart(idLibro).subscribe((resultado: boolean) => {
+      if (resultado) {
+        this.libro.stock = this.libro.stock - 1;
+      }
+    });
   }
+  
 
   addToFavs(idLibro: string) {
-    const actual = this.uService.obtenerUsuarioActual();
+    const actual = this.cService.obtenerUsuarioActual();
 
-    this.uService.buscarEnFavs(idLibro).subscribe((existe) => {
+    this.cService.buscarEnFavs(idLibro).subscribe((existe) => {
       if (existe) {
         alert('El libro ya existe en favoritos');
       } else {
         this.apiService.getLibro(idLibro).subscribe((libro) => {
-          this.uService.postFav(actual!, idLibro).subscribe(() => {
+          this.cService.postFav(actual!, idLibro).subscribe(() => {
             alert('Libro agregado a favoritos');
           });
         });

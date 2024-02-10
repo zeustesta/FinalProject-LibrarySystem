@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Venta } from '../interfaces/plantillaVenta';
-import { UsuariosService } from './usuarios.service';
-import { v4 as uuidv4 } from 'uuid';
 import { APIService } from './api.service';
-import { StorageService } from './storage.service';
-import { Observable, Observer, forkJoin } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/enviroments/environment.prod';
 import { Libro } from '../interfaces/plantillaLibro';
@@ -16,7 +13,7 @@ export class VentasService {
   private appUrl: string; 
   private apiUrl: string;
 
-  constructor(private uService: UsuariosService, private aService: APIService, private storage: StorageService, private http: HttpClient) {
+  constructor(private aService: APIService, private http: HttpClient) {
     this.appUrl = environment.apiUrl;
     this.apiUrl = '/api/ventas';
   }

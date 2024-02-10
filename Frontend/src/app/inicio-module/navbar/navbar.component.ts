@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,18 +10,18 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 export class NavbarComponent {
   tituloBusqueda: string='';
   
-  constructor(private uService: UsuariosService, private router: Router){ }
+  constructor(private cService: ClienteService, private router: Router){ }
   
   isAdmin(){
-    return this.uService.rolActual;
+    return this.cService.rolActual;
   }
 
   isLoggedIn(){
-    return this.uService.estaLogueado();
+    return this.cService.estaLogueado();
   }
 
   logOut(){
-    this.uService.cerrarSesion();
+    this.cService.cerrarSesion();
   }
 
   buscarLibros(){
