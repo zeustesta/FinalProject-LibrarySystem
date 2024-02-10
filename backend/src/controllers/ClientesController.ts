@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Cliente, ClienteCarrito, ClienteFavoritos } from "../models/ClientesModel";
 import { Venta, LibrosVendidos } from "../models/VentasModel";
 import Libro from "../models/LibrosModel";
+import { updateStockLibroFunction } from "./LibrosController";
 
 //METODOS PARA CLIENTE
 
@@ -209,6 +210,15 @@ export const postLibroEnFavoritos = async (req: Request, res: Response) => {
 export const getCarrito = async (req: Request, res: Response) => {
   const { idCliente } = req.params;
 
+  const carrito = await getCarritoFunction(idCliente);
+  if (carrito.length > 0) {
+    res.json(carrito);
+  } else {
+    res.json([]);
+  }
+}
+
+export async function getCarritoFunction (idCliente: string) {
   const carrito = await ClienteCarrito.findAll({
     where: {
       idCliente: idCliente,
@@ -216,9 +226,9 @@ export const getCarrito = async (req: Request, res: Response) => {
     attributes: ['idLibro']
   });
   if (carrito.length > 0) {
-    res.json(carrito);
+    return carrito;
   } else {
-    res.json([]);
+    return [];
   }
 }
 
@@ -248,13 +258,32 @@ export const postLibroEnCarrito = async (req: Request, res: Response) => {
   const { body } = req;
 
   try {
-    await ClienteCarrito.create(body);
-    res.json({
-      msg: 'Libro agregado al carrito con exito'
-    });
+    const libro = await Libro.findByPk(body.idLibro);
+
+    if (libro && libro.getDataValue('stock') > 0) {
+        const clienteCart = await getCarritoFunction(body.idCliente);
+        if ((clienteCart.find(item => item.getDataValue('idLibro') === body.idLibro)) === undefined) {
+          const newStock = libro.getDataValue('stock') - 1;
+          await ClienteCarrito.create(body);
+          await updateStockLibroFunction(body.idLibro, newStock);
+          res.json({
+            agregado: 1 // AGREGADO CORRECTAMENTE 
+          });
+        } else {
+          res.json({
+            agregado: 0 // YA EXISTE EN EL CARRITO
+          })
+        }
+    } else {
+      res.json({
+        agregado: -1 // NO HAY STOCK
+      })
+    }
   } catch (error) {
-    console.log(error);
-    console.log('No se ha podido agregar el libro al carrito');
+    res.status(500).json({
+      msg: 'No se ha podido agregar el libro al carrito',
+      error
+    })
   }
 } 
 

@@ -39,6 +39,6 @@ export class FavoritosComponent {
   }
 
   addToCart(idLibro: string) {
-    this.cService.addToCart(idLibro);
+    this.cService.addLibroToCart(idLibro).subscribe();
   }
 }

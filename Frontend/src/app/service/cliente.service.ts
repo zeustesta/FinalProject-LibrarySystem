@@ -95,45 +95,33 @@ export class ClienteService {
     return this.http.get<Libro[]>(`${this.appUrl}${this.apiUrl}/getCart/${idCliente}`);
   }
 
-  postCart(idCliente: string, idLibro: string): Observable<string> {
+  postLibroToCart(idCliente: string, idLibro: string): Observable<{ agregado: number }> {
     const body = { idCliente, idLibro };
-    return this.http.post<string>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
+    return this.http.post<{ agregado: number }>(`${this.appUrl}${this.apiUrl}/postLibroEnCart`, body);
   }
 
-  addToCart(idLibro: string): Observable<boolean> {
+  addLibroToCart(idLibro: string): Observable<boolean> {
     const actual = this.obtenerUsuarioActual();
   
     if (actual === null) {
       alert('Debe iniciar sesión');
       return of(false);
+    } else {
+      return this.postLibroToCart(actual, idLibro).pipe(
+        map((res) => {
+          if (res.agregado === -1) {
+            alert('No hay stock');
+            return false;
+          } else if (res.agregado === 0) {
+            alert('Ya existe en el carrito');
+            return false;
+          } else {
+            alert('Agregado correctamente');
+            return true;
+          }
+        })
+      );
     }
-  
-    return this.buscarEnCart(idLibro).pipe(
-      switchMap((existe) => {
-        if (existe) {
-          alert('El libro ya existe en el carrito');
-          return of(false);
-        } else {
-          return this.aService.getLibro(idLibro).pipe(
-            switchMap((libro) => {
-              if (libro.stock > 0) {
-                return this.postCart(actual!, idLibro).pipe(
-                  switchMap(() => this.aService.updateStockLibro(idLibro, libro.stock - 1)),
-                  tap(() => {
-                    alert('Libro agregado al carrito');
-                    libro.stock = libro.stock - 1;
-                  }),
-                  map(() => true)
-                );
-              } else {
-                alert('No hay más stock');
-                return of(false);
-              }
-            })
-          );
-        }
-      })
-    );
   }
 
   deleteCart(idCliente: string, idLibro: string): Observable<string> {
@@ -142,23 +130,6 @@ export class ClienteService {
 
   cleanCart(idCliente: string): Observable<string> {
     return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCarrito/${idCliente}`);
-  }
-
-  buscarEnCart(idLibro: string) {
-    const actual = this.obtenerUsuarioActual();
-
-    return this.getCart(actual!).pipe(
-        map((cart) => {
-            if (cart) {
-                for (let i = 0; i < cart.length; i++) {
-                    if (idLibro === cart[i]['idLibro']) {
-                        return true;  // El libro existe en el carrito
-                    }
-                }
-            }
-            return false;  // El libro no existe en el carrito
-        })
-    );
   }
 
   //METODO PARA EL HISTORIAL DEL CLIENTE

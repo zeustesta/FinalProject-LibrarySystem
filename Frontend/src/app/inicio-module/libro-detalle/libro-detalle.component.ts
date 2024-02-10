@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Libro } from '../../interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { ClienteService } from 'src/app/service/cliente.service';
-import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-libro-detalle',
@@ -32,11 +31,11 @@ export class LibroDetalleComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    this.cService.addToCart(idLibro).subscribe((resultado: boolean) => {
-      if (resultado) {
-        this.libro.stock = this.libro.stock - 1;
+    this.cService.addLibroToCart(idLibro).subscribe((agregado) => {
+      if (agregado) {
+        this.libro.stock = this.libro.stock - 1; 
       }
-    });
+    })
   }
   
 

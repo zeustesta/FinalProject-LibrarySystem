@@ -48,7 +48,7 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    this.cService.addToCart(idLibro).subscribe()
+    this.cService.addLibroToCart(idLibro).subscribe();
   }
 
   verInformacionDetallada(id: string) {
