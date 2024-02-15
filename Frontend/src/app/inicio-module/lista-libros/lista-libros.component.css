@@ -45,7 +45,7 @@ app-spinner {
 .text {
   justify-content: center;
   text-decoration: none;
-  font-family: 'Verdana', sans-serif;
+  font-family: 'Monospace', sans-serif;
   font-size: 0.8rem;
   font-weight: 900;
   margin-top: -1rem;

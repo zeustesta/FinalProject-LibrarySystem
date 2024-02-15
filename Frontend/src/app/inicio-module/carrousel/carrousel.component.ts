@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef,OnInit} from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { Router } from '@angular/router';
-
-
 
 @Component({
   selector: 'app-carrousel',
@@ -13,7 +11,7 @@ import { Router } from '@angular/router';
 export class CarrouselComponent implements OnInit{
   loading: boolean = false;
   listaLibros: Libro[] = [];
-  index = 0;
+
 
   constructor(private apiService: APIService, private router: Router){ 
     
@@ -34,7 +32,7 @@ export class CarrouselComponent implements OnInit{
           }
         }
         listaAux.sort((a,b) => b.cantVentas - a.cantVentas);
-        this.listaLibros= listaAux.slice(0,5);
+        this.listaLibros= listaAux.slice(0,9);
         this.loading= false;
       })
     }
@@ -42,8 +40,5 @@ export class CarrouselComponent implements OnInit{
     verInformacionDetallada(id: string) {
       this.router.navigate([`/inicio/libro_detalle/${id}`]);
     }
-  }
-
-
-
-
+}
+  

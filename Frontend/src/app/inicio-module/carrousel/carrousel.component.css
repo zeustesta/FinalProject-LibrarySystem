@@ -1,27 +1,86 @@
-.div{
+.product {
+    padding: 20px 0;
+  }
+  
+  .slider-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+  }
+  
+  .slider-main {
+    position: absolute;
+    height: 500px;
     display: flex;
     justify-content: center;
-    padding: 70px;
-    border: 2px solid #D4E6F1 ;
-    border-radius: 20px;
-    margin: 5px;
-    background-color: #D6EAF8 ;
-    margin-bottom: 50px;
-}
-
-.categorias img{
-
-    width: 250px;
-    height: 250px;
-}
-
-.categorias{
-    margin-bottom: 5rem;
-}
-.popular{
-    margin-bottom: 1rem;
-}
-h2{
-    text-align: center;
-    margin-bottom: 3.5rem;
-}
+    align-items: center;
+  }
+  
+  .item {
+    display: inline-block;
+    width: 236px;
+    height: 350px; /* Ajusta la altura según sea necesario */
+    position: relative;
+    margin: 0 12px;
+    border: 1px solid #ccc; /* Añade un borde */
+  }
+  
+  .item img {
+    width: 150px; /* Haz que la imagen ocupe todo el espacio del contenedor */
+    height: 200px;
+    border-bottom: 1px solid #ccc; /* Línea divisoria debajo de la imagen */
+  }
+  
+  .text {
+    padding: 10px; /* Añade espacio alrededor del contenido */
+    text-align: center; /* Centra el texto */
+  }
+  
+  .text h3 {
+    margin-top: 10px; /* Ajusta el margen superior del título */
+    font-size: 16px; /* Tamaño de letra para el título */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .text strong {
+    font-weight: bold; /* Estilo negrita para el autor */
+    font-size: 14px; /* Tamaño de letra para el autor */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .text h1 {
+    font-size: 20px; /* Tamaño de letra para el precio */
+    margin-top: 10px; /* Ajusta el margen superior del precio */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .text p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff; /* Fondo blanco para los botones */
+    border: none;
+    cursor: pointer;
+  }
+  
+  .prev {
+    left: 0;
+  }
+  
+  .next {
+    right: 0;
+  }
+  
