@@ -1,4 +1,5 @@
 <section class="product">
+  <h2>Los más populares</h2>
     <div class="slider-wrap">
       <div class="slider-main">
         <div class="item" (click)="verInformacionDetallada(listaLibros[0].idLibro)">
@@ -59,8 +60,38 @@
         </div>
       </div>
       <div class="button-area">
-        <button type="button" class="prev" appPrev>Prev</button>
-        <button type="button" class="next" appNext>Next</button>
+        <i class="fa-solid fa-angle-left prev" appPrev></i>
+        <i class="fa-solid fa-angle-right next" appNext></i>
       </div>
     </div>
 </section>
+
+<div class="categorias">
+  <h2>Ya sabes que vas a leer hoy?</h2>
+  <div class="row">
+    <div class="col-md-3 text-center">
+      <a [routerLink]="['/inicio/filtro','Fantasía']">
+        <img src="https://cdn-icons-png.flaticon.com/512/2368/2368498.png" alt="Fantasía" class="img-fluid img-hover">
+        <h3>Fantasía</h3>
+      </a>
+    </div>
+    <div class="col-md-3 text-center">
+      <a [routerLink]="['/inicio/filtro','Ciencia Ficción']">
+        <img src="https://cdn-icons-png.flaticon.com/512/4114/4114764.png" alt="Ciencia Ficción" class="img-fluid img-hover">
+        <h3>Ciencia Ficción</h3>
+      </a>
+    </div>
+    <div class="col-md-3 text-center">
+      <a [routerLink]="['/inicio/filtro','Horror']">
+        <img src="https://cdn-icons-png.flaticon.com/512/3773/3773795.png" alt="Horror" class="img-fluid img-hover">
+        <h3>Horror</h3>
+      </a>
+    </div>
+    <div class="col-md-3 text-center">
+      <a [routerLink]="['/inicio/filtro','Suspenso']">
+        <img src="https://cdn-icons-png.flaticon.com/512/1048/1048962.png" alt="Drama" class="img-fluid img-hover">
+        <h3>Drama</h3>
+      </a>
+    </div>
+  </div>
+</div>
