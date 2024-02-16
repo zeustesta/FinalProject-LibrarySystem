@@ -16,6 +16,7 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
 import { usersGuard } from '../utils/auth.guard';
 import { adminGuard } from '../utils/admin-guard.guard';
 import { HistorialCompraComponent } from './historial-compra/historial-compra.component';
+import { AddBookComponent } from './add-book/add-book.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
       {
         path: 'libros',
         component: ListaLibrosComponent
+      },
+      {
+        path: 'agregarLibro',
+        component: AddBookComponent,
+        canActivate: [adminGuard]
       },
       {
         path: 'usuarios',

@@ -80,18 +80,10 @@ export const updateStockLibro = async (req: Request, res: Response) => {
   const { stock } = req.body;
   const { idLibro } = req.params;
   try {
-    const libro = await Libro.findByPk(idLibro);
-  
-    if (libro) {
-      libro.set({stock: stock})
-      await libro.save();
+    const libroUpdated = await updateStockLibroFunction(idLibro, stock); 
+    if (libroUpdated) {
       res.json({
         msg: 'Stock actualizado con exito'
-      });
-    } 
-    else {
-      res.status(404).json({
-        msg: `No existe un libro con id: ${idLibro}`
       });
     }
   } catch (error) {
@@ -100,5 +92,22 @@ export const updateStockLibro = async (req: Request, res: Response) => {
       msg: `No se ha podido actualizar el stock: ${idLibro}`,
       error
     });
+  }
+} 
+
+export async function updateStockLibroFunction(idLibro: string, newStock: number) {
+  try {
+    const libro = await Libro.findByPk(idLibro);
+  
+    if (libro) {
+      libro.set({stock: newStock})
+      await libro.save();
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    console.log('No se ha podido actualizar el stock');
   }
 } 

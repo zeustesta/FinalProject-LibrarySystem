@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { deleteCarrito, deleteCliente, deleteLibroCarrito, deleteLibroFavoritos, getCarrito, getCliente, getClientes, getFavoritos, getHistorialComprasCliente, postCliente, postLibroEnCarrito, postLibroEnFavoritos, updateCliente, updateClienteRol, validarCliente, validarEmail } from "../controllers/ClientesController";
+import { 
+  deleteCarrito, deleteCliente, deleteLibroCarrito, deleteLibroFavoritos, 
+  getCarrito, getCliente, getClientes, getFavoritos, 
+  getHistorialComprasCliente, postCliente, postLibroEnCarrito, 
+  postLibroEnFavoritos, updateCliente, 
+  updateClienteRol, validarCliente, validarEmail 
+} from "../controllers/ClientesController";
 
 
 const router = Router();
@@ -27,7 +33,6 @@ router.post('/postLibroEnFavs', postLibroEnFavoritos);
 router.get('/getCart/:idCliente', getCarrito);
 router.delete('/deleteLibroCart/:idCliente/:idLibro', deleteLibroCarrito);
 router.post('/postLibroEnCart', postLibroEnCarrito);
-
 router.delete('/deleteCarrito/:idCliente', deleteCarrito);
 
 //GET HISTORIAL CLIENTE

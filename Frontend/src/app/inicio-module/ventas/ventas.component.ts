@@ -16,7 +16,7 @@ export class VentasComponent {
   listaVentas: Venta[] = [];
 
 
-  constructor(private vService: VentasService, private apiService: APIService, private fb: FormBuilder){
+  constructor(private vService: VentasService, private apiService: APIService){
     this.getVentas();
   }
 

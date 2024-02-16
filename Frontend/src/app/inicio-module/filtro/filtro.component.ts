@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 import { Router } from '@angular/router';
 
 
@@ -14,31 +14,34 @@ import { Router } from '@angular/router';
 
 export class FiltroComponent{
   librosFiltrados: Libro[] = [];
-  currentPage: number= 1;
-  itemsPerPage: number= 10; 
+  loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private libroService: APIService,
-    private uService: UsuariosService, 
+    private aService: APIService,
+    private cService: ClienteService, 
     private router: Router
   ) { this.filtrarLibros(); }
 
   filtrarLibros() {
+    this.loading = true;
     this.route.paramMap.subscribe((params) =>{
       const generoParam = params.get('genero');
       if (generoParam) {
-       this.libroService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
-         this.librosFiltrados = data;
-       })
+        this.aService.filtrarLibrosPorGenero(generoParam).subscribe((data) => {
+          this.librosFiltrados = data;
+          setTimeout(() => {
+            this.loading = false;
+          }, 800);
+        });
       } else {
        alert("No hay libros de ese genero");
-      }
+      };
     });
   }
 
   addToCart(idLibro: string){
-    this.uService.addToCart(idLibro);
+    this.cService.addLibroToCart(idLibro).subscribe();
   }
 
   verInformacionDetallada(id: string){

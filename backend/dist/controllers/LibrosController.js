@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateStockLibro = exports.updateCantVentasLibro = exports.postLibro = exports.deleteLibro = exports.getLibro = exports.getLibros = void 0;
+exports.updateStockLibroFunction = exports.updateStockLibro = exports.updateCantVentasLibro = exports.postLibro = exports.deleteLibro = exports.getLibro = exports.getLibros = void 0;
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
 const getLibros = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listaLibros = yield LibrosModel_1.default.findAll();
@@ -93,17 +93,10 @@ const updateStockLibro = (req, res) => __awaiter(void 0, void 0, void 0, functio
     const { stock } = req.body;
     const { idLibro } = req.params;
     try {
-        const libro = yield LibrosModel_1.default.findByPk(idLibro);
-        if (libro) {
-            libro.set({ stock: stock });
-            yield libro.save();
+        const libroUpdated = yield updateStockLibroFunction(idLibro, stock);
+        if (libroUpdated) {
             res.json({
                 msg: 'Stock actualizado con exito'
-            });
-        }
-        else {
-            res.status(404).json({
-                msg: `No existe un libro con id: ${idLibro}`
             });
         }
     }
@@ -116,3 +109,23 @@ const updateStockLibro = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.updateStockLibro = updateStockLibro;
+function updateStockLibroFunction(idLibro, newStock) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const libro = yield LibrosModel_1.default.findByPk(idLibro);
+            if (libro) {
+                libro.set({ stock: newStock });
+                yield libro.save();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (error) {
+            console.log(error);
+            console.log('No se ha podido actualizar el stock');
+        }
+    });
+}
+exports.updateStockLibroFunction = updateStockLibroFunction;

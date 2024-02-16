@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,6 @@ export class ListaLibrosComponent implements OnInit {
   itemsPerPage: number= 10; 
   allLibros: Libro[] = [];
   listaLibros: Libro[] = [];
-
 
   constructor(private aService: APIService, private uService: UsuariosService, private router: Router, private aRouter: ActivatedRoute) {}
 
@@ -54,7 +53,7 @@ export class ListaLibrosComponent implements OnInit {
   }
 
   addToCart(idLibro: string) {
-    this.uService.addToCart(idLibro);
+    this.cService.addLibroToCart(idLibro).subscribe();
   }
 
   verInformacionDetallada(id: string) {

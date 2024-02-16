@@ -14,7 +14,6 @@ export class CarrouselComponent implements OnInit{
 
 
   constructor(private apiService: APIService, private router: Router){ 
-    
   }
 
   ngOnInit(): void {
@@ -25,7 +24,7 @@ export class CarrouselComponent implements OnInit{
     this.loading = true;
     this.apiService.getLibros().subscribe((data) => {
         let results = data;
-        let listaAux: Libro []=[];
+        let listaAux: Libro [] = [];
         for(let i = 0; i < results.length; i++){
           if(results[i].autor[0] !== undefined){
             listaAux.push(results[i]);

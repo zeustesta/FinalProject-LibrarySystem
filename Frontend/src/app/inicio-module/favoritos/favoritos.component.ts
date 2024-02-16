@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
   selector: 'app-favoritos',
@@ -11,14 +11,14 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 export class FavoritosComponent {
   arrayFavs: Libro[] = [];
 
-  constructor(private uService: UsuariosService, private aService: APIService){
-    this.getFavoritos();
+  constructor(private cService: ClienteService, private aService: APIService){
+  this.getFavoritos();
   }
 
   getFavoritos() {
-    const actual = this.uService.obtenerUsuarioActual();
+    const actual = this.cService.obtenerUsuarioActual();
     
-    this.uService.getFavs(actual!).subscribe((favs) => {
+    this.cService.getFavs(actual!).subscribe((favs) => {
       let arrayIds = favs;
       if(arrayIds !== null){
         for(let i = 0; i < arrayIds.length; i++){
@@ -34,11 +34,12 @@ export class FavoritosComponent {
   }
 
   eliminarDeFavs(idLibro: string){
-    this.uService.deleteFav(this.uService.obtenerUsuarioActual()!, idLibro).subscribe();
+    this.cService.deleteFav(this.cService.obtenerUsuarioActual()!, idLibro).subscribe();
     this.arrayFavs.splice(this.arrayFavs.findIndex(item => item.idLibro === idLibro), 1);
+    alert('Libro eliminado de favoritos');
   }
 
   addToCart(idLibro: string) {
-    this.uService.addToCart(idLibro);
+    this.cService.addLibroToCart(idLibro).subscribe();
   }
 }

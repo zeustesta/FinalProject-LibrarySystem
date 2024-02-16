@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateClienteRol = exports.updateCliente = exports.postCliente = exports.deleteCliente = exports.getCliente = exports.getClientes = void 0;
+exports.getHistorialComprasCliente = exports.deleteCarrito = exports.postLibroEnCarrito = exports.deleteLibroCarrito = exports.getCarritoFunction = exports.getCarrito = exports.postLibroEnFavoritos = exports.deleteLibroFavoritos = exports.getFavoritos = exports.validarEmail = exports.validarCliente = exports.updateClienteRol = exports.updateCliente = exports.postCliente = exports.getCliente = exports.getClientes = void 0;
 const ClientesModel_1 = require("../models/ClientesModel");
 const VentasModel_1 = require("../models/VentasModel");
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
+const LibrosController_1 = require("./LibrosController");
 //METODOS PARA CLIENTE
 const getClientes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listaClientes = yield ClientesModel_1.Cliente.findAll();
@@ -35,22 +36,6 @@ const getCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getCliente = getCliente;
-const deleteCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idCliente } = req.params;
-    const cliente = yield ClientesModel_1.Cliente.findByPk(idCliente);
-    if (!cliente) {
-        res.status(404).json({
-            msg: `No existe un cliente con id: ${idCliente}`
-        });
-    }
-    else {
-        yield cliente.destroy();
-        res.json({
-            msg: 'Cliente eliminado con exito'
-        });
-    }
-});
-exports.deleteCliente = deleteCliente;
 const postCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     console.log(body);
@@ -219,12 +204,7 @@ exports.postLibroEnFavoritos = postLibroEnFavoritos;
 //METODOS PARA CARRITO
 const getCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idCliente } = req.params;
-    const carrito = yield ClientesModel_1.ClienteCarrito.findAll({
-        where: {
-            idCliente: idCliente,
-        },
-        attributes: ['idLibro']
-    });
+    const carrito = yield getCarritoFunction(idCliente);
     if (carrito.length > 0) {
         res.json(carrito);
     }
@@ -233,6 +213,23 @@ const getCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getCarrito = getCarrito;
+function getCarritoFunction(idCliente) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const carrito = yield ClientesModel_1.ClienteCarrito.findAll({
+            where: {
+                idCliente: idCliente,
+            },
+            attributes: ['idLibro']
+        });
+        if (carrito.length > 0) {
+            return carrito;
+        }
+        else {
+            return [];
+        }
+    });
+}
+exports.getCarritoFunction = getCarritoFunction;
 const deleteLibroCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idCliente } = req.params;
     const { idLibro } = req.params;
@@ -258,14 +255,34 @@ exports.deleteLibroCarrito = deleteLibroCarrito;
 const postLibroEnCarrito = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
-        yield ClientesModel_1.ClienteCarrito.create(body);
-        res.json({
-            msg: 'Libro agregado al carrito con exito'
-        });
+        const libro = yield LibrosModel_1.default.findByPk(body.idLibro);
+        if (libro && libro.getDataValue('stock') > 0) {
+            const clienteCart = yield getCarritoFunction(body.idCliente);
+            if ((clienteCart.find(item => item.getDataValue('idLibro') === body.idLibro)) === undefined) {
+                const newStock = libro.getDataValue('stock') - 1;
+                yield ClientesModel_1.ClienteCarrito.create(body);
+                yield (0, LibrosController_1.updateStockLibroFunction)(body.idLibro, newStock);
+                res.json({
+                    agregado: 1 // AGREGADO CORRECTAMENTE 
+                });
+            }
+            else {
+                res.json({
+                    agregado: 0 // YA EXISTE EN EL CARRITO
+                });
+            }
+        }
+        else {
+            res.json({
+                agregado: -1 // NO HAY STOCK
+            });
+        }
     }
     catch (error) {
-        console.log(error);
-        console.log('No se ha podido agregar el libro al carrito');
+        res.status(500).json({
+            msg: 'No se ha podido agregar el libro al carrito',
+            error
+        });
     }
 });
 exports.postLibroEnCarrito = postLibroEnCarrito;

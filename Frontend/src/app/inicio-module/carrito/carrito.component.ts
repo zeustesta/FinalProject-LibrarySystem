@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from 'src/app/service/api.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ClienteService } from 'src/app/service/cliente.service';
 import { VentasService } from 'src/app/service/ventas.service';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,14 +16,14 @@ import { forkJoin } from 'rxjs';
 export class CarritoComponent {
   arrayCarrito: Libro[] = [];
 
-  constructor(private aService: APIService, private vService: VentasService, private uService: UsuariosService, private router: Router){
+  constructor(private aService: APIService, private vService: VentasService, private cService: ClienteService, private router: Router){
     this.getCarrito();
   }
 
   getCarrito() {
-    const actual = this.uService.obtenerUsuarioActual();
+    const actual = this.cService.obtenerUsuarioActual();
     
-    this.uService.getCart(actual!).subscribe((cart) => {
+    this.cService.getCart(actual!).subscribe((cart) => {
       if(cart !== null){
         for(let i = 0; i < cart.length; i++){
           this.aService.getLibro(cart[i]['idLibro']).subscribe((data) => {
@@ -38,7 +38,7 @@ export class CarritoComponent {
   }
 
   comprarCarrito() {
-    const actual = this.uService.obtenerUsuarioActual();
+    const actual = this.cService.obtenerUsuarioActual();
   
     if (actual && this.arrayCarrito) {
       const idVenta = uuidv4();
@@ -56,7 +56,7 @@ export class CarritoComponent {
           };
   
           alert('Carrito encargado exitosamente, será redirigido');
-          this.uService.cleanCart(actual).subscribe();
+          this.cService.cleanCart(actual).subscribe();
           this.router.navigate(['/inicio']);
         });
       });
@@ -64,11 +64,11 @@ export class CarritoComponent {
   }
 
   eliminarDeCarrito(idLibro: string){
-    const actual = this.uService.obtenerUsuarioActual();
+    const actual = this.cService.obtenerUsuarioActual();
 
     if(actual){
       this.aService.getLibro(idLibro).subscribe((libro) => {
-        this.uService.deleteCart(actual, idLibro).subscribe(() => {
+        this.cService.deleteCart(actual, idLibro).subscribe(() => {
           this.arrayCarrito.splice(this.arrayCarrito.findIndex((idLibro) => idLibro = idLibro), 1);
           this.aService.updateStockLibro(idLibro, libro.stock + 1).subscribe(() => {
             alert('Libro eliminado de carrito');          
