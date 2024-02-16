@@ -45,10 +45,6 @@ export class ClienteService {
     return this.http.put<string>(`${this.appUrl}${this.apiUrl}/updateClienteRol/${idCliente}`, { rol: rol});  
   }
 
-  deleteCliente(idCliente: string): Observable<string> { 
-    return this.http.delete<string>(`${this.appUrl}${this.apiUrl}/deleteCliente/${idCliente}`);
-  }
-
   validarCliente(email: string, password: string): Observable<Usuario | null> {
     return this.http.post<Usuario | null>(`${this.appUrl}${this.apiUrl}/validarCliente`, { email, password });
   }

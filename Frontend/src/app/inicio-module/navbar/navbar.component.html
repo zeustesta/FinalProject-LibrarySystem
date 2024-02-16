@@ -19,29 +19,32 @@
           <a class="dropdown-item" [routerLink]="['/inicio/filtro','Poesía']" href="#">Poesía</a>
         </div>
       </li>
+      <li class="nav-item mt-2" *ngIf="!isAdmin()">
+        <button class="fa-solid fa-cart-shopping nav-btn" [routerLink]="['/inicio/carrito']"></button>
+      </li>
       <li class="nav-item mt-2">
-        <i type="button" class="fa-solid fa-cart-shopping" [routerLink]="['/inicio/carrito']"></i>
+        <button class="fa-solid fa-book nav-btn" [routerLink]="['/inicio/libros']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2">
-        <i type="button" class="fa-solid fa-book" [routerLink]="['/inicio/libros']"></i>
+      <li class="nav-item mt-2" *ngIf="isAdmin()">
+        <button class="fa-solid fa-clipboard-check nav-btn" [routerLink]="['/inicio/ventas']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2" *ngIf="isAdmin()">
-        <i type="button" class="fa-solid fa-clipboard-check" [routerLink]="['/inicio/ventas']"></i>
+      <li class="nav-item mt-2" *ngIf="!isAdmin()">
+        <button class="fa-solid fa-heart nav-btn" [routerLink]="['/inicio/favoritos']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2" *ngIf="isAdmin()">
-        <i type="button" class="fa-solid fa-users" [routerLink]="['/inicio/usuarios']"></i>
+      <li class="nav-item mt-2" *ngIf="isAdmin()">
+        <button class="fa-solid fa-users nav-btn" [routerLink]="['/inicio/usuarios']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2">
-        <i type="button" class="fa-solid fa-heart" [routerLink]="['/inicio/favoritos']"></i>
+      <li class="nav-item mt-2" *ngIf="!isAdmin()">
+        <button class="fa-solid fa-clock-rotate-left nav-btn" [routerLink]="['/inicio/historial']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2">
-        <i type="button" class="fa-solid fa-clock-rotate-left" [routerLink]="['/inicio/historial']"></i>
+      <li class="nav-item mt-2" *ngIf="isAdmin()">
+        <button class="fa-solid fa-book-medical nav-btn" [routerLink]="['inicio/agregarLibro']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2" *ngIf="!isLoggedIn()">
-        <i type="button" class="fa-solid fa-user" [routerLink]="['/login']"></i>
+      <li class="nav-item mt-2" *ngIf="!isLoggedIn()">
+        <button class="fa-solid fa-user nav-btn" [routerLink]="['/login']"></button>
       </li>
-      <li class="nav-item mt-2 ml-2" *ngIf="isLoggedIn()">
-        <i type="button" class="fa-solid fa-right-from-bracket" [routerLink]="['/inicio']" (click)="logOut()"></i>
+      <li class="nav-item mt-2" *ngIf="isLoggedIn()">
+        <button class="fa-solid fa-right-from-bracket nav-btn" [routerLink]="['/inicio']" (click)="logOut()"></button>
       </li>
     </ul>
   </div>

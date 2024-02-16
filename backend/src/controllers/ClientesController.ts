@@ -24,22 +24,6 @@ export const getCliente = async (req: Request, res: Response) => {
   }
 } 
 
-export const deleteCliente = async (req: Request, res: Response) => {
-  const { idCliente } = req.params;
-  const cliente = await Cliente.findByPk(idCliente);
-
-  if (!cliente) {
-    res.status(404).json({
-      msg: `No existe un cliente con id: ${idCliente}`
-    });
-  } else {
-    await cliente.destroy();
-    res.json({
-      msg: 'Cliente eliminado con exito'
-    });
-  }
-} 
-
 export const postCliente = async (req: Request, res: Response) => {
   const { body } = req;
   console.log(body)

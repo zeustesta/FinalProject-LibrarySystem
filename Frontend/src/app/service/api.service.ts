@@ -27,6 +27,10 @@ export class APIService {
     return this.http.get<Libro>(`${this.appUrl}${this.apiUrl}/getLibro/${idLibro}`)
   }
 
+  postLibro(body: Libro): Observable<void> {
+    return this.http.post<void>(`${this.appUrl}${this.apiUrl}/postLibro`, body);
+  }
+
   updateStockLibro(idLibro: string, newStock: number): Observable<void> {
     return this.http.put<void>(`${this.appUrl}${this.apiUrl}/updateStockLibro/${idLibro}`, { stock: newStock });
   }
