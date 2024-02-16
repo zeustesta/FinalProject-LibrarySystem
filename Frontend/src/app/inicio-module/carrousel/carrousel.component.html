@@ -7,7 +7,7 @@
             <img src="{{libro.portada}}">
             <div><h3>{{libro.titulo}}</h3></div>
             <div><p><strong>{{libro.autor}}</strong></p></div>
-            <div><h1>{{libro.precio}}</h1></div>
+            <div><h1>{{libro.precio | currency}}</h1></div>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
 </section>
 
 <div class="categorias">
-  <h2>Ya sabes que vas a leer hoy?</h2>
+  <h2>¿Ya sabes que vas a leer hoy?</h2>
   <div class="row">
     <div class="col-md-3 text-center">
       <a [routerLink]="['/inicio/filtro','Fantasía']">

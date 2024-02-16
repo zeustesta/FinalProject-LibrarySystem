@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 
 export class FiltroComponent{
   librosFiltrados: Libro[] = [];
+  currentPage: number= 1;
+  itemsPerPage: number= 10; 
 
   constructor(
     private route: ActivatedRoute,
@@ -43,3 +45,4 @@ export class FiltroComponent{
     this.router.navigate([`/inicio/libro_detalle/${id}`]);
   }
 }
+

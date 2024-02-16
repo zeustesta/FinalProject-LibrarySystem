@@ -80,3 +80,6 @@ app-spinner {
   align-items: center;
   font-size: 12px;
 }
+.justify-content-between{
+  padding-bottom: 2rem;
+}
