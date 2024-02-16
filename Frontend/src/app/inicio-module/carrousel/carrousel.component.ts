@@ -31,8 +31,8 @@ export class CarrouselComponent implements OnInit{
           }
         }
         listaAux.sort((a,b) => b.cantVentas - a.cantVentas);
-        this.listaLibros = listaAux.slice(0, 7);
-        this.loading = false;
+        this.listaLibros= listaAux.slice(0,10);
+        this.loading= false;
       })
     }
 

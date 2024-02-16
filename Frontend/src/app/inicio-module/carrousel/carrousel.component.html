@@ -2,60 +2,13 @@
   <h2>Los más populares</h2>
     <div class="slider-wrap">
       <div class="slider-main">
-        <div class="item" (click)="verInformacionDetallada(listaLibros[0].idLibro)">
-          <div class="text" >
-            <img src="{{listaLibros[0].portada}}">
-            <div><h3>{{listaLibros[0].titulo}}</h3></div>
-            <div><p><strong>{{listaLibros[0].autor}}</strong></p></div>
-            <div><h1>{{listaLibros[0].precio | currency}}</h1></div>
-          </div>
-        </div>
-        <div class="item" (click)="verInformacionDetallada(listaLibros[1].idLibro)">
+
+        <div class="item" *ngFor="let libro of listaLibros">
           <div class="text">
-            <img src="{{listaLibros[1].portada}}">
-            <div><h3>{{listaLibros[1].titulo}}</h3></div>
-            <div><p><strong>{{listaLibros[1].autor}}</strong></p></div>
-            <div><h1>{{listaLibros[1].precio | currency}}</h1></div>
-          </div>
-        </div>
-        <div class="item" (click)="verInformacionDetallada(listaLibros[2].idLibro)">
-          <div class="text">
-            <img src="{{listaLibros[2].portada}}">
-            <div><h3>{{listaLibros[2].titulo}}</h3></div>
-            <div><p><strong>{{listaLibros[2].autor}}</strong></p></div>
-            <div><h1>{{listaLibros[2].precio | currency}}</h1></div>
-          </div>
-        </div>
-        <div class="item" (click)="verInformacionDetallada(listaLibros[3].idLibro)">
-          <div class="text">
-            <img src="{{listaLibros[3].portada}}">
-            <div><h3>{{listaLibros[3].titulo}}</h3></div>
-            <div><p><strong>{{listaLibros[3].autor}}</strong></p></div>
-            <div><h1>{{listaLibros[3].precio | currency}}</h1></div>
-          </div>
-        </div>
-        <div class="item" (click)="verInformacionDetallada(listaLibros[4].idLibro)">
-          <div class="text">
-            <img src="{{listaLibros[4].portada}}">
-            <div><h3>{{listaLibros[4].titulo}}</h3></div>
-            <div><p><strong>{{listaLibros[4].autor}}</strong></p></div>
-            <div><h1>{{listaLibros[4].precio | currency}}</h1></div>
-          </div>
-        </div>
-        <div class="item" (click)="verInformacionDetallada(listaLibros[5].idLibro)">
-          <div class="text">
-            <img src="{{listaLibros[5].portada}}">
-            <div><h3>{{listaLibros[5].titulo}}</h3></div>
-            <div><p><strong>{{listaLibros[5].autor}}</strong></p></div>
-            <div><h1>{{listaLibros[5].precio | currency}}</h1></div>
-          </div>
-        </div>
-        <div class="item" (click)="verInformacionDetallada(listaLibros[6].idLibro)">
-          <div class="text">
-            <img src="{{listaLibros[6].portada}}">
-            <h3>{{listaLibros[6].titulo}}</h3>
-            <p><strong>{{listaLibros[6].autor}}</strong></p>
-            <h1>{{listaLibros[6].precio | currency}}</h1>
+            <img src="{{libro.portada}}">
+            <div><h3>{{libro.titulo}}</h3></div>
+            <div><p><strong>{{libro.autor}}</strong></p></div>
+            <div><h1>{{libro.precio | currency}}</h1></div>
           </div>
         </div>
       </div>
@@ -67,7 +20,7 @@
 </section>
 
 <div class="categorias">
-  <h2>Ya sabes que vas a leer hoy?</h2>
+  <h2>¿Ya sabes que vas a leer hoy?</h2>
   <div class="row">
     <div class="col-md-3 text-center">
       <a [routerLink]="['/inicio/filtro','Fantasía']">

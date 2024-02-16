@@ -17,3 +17,8 @@
 <div *ngIf="listaLibros.length === 0" class="warning">
   <p>No hay libros disponibles.</p>
 </div>
+<div class="container d-flex justify-content-between" *ngIf="!loading">
+  <button class="btn btn-outline-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+  <span>{{currentPage}}</span>
+  <button class="btn btn-outline-primary" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= allLibros.length">Siguiente</button>
+</div>

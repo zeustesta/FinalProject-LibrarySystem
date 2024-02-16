@@ -10,13 +10,13 @@
   .slider-wrap {
     position: relative;
     overflow: hidden;
-    height: 440px;
-    margin-top: 40px; /* Ajusta el margen superior para dejar espacio para los botones */
+    height: 380px;
+    margin-top: 8px; /* Ajusta el margen superior para dejar espacio para los botones */
   }
 
   .slider-main {
     position: absolute;
-    height: 380px;
+    height: 395px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,7 +79,7 @@
     font-size: 1.2rem;
     text-align: center;
     line-height: 46px;
-    background: #26f8ff;
+    background: #2672ff;
     cursor: pointer;
     border-radius: 50%;
     position: absolute;

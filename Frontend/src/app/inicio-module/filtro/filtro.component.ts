@@ -48,3 +48,4 @@ export class FiltroComponent{
     this.router.navigate([`/inicio/libro_detalle/${id}`]);
   }
 }
+
