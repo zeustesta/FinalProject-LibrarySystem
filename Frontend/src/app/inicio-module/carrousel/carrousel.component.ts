@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef,OnInit} from '@angular/core';
 import { Libro } from 'src/app/interfaces/plantillaLibro';
 import { APIService } from '../../service/api.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class CarrouselComponent implements OnInit{
   loading: boolean = false;
   listaLibros: Libro[] = [];
+
 
   constructor(private apiService: APIService, private router: Router){ 
   }
@@ -38,8 +39,5 @@ export class CarrouselComponent implements OnInit{
     verInformacionDetallada(id: string) {
       this.router.navigate([`/inicio/libro_detalle/${id}`]);
     }
-  }
-
-
-
-
+}
+  

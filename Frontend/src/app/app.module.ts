@@ -17,6 +17,8 @@ import { FooterComponent } from './inicio-module/footer/footer.component';
 import { LoginComponent } from './Seguridad/login/login.component';
 import { RegistroComponent } from './Seguridad/registro/registro.component';
 import { CarrouselComponent } from './inicio-module/carrousel/carrousel.component';
+import { NextDirective } from './next.directive';
+import { PrevDirective } from './prev.directive';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { CarrouselComponent } from './inicio-module/carrousel/carrousel.componen
     LoginComponent,
     RegistroComponent,
     CarrouselComponent,
+    NextDirective,
+    PrevDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,27 +1,111 @@
-.div{
+.product {
+    padding: 20px 0;
+    position: relative; /* Agrega posición relativa al contenedor principal */
+  }
+
+.product h2{
+    text-align: center;
+  }
+  
+  .slider-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 440px;
+    margin-top: 40px; /* Ajusta el margen superior para dejar espacio para los botones */
+  }
+
+  .slider-main {
+    position: absolute;
+    height: 380px;
     display: flex;
     justify-content: center;
-    padding: 70px;
-    border: 2px solid #D4E6F1 ;
-    border-radius: 20px;
-    margin: 5px;
-    background-color: #D6EAF8 ;
-    margin-bottom: 50px;
-}
+    align-items: center;
+  }
+  
+  .item {
+    display: inline-block;
+    width: 236px;
+    height: 350px; /* Ajusta la altura según sea necesario */
+    position: relative;
+    margin: 0 12px;
+    border: 1px solid #ccc; /* Añade un borde */
+  }
+  
+  .item img {
+    width: 150px; /* Haz que la imagen ocupe todo el espacio del contenedor */
+    height: 200px;
+    border-bottom: 1px solid #ccc; /* Línea divisoria debajo de la imagen */
+  }
+  
+  .text {
+    padding: 10px; /* Añade espacio alrededor del contenido */
+    text-align: center; /* Centra el texto */
+  }
+  
+  .text h3 {
+    margin-top: 10px; /* Ajusta el margen superior del título */
+    font-size: 16px; /* Tamaño de letra para el título */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .text strong {
+    font-weight: bold; /* Estilo negrita para el autor */
+    font-size: 14px; /* Tamaño de letra para el autor */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .text h1 {
+    font-size: 20px; /* Tamaño de letra para el precio */
+    margin-top: 10px; /* Ajusta el margen superior del precio */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .text p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .button-area i{
+    z-index: 1;
+    top: 50%;
+    height: 46px;
+    width: 46px;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 46px;
+    background: #26f8ff;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+  }
 
-.categorias img{
+  .prev {
+    left: 0px;
+  }
+  
+  .next {
+    right: 0px;
+  }
 
+  .categorias img{
     width: 250px;
     height: 250px;
 }
 
+.categorias h2{
+    text-align: center;
+    margin-bottom: 2rem;
+}
 .categorias{
     margin-bottom: 5rem;
 }
 .popular{
     margin-bottom: 1rem;
-}
-h2{
-    text-align: center;
-    margin-bottom: 3.5rem;
 }

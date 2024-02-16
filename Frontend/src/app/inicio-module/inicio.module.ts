@@ -18,6 +18,7 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
 import { HistorialCompraComponent } from './historial-compra/historial-compra.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
+
 @NgModule({
   declarations: [
     ListaLibrosComponent,
@@ -27,7 +28,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     LibroDetalleComponent,
     FavoritosComponent,
     HistorialCompraComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
