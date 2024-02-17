@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { 
-  deleteCarrito, deleteCliente, deleteLibroCarrito, deleteLibroFavoritos, 
+  deleteCarrito, deleteLibroCarrito, deleteLibroFavoritos, 
   getCarrito, getCliente, getClientes, getFavoritos, 
   getHistorialComprasCliente, postCliente, postLibroEnCarrito, 
   postLibroEnFavoritos, updateCliente, 
@@ -17,7 +17,6 @@ router.get('/getCliente/:idCliente', getCliente);
 router.post('/postCliente', postCliente);
 router.put('/updateCliente/:idCliente', updateCliente);
 router.put('/updateClienteRol/:idCliente', updateClienteRol);
-router.delete('/deleteCliente/:idCliente', deleteCliente);
 
 router.post('/validarCliente', validarCliente);
 router.post('/validarEmail', validarEmail);

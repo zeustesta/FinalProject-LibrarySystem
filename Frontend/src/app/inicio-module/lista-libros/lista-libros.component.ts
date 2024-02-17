@@ -16,7 +16,7 @@ export class ListaLibrosComponent implements OnInit {
   allLibros: Libro[] = [];
   listaLibros: Libro[] = [];
 
-  constructor(private aService: APIService, private uService: UsuariosService, private router: Router, private aRouter: ActivatedRoute) {}
+  constructor(private aService: APIService, private cService: ClienteService, private router: Router, private aRouter: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.getListaLibros();

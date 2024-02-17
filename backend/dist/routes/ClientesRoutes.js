@@ -9,7 +9,6 @@ router.get('/getCliente/:idCliente', ClientesController_1.getCliente);
 router.post('/postCliente', ClientesController_1.postCliente);
 router.put('/updateCliente/:idCliente', ClientesController_1.updateCliente);
 router.put('/updateClienteRol/:idCliente', ClientesController_1.updateClienteRol);
-router.delete('/deleteCliente/:idCliente', ClientesController_1.deleteCliente);
 router.post('/validarCliente', ClientesController_1.validarCliente);
 router.post('/validarEmail', ClientesController_1.validarEmail);
 //ROUTES PARA FAVORITOS

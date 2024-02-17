@@ -51,7 +51,7 @@ class Server {
       await libroModel.sync();
       await Cliente.sync();
       await ClienteCarrito.sync();
-      await ClienteFavoritos.sync()
+      await ClienteFavoritos.sync();
       await Venta.sync();
       await LibrosVendidos.sync();
       console.log('Modelos sincronizados correctamente');
