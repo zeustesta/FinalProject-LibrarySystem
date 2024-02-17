@@ -57,4 +57,19 @@ export class LibroDetalleComponent implements OnInit {
       alert('Debe iniciar sesion');
     }
   }
+
+  updateStock(idLibro: string) {
+    const campo: HTMLInputElement = document.getElementById("newStock") as HTMLInputElement;  
+    const newStock = Number(campo.value);
+    if (newStock < 0) {
+      alert('Solo valores positivos');
+    } else {
+      this.libro.stock = newStock;
+      this.apiService.updateStockLibro(idLibro, Number(campo.value)).subscribe();
+    }
+  }
+
+  isAdmin() {
+    return this.cService.rolActual;
+  }
 }

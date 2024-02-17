@@ -6,7 +6,7 @@
         <div class="item" *ngFor="let libro of listaLibros">
           <div class="text">
             <img src="{{libro.portada}}">
-            <div><h3>{{libro.titulo}}</h3></div>
+            <div><h3 (click)="verInformacionDetallada(libro.idLibro)">{{libro.titulo}}</h3></div>
             <div><p><strong>{{libro.autor}}</strong></p></div>
             <div><h1>{{libro.precio | currency}}</h1></div>
           </div>

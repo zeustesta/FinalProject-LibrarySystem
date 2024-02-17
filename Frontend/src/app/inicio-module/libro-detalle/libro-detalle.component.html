@@ -30,7 +30,17 @@
                 <div class="col-12 col-sm-6">
                   <h2 class="my-3">Autor: {{ libro.autor }}</h2>
                   <h3 class="my-3">Genero: {{ libro.genero }} </h3>
-                  <h5 class="my-3">Stock: {{ libro.stock }} </h5>
+                  <div class="my-3 d-flex flex-row">
+                    <h5 class="mr-3">Stock: {{ libro.stock }} </h5>
+                    <div class="input-group w-50" *ngIf="isAdmin()">
+                      <input type="text" class="form-control" id="newStock" name="newStock" placeholder="Ingrese el nuevo stock">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="fa-solid fa-circle-plus" (click)="updateStock(libro.idLibro)"></i>              
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <hr>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum corporis nulla error asperiores vel. 
                     Qui quis odit natus, aspernatur obcaecati, nesciunt delectus odio quaerat quidem molestias labore quod, reprehenderit amet!
