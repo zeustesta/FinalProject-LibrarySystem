@@ -10,7 +10,6 @@ import { environment } from 'src/enviroments/environment.prod';
 })
 
 export class APIService {
-  listaLibros: Libro[] = [];
   private appUrl: string; 
   private apiUrl: string;
 

@@ -1,6 +1,5 @@
 <body class="hold-transition">
-  <app-spinner *ngIf="loading"></app-spinner>
-  <div class="content-box" *ngIf="historial.length > 0 && !loading">
+  <div class="content-box" *ngIf="historial.length > 0">
     <section class="content-header d-flex justify-content-center align-items-center">
       <h1 class="title">Historial de Compras</h1>
     </section>
@@ -38,7 +37,7 @@
       </div>
     </section>
   </div>
-  <div class="warning" *ngIf="historial.length === 0 && !loading">
+  <div class="warning" *ngIf="historial.length === 0">
     <h1>Aun no ha realizado compras.</h1>
   </div>
 </body>

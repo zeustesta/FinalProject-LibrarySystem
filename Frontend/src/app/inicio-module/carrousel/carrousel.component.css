@@ -24,8 +24,8 @@
   
   .item {
     display: inline-block;
-    width: 236px;
-    height: 350px; /* Ajusta la altura según sea necesario */
+    width: 15rem;
+    height: 20rem; /* Ajusta la altura según sea necesario */
     position: relative;
     margin: 0 12px;
     border: 1px solid #ccc; /* Añade un borde */

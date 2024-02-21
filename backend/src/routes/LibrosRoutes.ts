@@ -9,4 +9,5 @@ router.delete('/deleteLibro/:idLibro', deleteLibro);
 router.post('/postLibro', postLibro);
 router.put('/updateCantVentas/:idLibro', updateCantVentasLibro);
 router.put('/updateStockLibro/:idLibro', updateStockLibro);
+
 export default router;

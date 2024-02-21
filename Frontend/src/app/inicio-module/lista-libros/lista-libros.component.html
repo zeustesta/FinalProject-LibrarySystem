@@ -3,8 +3,8 @@
   <div class="cards" *ngIf="!loading">
     <div *ngFor="let libro of listaLibros" class="card">
       <img class="img" src='{{libro.portada}}' alt="imagen">
-      <h5 class="h5">{{libro.titulo}}</h5>
-      <h6>{{libro.autor}}</h6>
+      <div><h5>{{libro.titulo}}</h5></div>
+      <div><h6>{{libro.autor}}</h6></div>
       <br>
       <p class="text">{{libro.precio | currency}}</p>
       <div class="d-flex flex-column align-items-center">
