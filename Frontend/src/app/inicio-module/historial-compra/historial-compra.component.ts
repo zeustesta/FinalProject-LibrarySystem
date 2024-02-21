@@ -43,7 +43,7 @@ export class HistorialCompraComponent {
       this.filterFechaLejanaACercana();
       setTimeout( () => {
         this.loading= false;
-      },800)
+      }, 800)
     });
   }
 
