@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.seedDatabase = void 0;
 const LibrosModel_1 = __importDefault(require("../models/LibrosModel"));
 const urlApi = 'https://gutendex.com/books/?page=4';
+const imageNotFound = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
 function seedDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -22,7 +23,12 @@ function seedDatabase() {
             const results = data.results;
             for (let i = 0; i < results.length; i++) {
                 if (results[i].authors[0] !== undefined) {
-                    populateBooksTable(results[i].title, results[i].authors[0].name, results[i].formats["image/jpeg"]);
+                    if (results[i].formats["image/jpeg"] == null) {
+                        populateBooksTable(results[i].title, results[i].authors[0].name, imageNotFound);
+                    }
+                    else {
+                        populateBooksTable(results[i].title, results[i].authors[0].name, results[i].formats["image/jpeg"]);
+                    }
                 }
             }
             console.log('Base de datos poblada correctamente');

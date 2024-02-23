@@ -1,5 +1,6 @@
 import LibrosModel from '../models/LibrosModel'
 const urlApi = 'https://gutendex.com/books/?page=4';
+const imageNotFound = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
 
 export async function seedDatabase() {
   try {
@@ -7,7 +8,12 @@ export async function seedDatabase() {
     const results = data.results;
     for (let i = 0; i < results.length; i++) {
       if(results[i].authors[0] !== undefined){
-        populateBooksTable(results[i].title, results[i].authors[0].name, results[i].formats["image/jpeg"]);
+        if (results[i].formats["image/jpeg"] == null) {
+          populateBooksTable(results[i].title, results[i].authors[0].name, imageNotFound);
+        } else {
+          populateBooksTable(results[i].title, results[i].authors[0].name, results[i].formats["image/jpeg"]);
+        }
+        
       }
     }
     console.log('Base de datos poblada correctamente'); 
